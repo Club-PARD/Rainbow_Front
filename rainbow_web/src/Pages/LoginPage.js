@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
+// import { postAPI } from '../APIs/AxiosAPI';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
@@ -10,6 +11,7 @@ function LoginPage() {
   function handleLoginResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     const userObject = jwtDecode(response.credential);
+    // const APIresponse = await postAPI(response.credential);
     console.log(userObject);
     setUser(userObject);
     document.getElementById("signInDiv").hidden = true;
