@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 
 const google = window.google;
+const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ user, setUser ] = useState({});
@@ -22,7 +23,7 @@ function LoginPage() {
   useEffect(() => {
     // global google
     google.accounts.id.initialize({
-      client_id: "138487470041-qo2hanr2791bvr3th4tunvm729gqbbqs.apps.googleusercontent.com",
+      client_id: clientId,
       callback: handleLoginResponse
     });
 
