@@ -2,7 +2,7 @@ import axios from "axios";
 
 const server = process.env.REACT_APP_API_URL;
 
-export const getMembersAPI = async () => {
+export const getDataAPI = async () => {
     try {
         const response = await axios
         .get();
@@ -12,7 +12,7 @@ export const getMembersAPI = async () => {
     }
 };
 
-// export const getMembersAPI = async (part) => {
+// export const getDataAPI = async (part) => {
 //   // your code here
 //   try {
 //     const response = await axios
@@ -25,7 +25,7 @@ export const getMembersAPI = async () => {
 //   }
 // };
 
-export const getMemberAPI = async (id) => {
+export const getAPI = async (id) => {
   // your code here
   try {
     const response = await axios
@@ -37,7 +37,7 @@ export const getMemberAPI = async (id) => {
 };
 
 // 아래 코드는 잘 돌아가는 코드이니 참고해서 작성해보세요.
-export const postMemberAPI = async (data) => {
+export const postAPI = async (data) => {
   try {
     const response = await axios.post(`${server}`, data);
     return response;
@@ -46,7 +46,7 @@ export const postMemberAPI = async (data) => {
   }
 };
 
-export const patchMemberAPI = async (data) => {
+export const patchAPI = async (id, data) => {
   try {
     const response = await axios.patch(`${server}/${id}`, data);
     console.log(response);
@@ -56,7 +56,7 @@ export const patchMemberAPI = async (data) => {
   }
 };
 
-export const deleteMemberAPI = async (id) => {
+export const deleteAPI = async (id) => {
   // your code here
   try {
     const response = await axios
