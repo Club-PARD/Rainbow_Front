@@ -1,12 +1,10 @@
 import './App.css';
-import { GoogleLoginBtn } from './GoogleLoginBtn';
-import LoginPage from './LoginPage';
+import LoginPage from './Pages/LoginPage';
 
 function App() {
   return (
     <div className="App">
       <LoginPage />
-      <GoogleLoginBtn />
     </div>
   );
 }
