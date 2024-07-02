@@ -38,7 +38,7 @@ function LoginPage() {
   }, []);
 
   return (
-    <div className="App">
+    <div>
       <div id="signInDiv"></div>
       {/* Sign Out button 이 로그인 성공 시에만 보여지도록 하는 코드 */}
       { Object.keys(user).length != 0 &&
