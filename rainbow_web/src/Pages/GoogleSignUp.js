@@ -9,7 +9,12 @@ function GoogleSignUp(){
     const [emailValid, setEmailValid] = useState(true);
 
     const [petName, setPetName] = useState('');
-    
+    const userInfo = {
+        user : {
+            email: {email},
+            petName: {petName},
+        }
+    }
 
 
     const onEmailHandler = (e) => {
@@ -35,6 +40,7 @@ function GoogleSignUp(){
             alert("애완동물의 이름을 입력해주세요");
         }
         else{
+            console.log({userInfo});
             alert("회원가입이 완료되었습니다!");
         }
     }

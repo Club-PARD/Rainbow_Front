@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 
-//To do List
-//비밀번호란에 뭐 입력했는지 보일 수 있게
-//버튼 누르면 하나의 오브젝트로 console에 띄우기
 
 function LocalSignUp(){
     //유효성 검사 관련 코드
@@ -16,6 +13,31 @@ function LocalSignUp(){
     const [passWord, setPassWord] = useState('');
     const [confirmPassWord, setConfirmPassWord] = useState('');
     const [passWordValid, setPassWordValid] = useState(true);
+    const [pwType, setpwType] = useState({
+        type: "password",
+        visible: false,
+      });
+
+    const userInfo = {
+        user : {
+            email: {email},
+            petName: {petName},
+            passWord: {passWord},
+        }
+    }
+
+      const handlePasswordType = (e) => {
+        setpwType(() => {
+        // 만약 현재 pwType.visible이 false 라면
+          if (!pwType.visible) {
+            return { type: "text", visible: true };
+    
+        //현재 pwType.visible이 true 라면
+          } else {
+            return { type: "password", visible: false };
+          }
+        });
+      };
 
 
     const onEmailHandler = (e) => {
@@ -66,6 +88,7 @@ function LocalSignUp(){
             alert("비밀번호가 일치하지 않습니다!");
         }
         else{
+            console.log({userInfo});
             alert("회원가입이 완료되었습니다!");
         }
     }
@@ -75,8 +98,9 @@ function LocalSignUp(){
             <SignUpTitle>회원가입</SignUpTitle>
             <SignUpInput type="email" onChange={onEmailHandler} onBlur={onEmailHandler} placeholder="이메일"/>
             <SignUpInput type="text" onChange={onPetNameHandler} placeholder="반려동물 이름"/>
-            <SignUpInput type="password" onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="패스워드"/>
+            <SignUpInput type={pwType.type} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="패스워드"/>
             <SignUpInput type="password" onChange={onConfirmPassWordHandler} placeholder="패스워드 확인"/>
+            <span onClick={handlePasswordType}>{pwType.visible ? "비밀번호 숨기기" : "비밀번호 보기"}</span>
             <SignUpCreateBtn onClick={onSubmitHandler}>Create account</SignUpCreateBtn>
         </Container>
     )
