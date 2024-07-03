@@ -106,7 +106,6 @@ function LocalSignUp() {
             // alert("이메일을 입력해주세요");
             //emailInput.current.color = "red"
             setEmailMsg("이메일을 입력해주세요");
-            emailInput.current.color = 'red';
             return emailInput.current.focus();
         }
         else if (!emailValid) {
