@@ -1,4 +1,4 @@
-import mangom from '../img/망곰이.png';
+import mangom from '../Img/망곰이.png';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
@@ -20,7 +20,7 @@ function Header() {
   };
   
   return (
-    <div>
+    <HeaderContainer>
       <Img>
         {/* Sincerely, logo svg file */}
         <svg width="186" height="40" viewBox="0 0 186 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,19 +49,31 @@ function Header() {
         <p>모달 내용입니다.</p>
         <CloseButton onClick={closeModal}>닫기</CloseButton>
       </StyledModal>
-    </div>
+    </HeaderContainer>
   );
 }
 
 export default Header;
 
+const HeaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;  // 선택 사항: 상단 고정 시 배경색을 설정하여 다른 콘텐츠와 구분
+  z-index: 1000;  // 선택 사항: 다른 콘텐츠 위에 올리기 위해 z-index 설정
+  box-sizing: border-box;  // 패딩과 테두리를 전체 너비에 포함
+`;
+
 const Img = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-
-  margin: 2rem;
-`
+  margin-right: 2rem;
+`;
 
 const CustomLink = styled.span`
   margin: 0 10px;
@@ -77,9 +89,6 @@ const ImageButtonWrapper = styled.button`
   background: none;
   padding: 0;
   cursor: pointer;
-  position: absolute;
-  top: 10px;  // 원하는 위치로 조정 가능
-  right: 10px;  // 원하는 위치로 조정 가능
   width: 50px;
   height: 50px;
   border-radius: 50%;
