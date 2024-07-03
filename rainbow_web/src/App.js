@@ -1,16 +1,14 @@
 import './App.css';
 import LoginPage from './Pages/LoginPage';
 import {Route, Routes} from "react-router-dom";
-import Book from './Pages/Book';
-import List from './Pages/List';
+import CommunityPage from './Pages/CommunityPage';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LoginPage />}/>
-        <Route path="/book" element={<Book />}/> 
-        <Route path="/list" element={<List />}/>
+        <Route path="/community" element={<CommunityPage />}/>
       </Routes>
     </div>
   );
