@@ -3,31 +3,18 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
 import LoginHeader from '../Components/LoginHeader';
-// import { postAPI } from '../APIs/AxiosAPI';
+import { googleLoginAPI } from '../APIs/GoogleLoginAPI';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
-// {/* Sign Out button 이 로그인 성공 시에만 보여지도록 하는 코드 */}
-// { Object.keys(user).length != 0 &&
-//   <button onClick={ (e) => handleSignOut(e)}>Sign Out</button>
-// }
-
-// {/* 로그인 성공 시, 즉 user 변수에 어떤 값이 들어갈 시, 유저 프로필과 이름이 보여지도록 하는 코드 */}
-// { user &&
-//   <div>
-//     <img src={user.picture}></img>
-//     <h3>{user.name}</h3>
-//   </div>
-// }
-
 function LoginPage() {
   const [ user, setUser ] = useState({});
 
-  function handleLoginResponse(response) {
+  const handleLoginResponse = async (response) => {
     console.log("Encoded JWT ID token: " + response.credential);
     const userObject = jwtDecode(response.credential);
-    // const APIresponse = await postAPI(response.credential);
+    const APIresponse = await googleLoginAPI(response.credential);
     console.log(userObject);
     setUser(userObject);
     // document.getElementById("signInDiv").hidden = true;
