@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
 import LoginHeader from '../Components/LoginHeader';
-import LocalLogin from './LocalLogin';
+import LocalLogin from '../Components/LocalLogin';
 import { useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
 import { LoginState } from '../Atom';
@@ -21,9 +21,11 @@ function LoginPage() {
   const handleGoogleLogin = async (res) => {
     console.log("Encoded JWT ID token: " + res.credential);
     const googleUser = jwtDecode(res.credential);
+    setUser(googleUser);
     try{
-      const response = await googleLoginAPI(res.credential);
+      // const response = await googleLoginAPI(res.credential);
       // const response = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg3YmJlMDgxNWIwNjRlNmQ0NDljYWM5OTlmMGU1MGU3MmEzZTQzNzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTQ2MjQ4NjgzNjg3MTE3NTgyNTkiLCJlbWFpbCI6InVtaW5uYW5jeTAzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MjAwNjIzNTAsIm5hbWUiOiLtmansnKDrr7wiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS3JRRlhTTklZaVVEMkFyTVpNVi0yTUhObWtBWUQwaTVIVF9NbEp2cXdsYnVmUmFRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IuycoOuvvCIsImZhbWlseV9uYW1lIjoi7ZmpIiwiaWF0IjoxNzIwMDYyNjUwLCJleHAiOjE3MjAwNjYyNTAsImp0aSI6ImExMDU1NmFmYzZlNjU3ZmRhMTVkOTBkODE2MTliNWVkYmNjZjU3ZDQifQ.aldKYvsf_uSvftAOlJVl8X1WfCgYY2JhGldF2AxPWBrVrAjitSMlumG0Ut2D-281l9eHnNnYOMioeCOP76cDMZAHLNXfreje0nC9cL9QvXcFKBLSwueRwkGYRRKczJnYpEdg6kDTBODX1JaIBcaYNEjHGZqKnuSpZvUIzl1vH2-lteC5PBQk9iayPD9Sv1sexrP4l18aTp6tFpvd4RWdwYo43-5btjj2J5ugPGJBF7IWi1bcag8c7Ar_Wn-kx5MDwHRUG0r-jV-mfTvUAw9i2Ekayu-6Fq3mHVi6Z4f-7m0sf6riZ1YaMm8GPesdln9EjizY0OnLgr48hAXi6Jj0_Q";
+      const response = await googleLoginAPI(user.email, user.password);
       localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
       // Google Login data 받아와짐
       console.log(googleUser);
