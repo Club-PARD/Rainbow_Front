@@ -2,7 +2,7 @@ import '../App.css';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
-import LoginHeader from '../Components/LoginHeader';
+import LoginHeader from './LoginHeader';
 import { loginAPI } from '../APIs/LoginAPI';
 import { Link, useNavigate } from "react-router-dom";
 import { LoginState } from '../Atom';

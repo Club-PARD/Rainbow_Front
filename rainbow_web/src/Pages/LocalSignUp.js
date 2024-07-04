@@ -1,25 +1,21 @@
 import React, { useRef, useState } from 'react';
 import styled from "styled-components";
 import { SignUpLogo } from './SignUpLoco';
-
-//To do List
-//비밀번호란에 뭐 입력했는지 보일 수 있게 v
-//버튼 누르면 하나의 오브젝트로 console에 띄우기 v
-// 오류가 있을 시 해당 input에 포커싱 되게 하기 v
-// 포커싱 되는 input의 색깔조정
-// 포커싱 되는 input 아래에 에러가 왜 생기는건지 사용자에게 알려주기
+import LoginHeader from './LoginHeader';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
 
     //잘못된 Input이 왔을 때, input을 변화시키기 위한 설정
     const emailInput = useRef(null);
+    const nickNameInput = useRef(null);
     const petNameInput = useRef(null);
     const passWordInput = useRef(null);
     const confirmPassWordInput = useRef(null);
 
     //Error Message useState
     const [emailMsg, setEmailMsg] = useState('');
+    const [nickNameMsg, setNickNameMsg] = useState('');
     const [petNameMsg, setPetNameMsg] = useState('');
     const [passWordMsg, setPassWordMsg] = useState('');
     const [confirmPassWordMsg, setConfirmPassWordMsg] = useState('');
@@ -29,8 +25,7 @@ function LocalSignUp() {
     //빈칸이 없다면 이메일과 비밀번호의 형식이 올바른 형식인지 확인
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(true);
-
-
+    const [nickName, setNickName] = useState('');
     const [petName, setPetName] = useState('');
     const [passWord, setPassWord] = useState('');
     const [confirmPassWord, setConfirmPassWord] = useState('');
@@ -43,6 +38,7 @@ function LocalSignUp() {
     const userInfo = {
         user: {
             email: { email },
+            nickName: {nickName},
             petName: { petName },
             passWord: { passWord },
         }
@@ -68,15 +64,26 @@ function LocalSignUp() {
         console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
         setEmailValid(regExp.test(e.target.value));
         if(regExp.test(e.target.value)){
+            setEmailColor(null);
             setEmailMsg('');
         }
         setEmail(e.target.value);
+    }
+
+    const onNickNameHandler = (e) => {
+        var regExp = /^.*$/;
+        setNickName(e.target.value);
+        if(regExp.test(e.target.value)){
+            setNickNameColor(null);
+            setNickNameMsg('');
+        }
     }
 
     const onPetNameHandler = (e) => {
         var regExp = /^.*$/;
         setPetName(e.target.value);
         if(regExp.test(e.target.value)){
+            setPetNameColor(null);
             setPetNameMsg('');
         }
     }
@@ -88,6 +95,7 @@ function LocalSignUp() {
         console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
         setPassWordValid(regExp.test(e.target.value));
         if(regExp.test(e.target.value)){
+            setPassWordColor(null);
             setPassWordMsg('');
         }
         setPassWord(e.target.value);
@@ -95,40 +103,50 @@ function LocalSignUp() {
 
     const onConfirmPassWordHandler = (e) => {
         setConfirmPassWord(e.target.value)
-        if(passWord == confirmPassWord){
+        if(passWord == e.target.value){
+            setConfirmPassWordColor(null);
             setConfirmPassWordMsg('');
         }
-        setConfirmPassWord(e.target.value);
     }
 
+    // if (email === '') {
+    //     // alert("이메일을 입력해주세요");
+    //     //emailInput.current.color = "red"
+    //     setEmailMsg("이메일을 입력해주세요");
+    //     emailInput.current.color = 'red';
+    //     return emailInput.current.focus();
+    // }
+    // else 
+    // else if (passWord === '') {
+    //     setPassWordMsg("비밀번호를 입력해주세요");
+    //     return passWordInput.current.focus();
+    // }
+    // else if (confirmPassWord === '') {
+    //     setConfirmPassWordMsg("비밀번호 확인란을 채워주세요");
+    //     return confirmPassWordInput.current.focus();
+    // }
+
     const onSubmitHandler = (e) => {
-        if (email === '') {
-            // alert("이메일을 입력해주세요");
-            //emailInput.current.color = "red"
-            setEmailMsg("이메일을 입력해주세요");
+        if (email === '' || !emailValid) {
+            setEmailMsg("이메일의 형식이 올바르지 않습니다");
+            setEmailColor("red");
             return emailInput.current.focus();
         }
-        else if (!emailValid) {
-            setEmailMsg("이메일의 형식이 올바르지 않습니다");
-            return emailInput.current.focus();
+        else if (nickName === '') {
+            setNickNameMsg("닉네임을 입력해주세요");
+            setNickNameColor("red");
+            return nickNameInput.current.focus();
         }
         else if (petName === '') {
             setPetNameMsg("애완동물의 이름을 입력해주세요");
+            setPetNameColor("red");
             return petNameInput.current.focus();
         }
-        else if (passWord === '') {
-            setPassWordMsg("비밀번호를 입력해주세요");
-            return passWordInput.current.focus();
-        }
-        else if (confirmPassWord === '') {
-            setConfirmPassWordMsg("비밀번호 확인란을 채워주세요");
-            return confirmPassWordInput.current.focus();
-        }
-        else if (!passWordValid) {
+        else if (passWord === '' || !passWordValid) {
             setPassWordMsg("비밀번호는 영문 숫자 특수문자를 포함해야합니다");
             return passWordInput.current.focus();
         }
-        else if (passWord !== confirmPassWord) {
+        else if (confirmPassWord === '' || passWord !== confirmPassWord) {
             setConfirmPassWordMsg("비밀번호가 일치하지 않습니다!");
             return confirmPassWordInput.current.focus();
         }
@@ -138,8 +156,15 @@ function LocalSignUp() {
         }
     }
 
+    const [emailColor, setEmailColor] = useState(null);
+    const [nickNameColor, setNickNameColor] = useState(null);
+    const [petNameColor, setPetNameColor] = useState(null);
+    const [passWordColor, setPassWordColor] = useState(null);
+    const [confirmPassWordColor, setConfirmPassWordColor] = useState(null);
+
     return (
         <Container>
+            <LoginHeader/>
             <SignUpTitle>
                 <span><SignUpLogo/>&nbsp;에 오신 것을 환영합니다<br /></span>
                 <span>
@@ -149,30 +174,40 @@ function LocalSignUp() {
             <SignUpForm>
                 <InputField>
                     <InputTitle>이메일</InputTitle>
-                    <SignUpInput type="email" color='' ref={emailInput} onChange={onEmailHandler} onBlur={onEmailHandler} placeholder="type your email" />
+                    <SignUpInput type="email" color={emailColor} ref={emailInput} onChange={onEmailHandler} onBlur={onEmailHandler} placeholder="type your email" />
                     <ErrorExplain>{emailMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
+                    <InputTitle>닉네임 입력</InputTitle>
+                    <SignUpInput type="text" color={nickNameColor} ref={nickNameInput} onChange={onNickNameHandler} onBlur={onNickNameHandler} placeholder="type your nickname" />
+                    <ErrorExplain>{nickNameMsg}</ErrorExplain>
+                </InputField>
+
+                <InputField>
                     <InputTitle>반려동물 이름</InputTitle>
-                    <SignUpInput type="text" ref={petNameInput} onChange={onPetNameHandler} placeholder="type your pet name" />
+                    <SignUpInput type="text" color={petNameColor} ref={petNameInput} onChange={onPetNameHandler} placeholder="type your pet name" />
                     <ErrorExplain>{petNameMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
                     <InputTitle>비밀번호</InputTitle>
-                    <SignUpInput type={pwType.type} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
+                    <SignUpInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
                     <ErrorExplain>{passWordMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
                     <InputTitle>비밀번호 확인</InputTitle>
-                    <SignUpInput type="password" ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                    <SignUpInput type="password" color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
                 <InputTitle onClick={handlePasswordType}>{pwType.visible ? "비밀번호 숨기기" : "비밀번호 보기"}</InputTitle>
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
             </SignUpForm>
+            <Footer>
+        계속 진행할 경우 Sincerely,의 개인정보 약관<br />
+        및 이용정책에 동의하는 것으로 간주됩니다.
+      </Footer>
         </Container>
     )
 }
@@ -186,11 +221,19 @@ export default LocalSignUp;
 const Container = styled.div`
 width: 100vw;
 height: 100vh;
+
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+
+background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+color: #2C2C2C;
+font-size: 0.9rem;
 `
+
+// calc(100vw * 450 / 1920);
+// calc(100vw * 320 / 1920);
 
 //회원가입 Form
 const SignUpForm = styled.div`
@@ -200,8 +243,9 @@ min-width: 320px;
 padding: 24px;
 flex-direction: column;
 align-items: flex-start;
-border: 1px solid;
+border: 1px solid #DDD;
 border-radius: 8px;
+background-color: #FFFFFF;
 `
 
 //제목과 Input 태그를 합친 공간
@@ -228,7 +272,8 @@ margin-bottom: 8px;
 //회원가입 제목 css
 const SignUpTitle = styled.div`
 display: flex;
-padding: 0px 22px 0px 29px;
+padding-left: 29px;
+padding-right: 22px;
 width: 450px;
 flex-direction: column;
 align-items: center;
@@ -245,9 +290,14 @@ display: flex;
 min-width: 240px;
 padding: 12px 16px 12px 16px;
 align-items: center;
+border: solid 1px;
 border-radius: 8px;
 align-self: stretch;
-border-color: ${(props) => props.color? props.color:"lightgray"};
+border-color: #DDD;
+&:focus{
+ border-color: ${(props) => props.color || "#B0B0B0"};
+ outline: none;
+}
 `
 
 //회원가입 버튼
@@ -265,4 +315,15 @@ const ErrorExplain = styled.p`
 margin-top: 1px;
 font-size: 12px;
 color: red;
+`
+//Footer
+const Footer = styled.div`
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
+  font-weight: 500;
+  color: #5E5E5E;
+  margin-bottom: 1.6rem;
 `
