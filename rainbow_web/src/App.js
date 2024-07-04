@@ -14,7 +14,7 @@ function App() {
         <Route path="/community" element={<CommunityPage />}/>
         <Route path="/main" element={<MainPage />}/>
         <Route path="/write" element={<WritingPage />}/>
-        <Route path="/localSignUp" element={<LocalSignUp/>}/>
+        <Route path="/register" element={<LocalSignUp/>}/>
       </Routes>
     </div>
   );

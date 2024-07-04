@@ -37,9 +37,9 @@ const server = process.env.REACT_APP_API_URL;
 // };
 
 // 아래 코드는 잘 돌아가는 코드이니 참고해서 작성해보세요.
-export const postAPI = async (data) => {
+export const postMemberAPI = async (data) => {
   try {
-    const response = await axios.post(`${server}`, data);
+    const response = await axios.post(`${server}/user/register`, data);
     return response;
   } catch (err) {
     console.error(err);
