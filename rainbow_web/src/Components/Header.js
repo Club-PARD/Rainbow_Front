@@ -53,7 +53,6 @@ function Header() {
         <p>회원 정보 수정</p>
         <p>이용 정책</p>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
-        {/*<CloseButton onClick={closeModal}>닫기</CloseButton>*/}
       </StyledModal>
     </HeaderContainer>
   );

@@ -2,11 +2,15 @@ import React from 'react';
 import Header from '../Components/Header';
 
 function MainPage() {
+  const handleClick = () => {
+    console.log("글쓰기 버튼 클릭됨");
+  };
   return (
     <div>
       <Header />
-      <h1>Main Page</h1>
-      <p>메인 페이지입니다.</p>
+      <button onClick={handleClick}>
+        글쓰기
+      </button>
     </div>
   );
 }
