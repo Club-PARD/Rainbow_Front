@@ -4,8 +4,8 @@ const server = process.env.REACT_APP_API_URL;
 
 export const googleLoginAPI = async (jwt) => {
     try{
-        const response = await axios.post(
-            `${server}/`,
+        const response = await axios.get(
+            `${server}/auth/loginForm`,
             jwt
         );
         return response;
@@ -16,8 +16,8 @@ export const googleLoginAPI = async (jwt) => {
 
 export const loginAPI = async (email, password) => {
     try{
-        const response = await axios.post(
-            `${server}/`,
+        const response = await axios.get(
+            `${server}/auth/loginForm`,
             email, password
         );
         return response;
