@@ -2,11 +2,26 @@ import axios from "axios";
 
 const server = process.env.REACT_APP_API_URL;
 
-export const loginAPI = async (userData) => {
-    const response = await axios.post(
-        `${server}/login`,
-        userData
-    );
+export const googleLoginAPI = async (jwt) => {
+    try{
+        const response = await axios.post(
+            `${server}/`,
+            jwt
+        );
+        return response;
+    } catch(err) {
+        console.log(err);
+    }
+};
 
-    return response;
+export const loginAPI = async (email, password) => {
+    try{
+        const response = await axios.post(
+            `${server}/`,
+            email, password
+        );
+        return response;
+    } catch(err) {
+        console.log(err);
+    }
 };
