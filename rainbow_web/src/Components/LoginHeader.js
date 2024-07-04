@@ -19,6 +19,8 @@ const Header = styled.div`
   align-items: center;
   justify-content: flex-start;
 
+  width: 95%;
+
   margin: 2rem;
 `
 
