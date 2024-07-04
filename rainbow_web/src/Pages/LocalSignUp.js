@@ -8,12 +8,14 @@ function LocalSignUp() {
 
     //잘못된 Input이 왔을 때, input을 변화시키기 위한 설정
     const emailInput = useRef(null);
+    const nickNameInput = useRef(null);
     const petNameInput = useRef(null);
     const passWordInput = useRef(null);
     const confirmPassWordInput = useRef(null);
 
     //Error Message useState
     const [emailMsg, setEmailMsg] = useState('');
+    const [nickNameMsg, setNickNameMsg] = useState('');
     const [petNameMsg, setPetNameMsg] = useState('');
     const [passWordMsg, setPassWordMsg] = useState('');
     const [confirmPassWordMsg, setConfirmPassWordMsg] = useState('');
@@ -23,8 +25,7 @@ function LocalSignUp() {
     //빈칸이 없다면 이메일과 비밀번호의 형식이 올바른 형식인지 확인
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(true);
-
-
+    const [nickName, setNickName] = useState('');
     const [petName, setPetName] = useState('');
     const [passWord, setPassWord] = useState('');
     const [confirmPassWord, setConfirmPassWord] = useState('');
@@ -37,6 +38,7 @@ function LocalSignUp() {
     const userInfo = {
         user: {
             email: { email },
+            nickName: {nickName},
             petName: { petName },
             passWord: { passWord },
         }
@@ -66,6 +68,15 @@ function LocalSignUp() {
             setEmailMsg('');
         }
         setEmail(e.target.value);
+    }
+
+    const onNickNameHandler = (e) => {
+        var regExp = /^.*$/;
+        setNickName(e.target.value);
+        if(regExp.test(e.target.value)){
+            setNickNameColor(null);
+            setNickNameMsg('');
+        }
     }
 
     const onPetNameHandler = (e) => {
@@ -121,6 +132,11 @@ function LocalSignUp() {
             setEmailColor("red");
             return emailInput.current.focus();
         }
+        else if (nickName === '') {
+            setNickNameMsg("닉네임을 입력해주세요");
+            setNickNameColor("red");
+            return nickNameInput.current.focus();
+        }
         else if (petName === '') {
             setPetNameMsg("애완동물의 이름을 입력해주세요");
             setPetNameColor("red");
@@ -141,6 +157,7 @@ function LocalSignUp() {
     }
 
     const [emailColor, setEmailColor] = useState(null);
+    const [nickNameColor, setNickNameColor] = useState(null);
     const [petNameColor, setPetNameColor] = useState(null);
     const [passWordColor, setPassWordColor] = useState(null);
     const [confirmPassWordColor, setConfirmPassWordColor] = useState(null);
@@ -159,6 +176,12 @@ function LocalSignUp() {
                     <InputTitle>이메일</InputTitle>
                     <SignUpInput type="email" color={emailColor} ref={emailInput} onChange={onEmailHandler} onBlur={onEmailHandler} placeholder="type your email" />
                     <ErrorExplain>{emailMsg}</ErrorExplain>
+                </InputField>
+
+                <InputField>
+                    <InputTitle>닉네임 입력</InputTitle>
+                    <SignUpInput type="text" color={nickNameColor} ref={nickNameInput} onChange={onNickNameHandler} onBlur={onNickNameHandler} placeholder="type your nickname" />
+                    <ErrorExplain>{nickNameMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
@@ -209,6 +232,9 @@ color: #2C2C2C;
 font-size: 0.9rem;
 `
 
+// calc(100vw * 450 / 1920);
+// calc(100vw * 320 / 1920);
+
 //회원가입 Form
 const SignUpForm = styled.div`
 display: flex;
@@ -246,7 +272,8 @@ margin-bottom: 8px;
 //회원가입 제목 css
 const SignUpTitle = styled.div`
 display: flex;
-padding: 0px 22px 0px 29px;
+padding-left: 29px;
+padding-right: 22px;
 width: 450px;
 flex-direction: column;
 align-items: center;
