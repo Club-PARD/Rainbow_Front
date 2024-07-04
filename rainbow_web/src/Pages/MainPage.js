@@ -1,14 +1,18 @@
 import React from 'react';
 import Header from '../Components/Header';
+import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
-  const handleClick = () => {
-    console.log("글쓰기 버튼 클릭됨");
+  const navigate = useNavigate();
+
+  const goToWriting = () => {
+    navigate('/write');
   };
+
   return (
     <div>
       <Header />
-      <button onClick={handleClick}>
+      <button onClick={goToWriting}>
         글쓰기
       </button>
     </div>
