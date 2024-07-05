@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";  // AWS SDK를 가져옵니다.
 import { useState, useRef } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
-import FormImageFile from "./FormImageFile";  // FormImageFile 컴포넌트를 가져옵니다.
+//import FormImageFile from "./FormImageFile";  // FormImageFile 컴포넌트를 가져옵니다.
 import styled from "styled-components";  // styled-components 라이브러리를 가져옵니다.
 
 function WritingPage() {

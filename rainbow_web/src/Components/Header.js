@@ -1,10 +1,13 @@
-import profile from '../Img/프로필.png';
-import logo from '../Img/브랜드로고.png';
-import styled from 'styled-components';
 import React, { useState, useContext } from 'react';
+import styled from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom'; // useNavigate 추가
+import Toggle from 'react-toggle'; // react-toggle import
+import "react-toggle/style.css"; // react-toggle 기본 스타일 import
+
+import profile from '../Img/프로필.png';
+import logo from '../Img/브랜드로고.png';
 
 Modal.setAppElement('#root');
 
@@ -12,6 +15,7 @@ function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isPublic, setIsPublic] = useState(false); // 공개 여부 상태 추가
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -31,6 +35,10 @@ function Header() {
     navigate('/community');
   };
 
+  const handleToggle = () => {
+    setIsPublic(!isPublic);
+  };
+
   return (
     <HeaderContainer>
       <Img>
@@ -47,6 +55,14 @@ function Header() {
           <ModalOverlay {...props}>{contentElement}</ModalOverlay>
         )}
       >
+        <ToggleContainer>
+          <p>페이지 공개</p>
+          <StyledToggle
+            defaultChecked={isPublic}
+            icons={false}
+            onChange={handleToggle}
+          />
+        </ToggleContainer>
         <p>회원 정보 수정</p>
         <p>이용 정책</p>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
@@ -80,7 +96,6 @@ const Img = styled.div`
   margin-right: 2rem; // 필요 시 삭제 가능
 `;
 
-
 const CustomButton = styled.button`
   display: flex;
   width: 90px;
@@ -101,7 +116,7 @@ const CustomButton = styled.button`
   line-height: 16px; /* 106.667% */
   position: absolute;
   top: 32px;
-  right: 144px;
+  right: 104px;
   &:hover {
     color: gray;  // 글씨 색상만 변경
   }
@@ -120,7 +135,7 @@ const ImageButtonWrapper = styled.button`
   overflow: hidden;
   position: absolute;  // 위치 조정을 위해 추가
   top: 32px;  // 상단으로부터 32px 떨어지게 설정
-  right: 72px;  // 오른쪽으로부터 32px 떨어지게 설정
+  right: 40px;  // 오른쪽으로부터 32px 떨어지게 설정
   border: none;
   
   img {
@@ -139,8 +154,8 @@ const StyledModal = styled(Modal)`
   padding: 8px;
   position: fixed;
   top: 80px;
-  right: 72px;
-  border-radius: 4%;
+  right: 40px;
+  border-radius: 8px;
   border: 1px solid #C6C6C6;  // 테두리 색상 회색으로 지정
   background: #FEFEFE;
 
@@ -161,12 +176,12 @@ const StyledModal = styled(Modal)`
   p {
     color: #2C2C2C;
 
-/* Text/body1 */
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 150% */
+  /* Text/body1 */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
   }
 `;
 
@@ -186,10 +201,39 @@ const LogoutButton = styled.button`
   cursor: pointer;
   background-color: white;
 
-/* Text/body1 */
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 150% */
+  /* Text/body1 */
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+`;
+
+const ToggleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 20px;
+
+  p {
+    margin: 0; // 여백을 제거하여 토글과 같은 선상에 배치
+    padding-right: 10px; // 토글과의 간격 조정을 위해 오른쪽 패딩 추가
+  }
+`;
+
+// Custom styled Toggle component
+const StyledToggle = styled(Toggle)`
+  .react-toggle-track {
+    background-color: #ccc; // 트랙의 기본 색상
+  }
+  .react-toggle--checked .react-toggle-track {
+    background-color: #4cd137; // 활성화된 트랙의 색상
+  }
+  .react-toggle-thumb {
+    border-color: #ccc; // thumb의 기본 색상
+  }
+  .react-toggle--checked .react-toggle-thumb {
+    border-color: #4cd137; // 활성화된 thumb의 색상
+  }
 `;
