@@ -3,21 +3,22 @@ import { useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";  // AWS SDK를 가져옵니다.
 import { useState, useRef } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
 import styled from "styled-components";  // styled-components 라이브러리를 가져옵니다.
+import BlankImage from "../Img/BlankImage.png";
 
 function WritingPage() {
   const location = useLocation();
   const { selectedQuestion } = location.state || {};
 
   //여기서부터 동운 코드
-  const [imageSrc, setImageSrc] = useState(null);  // 이미지 소스를 상태로 관리합니다.
-    const [imageFile, setImageFile] = useState(null);  // 이미지 파일을 상태로 관리합니다.
+  const [imageSrc, setImageSrc] = useState(BlankImage);  // 이미지 소스를 상태로 관리합니다.
+    const [imageFile, setImageFile] = useState(BlankImage);  // 이미지 파일을 상태로 관리합니다.
     const inputRef = useRef([]);  // 파일 입력 요소를 참조하기 위한 ref를 생성합니다.
 
     const onUpload = (e) => {  // 파일 업로드 이벤트 핸들러를 정의합니다.
         const file = e.target.files[0];  // 업로드된 파일을 가져옵니다.
         if (!file) {
-            setImageSrc(null);
-            setImageFile(null);
+            setImageSrc(BlankImage);
+            setImageFile(BlankImage);
             return;    
         }
         const fileExt = file.name.split('.').pop();  // 파일의 확장자를 추출합니다.
