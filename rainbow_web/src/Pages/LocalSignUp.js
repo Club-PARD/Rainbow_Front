@@ -5,7 +5,7 @@ import { postMemberAPI } from '../APIs/RegisterAPI';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
-
+//
     //잘못된 Input이 왔을 때, input을 변화시키기 위한 설정
     const emailInput = useRef(null);
     const nickNameInput = useRef(null);
