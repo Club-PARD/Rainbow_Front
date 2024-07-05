@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import styled from "styled-components";
-import { SignUpLogo } from './SignUpLoco';
-import LoginHeader from './LoginHeader';
+import LoginHeader from '../Components/LoginHeader';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -36,13 +35,22 @@ function LocalSignUp() {
     });
 
     const userInfo = {
-        user: {
-            email: { email },
-            nickName: {nickName},
-            petName: { petName },
-            passWord: { passWord },
-        }
+        email: { email },
+        nickName: {nickName},
+        petName: { petName },
+        passWord: { passWord },
     }
+
+    const submitHandler = async () => {
+        try {
+          // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
+          const response =
+            await postMemberAPI(userInfo);
+        window.location.reload();
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
     const handlePasswordType = (e) => {
         setpwType(() => {
@@ -166,7 +174,7 @@ function LocalSignUp() {
         <Container>
             <LoginHeader/>
             <SignUpTitle>
-                <span><SignUpLogo/>&nbsp;에 오신 것을 환영합니다<br /></span>
+                <span>Sincerely, 에 오신 것을 환영합니다<br /></span>
                 <span>
                     이메일을 입력해주세요
                 </span>
