@@ -3,21 +3,22 @@ import { useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";  // AWS SDK를 가져옵니다.
 import { useState, useRef } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
 import styled from "styled-components";  // styled-components 라이브러리를 가져옵니다.
+import BlankImage from "../Img/BlankImage.png";
 
 function WritingPage() {
   const location = useLocation();
   const { selectedQuestion } = location.state || {};
 
   //여기서부터 동운 코드
-  const [imageSrc, setImageSrc] = useState(null);  // 이미지 소스를 상태로 관리합니다.
-    const [imageFile, setImageFile] = useState(null);  // 이미지 파일을 상태로 관리합니다.
+  const [imageSrc, setImageSrc] = useState(BlankImage);  // 이미지 소스를 상태로 관리합니다.
+    const [imageFile, setImageFile] = useState(BlankImage);  // 이미지 파일을 상태로 관리합니다.
     const inputRef = useRef([]);  // 파일 입력 요소를 참조하기 위한 ref를 생성합니다.
 
     const onUpload = (e) => {  // 파일 업로드 이벤트 핸들러를 정의합니다.
         const file = e.target.files[0];  // 업로드된 파일을 가져옵니다.
         if (!file) {
-            setImageSrc(null);
-            setImageFile(null);
+            setImageSrc(BlankImage);
+            setImageFile(BlankImage);
             return;    
         }
         const fileExt = file.name.split('.').pop();  // 파일의 확장자를 추출합니다.
@@ -82,16 +83,20 @@ function WritingPage() {
         </div>
         
         {/* 여기서부터 동운 코드 */}
-        <Img
-            src={imageSrc}  // 이미지 소스를 설정합니다.
-            alt="Img"  // 이미지 대체 텍스트를 설정합니다.
-        />
-        <input 
+        <ImgLabel htmlFor="file-input">
+            <Img
+                src={imageSrc}  // 이미지 소스를 설정합니다.
+                alt="Img"  // 이미지 대체 텍스트를 설정합니다.
+            />
+        </ImgLabel>
+        <input
+            id="file-input"
             accept="image/*"  // 모든 이미지 파일을 허용합니다.
             multiple  // 여러 파일을 선택할 수 있도록 합니다.
             type="file"  // 파일 입력 요소를 생성합니다.
             ref={el => (inputRef.current[0] = el)}  // ref를 설정합니다.
             onChange={e => onUpload(e)}  // 파일이 변경되면 onUpload 함수를 호출합니다.
+            style={{display: 'none'}}
         />
         {/* 여기는 유민 코드 */}
         <Textarea placeholder="사진과 글을 올릴 수 있습니다."></Textarea>
@@ -128,7 +133,16 @@ align-items: center;  // Flexbox 내부 요소를 가로로 중앙에 정렬합�
 `
 
 const Img = styled.img`
-width: 300px;  // 이미지 너비를 300px로 설정합니다.
+width: 574px;  // 이미지 너비를 300px로 설정합니다.
+border-radius: 8px;
+`
+
+const ImgLabel = styled.label`
+&:hover{
+cursor: pointer;
+border: 1px solid;
+border-radius: 8px;
+}
 `
 
 const Textarea = styled.textarea`
