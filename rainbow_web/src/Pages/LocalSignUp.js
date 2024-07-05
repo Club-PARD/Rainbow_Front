@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from "styled-components";
 import LoginHeader from '../Components/LoginHeader';
+import { postMemberAPI } from '../APIs/RegisterAPI';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -34,23 +35,12 @@ function LocalSignUp() {
         visible: false,
     });
 
-    const userInfo = {
-        email: { email },
-        nickName: {nickName},
-        petName: { petName },
-        passWord: { passWord },
-    }
-
-    const submitHandler = async () => {
-        try {
-          // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
-          const response =
-            await postMemberAPI(userInfo);
-        window.location.reload();
-        } catch (err) {
-          console.error(err);
-        }
-      };
+    const [newData, setNewData] = useState({
+        nickName: '',
+        email: '',
+        password: '',
+        petName: '',
+      });
 
     const handlePasswordType = (e) => {
         setpwType(() => {
@@ -76,6 +66,7 @@ function LocalSignUp() {
             setEmailMsg('');
         }
         setEmail(e.target.value);
+        setNewData({ ...newData, email: e.target.value })
     }
 
     const onNickNameHandler = (e) => {
@@ -85,6 +76,7 @@ function LocalSignUp() {
             setNickNameColor(null);
             setNickNameMsg('');
         }
+        setNewData({ ...newData, nickName: e.target.value })
     }
 
     const onPetNameHandler = (e) => {
@@ -94,6 +86,7 @@ function LocalSignUp() {
             setPetNameColor(null);
             setPetNameMsg('');
         }
+        setNewData({ ...newData, petName: e.target.value })
     }
 
     const onPassWordHandler = (e) => {
@@ -107,6 +100,7 @@ function LocalSignUp() {
             setPassWordMsg('');
         }
         setPassWord(e.target.value);
+        setNewData({ ...newData, password: e.target.value })
     }
 
     const onConfirmPassWordHandler = (e) => {
@@ -134,7 +128,16 @@ function LocalSignUp() {
     //     return confirmPassWordInput.current.focus();
     // }
 
-    const onSubmitHandler = (e) => {
+
+    const onSubmitHandler = async (e) => {
+        try {
+            // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
+            const response =
+              await postMemberAPI(newData);
+        } catch (err) {
+        console.error(err);
+        }
+
         if (email === '' || !emailValid) {
             setEmailMsg("이메일의 형식이 올바르지 않습니다");
             setEmailColor("red");
@@ -159,8 +162,9 @@ function LocalSignUp() {
             return confirmPassWordInput.current.focus();
         }
         else {
-            console.log({ userInfo });
+            console.log( newData );
             alert("회원가입이 완료되었습니다!");
+            //window.location.reload();
         }
     }
 
