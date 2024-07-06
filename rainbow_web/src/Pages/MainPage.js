@@ -1,8 +1,45 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// 동운 코드
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination, Navigation } from 'swiper/modules';
+import mainTest from '../Assets/Img/mainTest.png';
+import mainTest2 from '../Assets/Img/mainTest2.png';
+import mainTest3 from '../Assets/Img/mainTest3.png';
+
+const postData = {
+  id : {
+      title: "무떡 웹파트",
+      img: mainTest,
+  },
+  id2 : {
+      title: "화이팅",
+      img: mainTest2
+  },
+  id3 : {
+    title: "만만세",
+    img: mainTest3
+  },
+  id4 : {
+    title: "무떡 웹파트",
+    img: mainTest,
+  },
+  id5 : {
+      title: "화이팅",
+      img: mainTest2
+  },
+  id6 : {
+    title: "만만세",
+    img: mainTest3
+  },
+  //계속 이런식으로
+}
 
 Modal.setAppElement('#root');
 
@@ -35,6 +72,38 @@ const QuestionList = styled.ul`
 const PaginationButton = styled.button`
   margin: 5px;
 `;
+
+//동운 코드
+const StyledSwiper = styled(Swiper)`
+width: 918px;
+height: 318px;
+padding: 10px;
+`
+
+const StyledSwiperSlide = styled(SwiperSlide)`
+width: 246px !important;
+height: 298px !important;
+margin-right: 40px;
+border-radius: 6px;
+background-image: url(${(props) => props.ima});
+background-position: center;
+background-size: cover;
+color: white;
+display: flex;
+align-items: end;
+background-repeat: no-repeat;
+&:hover{
+cursor: pointer;
+}
+`
+
+const Text = styled.div`
+width: 100%;
+padding: 10px;
+background: rgba(0, 0, 0, 0.2);
+border-radius: 0 0 6px 6px;
+`
+
 
 function MainPage() {
   const navigate = useNavigate();
@@ -99,6 +168,24 @@ function MainPage() {
           ))}
         </div>
       </CustomModal>
+      {/* 동운 코드 여기부터 */}
+      <StyledSwiper
+        slidesPerView={3}
+        spaceBetween={40}
+        // pagination={{
+        //   clickable: true,
+        // }}
+        navigation
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
+        {Object.entries(postData).map(([key, value]) => (
+          <StyledSwiperSlide key={key} ima={value.img}>
+            <Text>{value.title}</Text>
+          </StyledSwiperSlide>
+        ))}
+      </StyledSwiper>
+      {/* 동운 코드 여기까지 */}
     </div>
   );
 }
