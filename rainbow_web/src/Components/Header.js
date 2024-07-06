@@ -37,7 +37,8 @@ function Header() {
       <Img>
         <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
       </Img>
-      <CustomButton onClick={goToCommunity}>커뮤니티</CustomButton>
+      <CustomButton1 onClick={goToCommunity}>기억의 꽃밭</CustomButton1>
+      <CustomButton2 onClick={goToCommunity}>커뮤니티</CustomButton2>
       <ImageButtonWrapper onClick={openModal}>
         <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
       </ImageButtonWrapper>
@@ -93,7 +94,33 @@ const Img = styled.div`
   margin-right: 2rem;
 `;
 
-const CustomButton = styled.button`
+const CustomButton1 = styled.button`
+  display: inline-flex;
+  width: 103px;
+  height: 40px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; 
+  position: absolute;
+  top: 32px;
+  right: 191px;
+  &:hover {
+    border: 1px solid #F3F3F3;
+  }
+`;
+
+const CustomButton2 = styled.button`
   display: flex;
   width: 80px;
   height: 40px;
@@ -101,7 +128,7 @@ const CustomButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 24px;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   background-color: white;
   border: none;

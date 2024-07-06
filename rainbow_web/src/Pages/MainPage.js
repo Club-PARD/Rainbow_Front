@@ -3,38 +3,9 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
+import Delete from '../Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
-
-const CustomModal = styled(Modal)`
-  display: flex;
-  width: 500px;
-  height: 590px;
-  padding: 24px 16px;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-`;
-
-const Button = styled.button`
-  margin: 10px;
-`;
-
-const QuestionList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const PaginationButton = styled.button`
-  margin: 5px;
-`;
 
 function MainPage() {
   const navigate = useNavigate();
@@ -76,8 +47,8 @@ function MainPage() {
         onRequestClose={closeModal}
         contentLabel="Select a Question"
       >
-        <h2>질문을 선택하세요</h2>
-        <Button onClick={closeModal}>닫기</Button>
+        <p>추억하고 싶은 질문을 선택해주세요</p>
+        <Button onClick={closeModal}><img src={Delete} alt="Button" style={{ width: '100%', height: '100%' }} /></Button>
         <QuestionList>
           {selectedQuestions.map((question, index) => (
             <li key={index}>
@@ -104,3 +75,36 @@ function MainPage() {
 }
 
 export default MainPage;
+
+const CustomModal = styled(Modal)`
+  display: flex;
+  width: 452px;
+  height: 566px;
+  padding: 40px 16px 24px 16px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+`;
+
+const Button = styled.button`
+  width: 36px;
+  height: 36px;
+  border: none;
+  background-color: #FEFEFE;
+`;
+
+const QuestionList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const PaginationButton = styled.button`
+  margin: 5px;
+`;
