@@ -3,9 +3,12 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import Delete from '../Assets/Img/삭제버튼.png';
+import Flowers from '../Components/Flowers';
+import { getCountAPI } from '../APIs/AxiosAPI';
 
-// 동운 코드
+//여기서 동운 코드
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -37,73 +40,11 @@ const postData = {
   id6 : {
     title: "만만세",
     img: mainTest3
-  },
+  },  
   //계속 이런식으로
 }
 
 Modal.setAppElement('#root');
-
-const CustomModal = styled(Modal)`
-  display: flex;
-  width: 500px;
-  height: 590px;
-  padding: 24px 16px;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-`;
-
-const Button = styled.button`
-  margin: 10px;
-`;
-
-const QuestionList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const PaginationButton = styled.button`
-  margin: 5px;
-`;
-
-//동운 코드
-const StyledSwiper = styled(Swiper)`
-width: 918px;
-height: 318px;
-padding: 10px;
-`
-
-const StyledSwiperSlide = styled(SwiperSlide)`
-width: 246px !important;
-height: 298px !important;
-margin-right: 40px;
-border-radius: 6px;
-background-image: url(${(props) => props.ima});
-background-position: center;
-background-size: cover;
-color: white;
-display: flex;
-align-items: end;
-background-repeat: no-repeat;
-&:hover{
-cursor: pointer;
-}
-`
-
-const Text = styled.div`
-width: 100%;
-padding: 10px;
-background: rgba(0, 0, 0, 0.2);
-border-radius: 0 0 6px 6px;
-`
-
 
 function MainPage() {
   const navigate = useNavigate();
@@ -206,7 +147,6 @@ function MainPage() {
           ))}
         </div>
       </CustomModal>
-      {/* 동운 코드 여기부터 */}
       <StyledSwiper
         slidesPerView={3}
         spaceBetween={40}
@@ -223,8 +163,7 @@ function MainPage() {
           </StyledSwiperSlide>
         ))}
       </StyledSwiper>
-      {/* 동운 코드 여기까지 */}
-    </div>
+    </Container>
   );
 }
 
@@ -349,6 +288,36 @@ const PaginationButton = styled.button`
     background-color: #F3F3F3;
   }
 `;
+
+const StyledSwiper = styled(Swiper)`
+width: 918px;
+height: 318px;
+padding: 10px;
+`
+
+const StyledSwiperSlide = styled(SwiperSlide)`
+width: 246px !important;
+height: 298px !important;
+margin-right: 40px;
+border-radius: 6px;
+background-image: url(${(props) => props.ima});
+background-position: center;
+background-size: cover;
+color: white;
+display: flex;
+align-items: end;
+background-repeat: no-repeat;
+&:hover{
+cursor: pointer;
+}
+`
+
+const Text = styled.div`
+width: 246px;
+padding: 10px;
+background: rgba(0, 0, 0, 0.5);
+border-radius: 0 0 6px 6px;
+`
 
 
 {/*import React, { useState, useEffect } from 'react';
