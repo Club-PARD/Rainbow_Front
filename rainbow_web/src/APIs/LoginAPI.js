@@ -8,7 +8,7 @@ export const googleLoginAPI = async (jwt) => {
             `${server}/auth/loginForm`,
             jwt
         );
-        return response;
+        return response.data;
     } catch(err) {
         console.log(err);
     }
@@ -20,7 +20,7 @@ export const loginAPI = async (email, password) => {
             `${server}/auth/login?email=${email}&password=${password}`,
             email, password
         );
-        return response;
+        return response.data;
     } catch(err) {
         console.log(err);
     }
