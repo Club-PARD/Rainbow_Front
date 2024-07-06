@@ -146,16 +146,14 @@ border-radius: 8px;
 `
 
 const Textarea = styled.textarea`
-width: 574px;
+width: 540px;
 height: 244px;
 font-size: 16px;
-color: #B0B0B0;
+color: #2C2C2C;
 background-color: #FEFEFE;
-border: soild 0.8px #DDD;
+border: soild 1px #DDD;
 border-radius: 8px;
 padding: 12px 16px;
 margin: 8px;
-&:focus {
-    outline: #B0B0B0;
-}
+outline: #B0B0B0;
 `
