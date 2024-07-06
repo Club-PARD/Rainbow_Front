@@ -6,12 +6,14 @@ import MainPage from './Pages/MainPage';
 import WritingPage from './Pages/WritingPage';
 import LocalSignUp from './Pages/LocalSignUp';
 import GoogleSignUp from './Pages/GoogleSignUp';
+import WriteBtn from './Components/WriteBtn';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LoginPage />}/>
+        <Route path="/test" element={<WriteBtn />}/>
         <Route path="/community" element={<CommunityPage />}/>
         <Route path="/main" element={<MainPage />}/>
         <Route path="/write" element={<WritingPage />}/>

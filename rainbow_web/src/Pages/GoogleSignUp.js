@@ -245,5 +245,3 @@ const SignUpCreateBtn = styled.button`
 // background: #D9D9D9;
 
 export default GoogleSignUp;
-
-
