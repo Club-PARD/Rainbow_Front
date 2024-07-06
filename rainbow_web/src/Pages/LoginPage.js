@@ -7,13 +7,17 @@ import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState } from '../Atom';
+import { LoginState, UserID } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
+<<<<<<< HEAD
+=======
+  const [ userID, setUserID ] = useRecoilState(UserID);
+>>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
 
   const navigate = useNavigate();
 
@@ -26,11 +30,17 @@ function LoginPage() {
 
       const response = await googleLoginAPI(res.credential);
       // const response = await googleLoginAPI(googleUser.email);
+<<<<<<< HEAD
       localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+=======
+      // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+      // console.log(localStorage.getItem("token"));
+
+>>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
       // server login 결과
-      console.log(localStorage.getItem("token"));
       console.log(response);
       setIsLoggedIn(true);
+      setUserID(response);
       navigate("../main");
     } catch(err) {
       console.log(err);
@@ -210,7 +220,11 @@ const Span = styled.span`
     color: #8952FF;
 
     &:hover {
+<<<<<<< HEAD
       color: #5952FF;
+=======
+      color: #6A3CCA;
+>>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
     }
   }
 `
