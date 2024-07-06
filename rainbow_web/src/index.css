@@ -13,4 +13,5 @@
 
 body {
   font-family: "GeistMono";
+  background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, transparent, transparent);
 }
