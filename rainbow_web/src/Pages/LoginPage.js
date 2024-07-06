@@ -5,35 +5,47 @@ import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
 import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState } from '../Atom';
+import { LoginState, UserID, UserEmail } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
-  const [ user, setUser ] = useState({});
+  const [ userID, setUserID ] = useRecoilState(UserID);
+  const [ userEmail, setUserEmail ] = useRecoilState(UserEmail);
 
   const navigate = useNavigate();
 
   const handleGoogleLogin = async (res) => {
-    console.log("Encoded JWT ID token: " + res.credential);
-    const googleUser = jwtDecode(res.credential);
-    setUser(googleUser);
     try{
+      console.log("Encoded JWT ID token: " + res.credential);
+      const googleUser = jwtDecode(res.credential);
+      // google login 결과
+      console.log(googleUser.email);
+      setUserEmail(googleUser.email);
+      console.log(userEmail);
+
+      const response = await googleLoginAPI(googleUser.email);
       // const response = await googleLoginAPI(res.credential);
-      // const response = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg3YmJlMDgxNWIwNjRlNmQ0NDljYWM5OTlmMGU1MGU3MmEzZTQzNzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTQ2MjQ4NjgzNjg3MTE3NTgyNTkiLCJlbWFpbCI6InVtaW5uYW5jeTAzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MjAwNjIzNTAsIm5hbWUiOiLtmansnKDrr7wiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS3JRRlhTTklZaVVEMkFyTVpNVi0yTUhObWtBWUQwaTVIVF9NbEp2cXdsYnVmUmFRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IuycoOuvvCIsImZhbWlseV9uYW1lIjoi7ZmpIiwiaWF0IjoxNzIwMDYyNjUwLCJleHAiOjE3MjAwNjYyNTAsImp0aSI6ImExMDU1NmFmYzZlNjU3ZmRhMTVkOTBkODE2MTliNWVkYmNjZjU3ZDQifQ.aldKYvsf_uSvftAOlJVl8X1WfCgYY2JhGldF2AxPWBrVrAjitSMlumG0Ut2D-281l9eHnNnYOMioeCOP76cDMZAHLNXfreje0nC9cL9QvXcFKBLSwueRwkGYRRKczJnYpEdg6kDTBODX1JaIBcaYNEjHGZqKnuSpZvUIzl1vH2-lteC5PBQk9iayPD9Sv1sexrP4l18aTp6tFpvd4RWdwYo43-5btjj2J5ugPGJBF7IWi1bcag8c7Ar_Wn-kx5MDwHRUG0r-jV-mfTvUAw9i2Ekayu-6Fq3mHVi6Z4f-7m0sf6riZ1YaMm8GPesdln9EjizY0OnLgr48hAXi6Jj0_Q";
-      const response = await googleLoginAPI(user.email, user.password);
-      localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
-      // Google Login data 받아와짐
-      console.log(googleUser);
+      // const response = await googleLoginAPI(googleUser.email);
+      // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+      // console.log(localStorage.getItem("token"));
+
       // server login 결과
-      console.log(localStorage.getItem("token"));
-      console.log(response);
-      setIsLoggedIn(true);
-      navigate("../main");
+      if(response) {
+        console.log(response);
+        setIsLoggedIn(true);
+        setUserID(response);
+        console.log(userID);
+        navigate("../main");
+      }
+      else {
+        console.log("to google register");
+        navigate("../register-google");
+      }
     } catch(err) {
       console.log(err);
     }
@@ -65,6 +77,10 @@ function LoginPage() {
         </Intro>
         <LoginWrapper>
           <LocalLogin />
+          <SignUp>
+            <Span>계정이 없으신가요?&nbsp;</Span>
+            <Span><Link to="/register" >Sign Up</Link></Span>
+          </SignUp>
           <Line />
           {/* Google Login button */}
           <GoogleBtn id="signInDiv"></GoogleBtn>
@@ -84,9 +100,8 @@ const Container = styled.div`
   justify-content: space-between;
 
   width: 100vw;
-  height: 100vh;
-
-  background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+  min-height: 100vh;
+  
   color: #2C2C2C;
   font-size: 0.9rem;
 `
@@ -106,11 +121,13 @@ const LoginWrapper = styled.div`
 
   width: 24rem;
 
-  padding: 24px;
+  padding: 16px;
 
   border-radius: 8px;
   border: solid 1px #C6C6C6;
   background: #FEFEFE;
+
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 const InputWrapper = styled.div`
@@ -121,7 +138,7 @@ const InputWrapper = styled.div`
 
   width: 17rem;
 
-  margin: 0.7rem;
+  margin: 16px;
 `
 
 const Input = styled.input`
@@ -133,6 +150,14 @@ const Input = styled.input`
 
   border: solid 1px #DDD;
   border-radius: 8px;
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+
+  &::placeholder {
+    color: #B0B0B0;
+  }
 
   &:focus {
     outline: none;
@@ -159,7 +184,7 @@ const Intro = styled.div`
 const Line = styled.hr`
   width: 93%;
 
-  margin: 0.7rem;
+  margin: 16px;
 
   border: solid 0.8px #B0B0B0;
 `
@@ -174,7 +199,7 @@ const LoginBtn = styled.button`
   width: 100%;
   height: 46px;
 
-  margin: 12px;
+  margin: 16px;
   padding: 12px;
 
   background-color: #2C2C2C;
@@ -189,22 +214,47 @@ const LoginBtn = styled.button`
   }
 `
 
+const SignUp = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  font-family: Pretendard-Regular;
+  font-size: 15px;
+  color: #2C2C2C;
+
+  width: 100%;
+  padding-right: 2rem;
+`
+
+const Span = styled.span`
+  a {
+    text-decoration: none;
+    color: #8952FF;
+
+    &:hover {
+      color: #6A3CCA;
+    }
+  }
+`
+
 const GoogleBtn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 12px;
+  margin: 16px;
   width: 100%;
   height: 100%;
 `
 
 const Footer = styled.div`
-  height: 30%;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 1.6rem;
