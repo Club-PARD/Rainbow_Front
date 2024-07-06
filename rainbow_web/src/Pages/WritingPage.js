@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";  // AWS SDK를 가져옵니다.
 import { useState, useRef } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
 import styled from "styled-components";  // styled-components 라이브러리를 가져옵니다.
-import BlankImage from "../Img/BlankImage.png";
+import BlankImage from "../Assets/Img/BlankImage.png";
 
 function WritingPage() {
   const location = useLocation();

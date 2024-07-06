@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
-import Delete from '../Img/삭제버튼.png';
+import Delete from '../Assets/Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
 
