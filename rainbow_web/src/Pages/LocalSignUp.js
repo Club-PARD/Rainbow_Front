@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
 import styled from "styled-components";
-import { SignUpLogo } from './SignUpLoco';
-import LoginHeader from './LoginHeader';
+import LoginHeader from '../Components/LoginHeader';
+import { postMemberAPI } from '../APIs/RegisterAPI';
+import { useNavigate } from 'react-router-dom';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
-
+//
     //잘못된 Input이 왔을 때, input을 변화시키기 위한 설정
     const emailInput = useRef(null);
     const nickNameInput = useRef(null);
@@ -35,14 +36,14 @@ function LocalSignUp() {
         visible: false,
     });
 
-    const userInfo = {
-        user: {
-            email: { email },
-            nickName: {nickName},
-            petName: { petName },
-            passWord: { passWord },
-        }
-    }
+    const [newData, setNewData] = useState({
+        nickName: '',
+        email: '',
+        password: '',
+        petName: '',
+      });
+
+    const navigate = useNavigate();
 
     const handlePasswordType = (e) => {
         setpwType(() => {
@@ -68,6 +69,7 @@ function LocalSignUp() {
             setEmailMsg('');
         }
         setEmail(e.target.value);
+        setNewData({ ...newData, email: e.target.value })
     }
 
     const onNickNameHandler = (e) => {
@@ -77,6 +79,7 @@ function LocalSignUp() {
             setNickNameColor(null);
             setNickNameMsg('');
         }
+        setNewData({ ...newData, nickName: e.target.value })
     }
 
     const onPetNameHandler = (e) => {
@@ -86,6 +89,7 @@ function LocalSignUp() {
             setPetNameColor(null);
             setPetNameMsg('');
         }
+        setNewData({ ...newData, petName: e.target.value })
     }
 
     const onPassWordHandler = (e) => {
@@ -99,6 +103,7 @@ function LocalSignUp() {
             setPassWordMsg('');
         }
         setPassWord(e.target.value);
+        setNewData({ ...newData, password: e.target.value })
     }
 
     const onConfirmPassWordHandler = (e) => {
@@ -126,7 +131,16 @@ function LocalSignUp() {
     //     return confirmPassWordInput.current.focus();
     // }
 
-    const onSubmitHandler = (e) => {
+
+    const onSubmitHandler = async (e) => {
+        try {
+            // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
+            const response =
+              await postMemberAPI(newData);
+        } catch (err) {
+            console.error(err);
+        }
+
         if (email === '' || !emailValid) {
             setEmailMsg("이메일의 형식이 올바르지 않습니다");
             setEmailColor("red");
@@ -151,8 +165,10 @@ function LocalSignUp() {
             return confirmPassWordInput.current.focus();
         }
         else {
-            console.log({ userInfo });
+            console.log( newData );
             alert("회원가입이 완료되었습니다!");
+            navigate("../");
+            //window.location.reload();
         }
     }
 
@@ -166,7 +182,7 @@ function LocalSignUp() {
         <Container>
             <LoginHeader/>
             <SignUpTitle>
-                <span><SignUpLogo/>&nbsp;에 오신 것을 환영합니다<br /></span>
+                <span>Sincerely, 에 오신 것을 환영합니다<br /></span>
                 <span>
                     이메일을 입력해주세요
                 </span>
@@ -220,14 +236,16 @@ export default LocalSignUp;
 //페이지 전체를 관리하는 css
 const Container = styled.div`
 width: 100vw;
-height: 100vh;
+min-height: 100vh;
+
+overflow: scroll;
 
 display: flex;
 flex-direction: column;
-justify-content: center;
+justify-content: space-between;
 align-items: center;
 
-background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+// background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
 color: #2C2C2C;
 font-size: 0.9rem;
 `
@@ -246,6 +264,7 @@ align-items: flex-start;
 border: 1px solid #DDD;
 border-radius: 8px;
 background-color: #FFFFFF;
+box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 //제목과 Input 태그를 합친 공간
@@ -294,6 +313,14 @@ border: solid 1px;
 border-radius: 8px;
 align-self: stretch;
 border-color: #DDD;
+font-family: Pretendard;
+font-size: 14px;
+font-weight: 400;
+
+&::placeholder {
+    color: #B0B0B0;
+}
+
 &:focus{
  border-color: ${(props) => props.color || "#B0B0B0"};
  outline: none;
@@ -318,11 +345,12 @@ color: red;
 `
 //Footer
 const Footer = styled.div`
-  height: 30%;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  font-family: Pretendard;
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 1.6rem;
