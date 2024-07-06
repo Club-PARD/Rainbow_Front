@@ -7,17 +7,15 @@ import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState, UserID } from '../Atom';
+import { LoginState, UserID, UserEmail } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
-<<<<<<< HEAD
-=======
   const [ userID, setUserID ] = useRecoilState(UserID);
->>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
+  const [ userEmail, setUserEmail ] = useRecoilState(UserEmail);
 
   const navigate = useNavigate();
 
@@ -26,22 +24,28 @@ function LoginPage() {
       console.log("Encoded JWT ID token: " + res.credential);
       const googleUser = jwtDecode(res.credential);
       // google login 결과
-      console.log(googleUser);
+      console.log(googleUser.email);
+      setUserEmail(googleUser.email);
+      console.log(userEmail);
 
-      const response = await googleLoginAPI(res.credential);
+      const response = await googleLoginAPI(googleUser.email);
+      // const response = await googleLoginAPI(res.credential);
       // const response = await googleLoginAPI(googleUser.email);
-<<<<<<< HEAD
-      localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
-=======
       // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
       // console.log(localStorage.getItem("token"));
 
->>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
       // server login 결과
-      console.log(response);
-      setIsLoggedIn(true);
-      setUserID(response);
-      navigate("../main");
+      if(response) {
+        console.log(response);
+        setIsLoggedIn(true);
+        setUserID(response);
+        console.log(userID);
+        navigate("../main");
+      }
+      else {
+        console.log("to google register");
+        navigate("../register-google");
+      }
     } catch(err) {
       console.log(err);
     }
@@ -96,9 +100,8 @@ const Container = styled.div`
   justify-content: space-between;
 
   width: 100vw;
-  height: 100vh;
-
-  background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+  min-height: 100vh;
+  
   color: #2C2C2C;
   font-size: 0.9rem;
 `
@@ -118,11 +121,13 @@ const LoginWrapper = styled.div`
 
   width: 24rem;
 
-  padding: 24px;
+  padding: 16px;
 
   border-radius: 8px;
   border: solid 1px #C6C6C6;
   background: #FEFEFE;
+
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 const InputWrapper = styled.div`
@@ -133,7 +138,7 @@ const InputWrapper = styled.div`
 
   width: 17rem;
 
-  margin: 0.7rem;
+  margin: 16px;
 `
 
 const Input = styled.input`
@@ -145,6 +150,14 @@ const Input = styled.input`
 
   border: solid 1px #DDD;
   border-radius: 8px;
+
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+
+  &::placeholder {
+    color: #B0B0B0;
+  }
 
   &:focus {
     outline: none;
@@ -171,7 +184,7 @@ const Intro = styled.div`
 const Line = styled.hr`
   width: 93%;
 
-  margin: 0.7rem;
+  margin: 16px;
 
   border: solid 0.8px #B0B0B0;
 `
@@ -186,7 +199,7 @@ const LoginBtn = styled.button`
   width: 100%;
   height: 46px;
 
-  margin: 12px;
+  margin: 16px;
   padding: 12px;
 
   background-color: #2C2C2C;
@@ -208,7 +221,7 @@ const SignUp = styled.div`
 
   font-family: Pretendard-Regular;
   font-size: 15px;
-  color: #000000;
+  color: #2C2C2C;
 
   width: 100%;
   padding-right: 2rem;
@@ -220,11 +233,7 @@ const Span = styled.span`
     color: #8952FF;
 
     &:hover {
-<<<<<<< HEAD
-      color: #5952FF;
-=======
       color: #6A3CCA;
->>>>>>> 1c937b4f88d427cc032020709368410a02b6457d
     }
   }
 `
@@ -234,17 +243,18 @@ const GoogleBtn = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 12px;
+  margin: 16px;
   width: 100%;
   height: 100%;
 `
 
 const Footer = styled.div`
-  height: 30%;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 1.6rem;
