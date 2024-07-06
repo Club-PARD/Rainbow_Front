@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from 'recoil';
 import PostCount from '../Atom.js';
 import styled from 'styled-components';
-import flower from "../Img/flower.svg";
+import flower from "../Assets/Img/flower.svg";
 
 export default Flowers = async () => {
   // 코드 설명
