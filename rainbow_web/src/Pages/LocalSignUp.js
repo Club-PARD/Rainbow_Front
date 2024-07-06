@@ -232,14 +232,16 @@ export default LocalSignUp;
 //페이지 전체를 관리하는 css
 const Container = styled.div`
 width: 100vw;
-// height: 100vh;
+min-height: 100vh;
+
+overflow: scroll;
 
 display: flex;
 flex-direction: column;
-justify-content: center;
+justify-content: space-between;
 align-items: center;
 
-background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+// background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
 color: #2C2C2C;
 font-size: 0.9rem;
 `
@@ -330,11 +332,12 @@ color: red;
 `
 //Footer
 const Footer = styled.div`
-  height: 30%;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  font-family: Pretendard;
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 1.6rem;

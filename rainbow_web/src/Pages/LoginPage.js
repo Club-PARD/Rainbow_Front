@@ -90,9 +90,8 @@ const Container = styled.div`
   justify-content: space-between;
 
   width: 100vw;
-  height: 100vh;
-
-  background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
+  min-height: 100vh;
+  
   color: #2C2C2C;
   font-size: 0.9rem;
 `
@@ -112,11 +111,13 @@ const LoginWrapper = styled.div`
 
   width: 24rem;
 
-  padding: 24px;
+  padding: 16px;
 
   border-radius: 8px;
   border: solid 1px #C6C6C6;
   background: #FEFEFE;
+
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 const InputWrapper = styled.div`
@@ -127,7 +128,7 @@ const InputWrapper = styled.div`
 
   width: 17rem;
 
-  margin: 0.7rem;
+  margin: 16px;
 `
 
 const Input = styled.input`
@@ -165,7 +166,7 @@ const Intro = styled.div`
 const Line = styled.hr`
   width: 93%;
 
-  margin: 0.7rem;
+  margin: 16px;
 
   border: solid 0.8px #B0B0B0;
 `
@@ -180,7 +181,7 @@ const LoginBtn = styled.button`
   width: 100%;
   height: 46px;
 
-  margin: 12px;
+  margin: 16px;
   padding: 12px;
 
   background-color: #2C2C2C;
@@ -202,7 +203,7 @@ const SignUp = styled.div`
 
   font-family: Pretendard-Regular;
   font-size: 15px;
-  color: #000000;
+  color: #2C2C2C;
 
   width: 100%;
   padding-right: 2rem;
@@ -224,7 +225,7 @@ const GoogleBtn = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 12px;
+  margin: 16px;
   width: 100%;
   height: 100%;
 `
@@ -235,6 +236,7 @@ const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
+  font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 1.6rem;
