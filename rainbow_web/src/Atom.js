@@ -1,7 +1,9 @@
 import { atom } from 'recoil';
-// import { recoilPersist } from 'recoil-persist';
 
-// const { persistAtom } = recoilPersist();
+export const UserID = atom({
+    key: 'UserID',
+    default: '',
+});
 
 export const LoginState = atom({
     key: 'LoginState',
@@ -12,4 +14,4 @@ export const LoginState = atom({
 export const PostCount = atom({
     key: 'PostCount',
     default: 0,
-})
+});
