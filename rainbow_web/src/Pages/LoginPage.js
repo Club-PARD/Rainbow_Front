@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
 import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
 import { LoginState } from '../Atom';
 
@@ -14,20 +14,19 @@ const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
-  const [ user, setUser ] = useState({});
 
   const navigate = useNavigate();
 
   const handleGoogleLogin = async (res) => {
-    console.log("Encoded JWT ID token: " + res.credential);
-    const googleUser = jwtDecode(res.credential);
-    setUser(googleUser);
     try{
-      // const response = await googleLoginAPI(res.credential);
-      const response = await googleLoginAPI(user.email, user.password);
-      localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
-      // Google Login data 받아와짐
+      console.log("Encoded JWT ID token: " + res.credential);
+      const googleUser = jwtDecode(res.credential);
+      // google login 결과
       console.log(googleUser);
+
+      const response = await googleLoginAPI(res.credential);
+      // const response = await googleLoginAPI(googleUser.email);
+      localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
       // server login 결과
       console.log(localStorage.getItem("token"));
       console.log(response);
@@ -64,6 +63,10 @@ function LoginPage() {
         </Intro>
         <LoginWrapper>
           <LocalLogin />
+          <SignUp>
+            <Span>계정이 없으신가요?&nbsp;</Span>
+            <Span><Link to="/register" >Sign Up</Link></Span>
+          </SignUp>
           <Line />
           {/* Google Login button */}
           <GoogleBtn id="signInDiv"></GoogleBtn>
@@ -185,6 +188,30 @@ const LoginBtn = styled.button`
   &:hover {
     background-color: #000000;
     cursor: pointer;
+  }
+`
+
+const SignUp = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  font-family: Pretendard-Regular;
+  font-size: 15px;
+  color: #000000;
+
+  width: 100%;
+  padding-right: 2rem;
+`
+
+const Span = styled.span`
+  a {
+    text-decoration: none;
+    color: #8952FF;
+
+    &:hover {
+      color: #5952FF;
+    }
   }
 `
 
