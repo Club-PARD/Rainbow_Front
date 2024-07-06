@@ -17,7 +17,7 @@ export const googleLoginAPI = async (jwt) => {
 export const loginAPI = async (email, password) => {
     try{
         const response = await axios.get(
-            `${server}/auth/loginForm`,
+            `${server}/auth/login`,
             email, password
         );
         return response;
