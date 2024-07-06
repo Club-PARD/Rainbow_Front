@@ -110,8 +110,12 @@ const Title = styled.div`
 `;
 
 const Button = styled.button`
+  display: flex;
   width: 50px;
   height: 36px;
+  position: fixed;
+  top: 100px;
+  right: 40px;
   border: none;
   background-color: #FEFEFE;
 `;
