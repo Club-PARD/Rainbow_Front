@@ -11,7 +11,7 @@ Modal.setAppElement('#root');
 
 const ITEMS_PER_PAGE = 8;
 
-function Main() {
+function WriteBtn() {
   const [questions, setQuestions] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +46,7 @@ function Main() {
 
   return (
     <div>
-      <WriteButton onClick={() => setModalIsOpen(true)}>글쓰기</WriteButton>
+      <WriteButton onClick={() => setModalIsOpen(true)}>글 쓰기</WriteButton>
       <CustomModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -89,20 +89,20 @@ function Main() {
   );
 }
 
-export default Main;
+export default WriteBtn;
 
 const WriteButton = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 20px;
-  cursor: pointer;
-  background-color: #007BFF;
-  color: white;
+  width: 80px;
+  height: 40px;
+  position: fixed;
+  top: 32px;
+  right: 90px;
+  padding: 12px;
+  font-size: 14px;
+  background-color: #2C2C2C;
+  color: #FEFEFE;
   border: none;
-  border-radius: 5px;
-  &:hover {
-    background-color: #0056b3;
-  }
+  border-radius: 8px;
 `;
 
 const ExitButton = styled.button`
@@ -201,11 +201,11 @@ const SelectButton = styled.button`
   justify-content: center;
   width: 65px;
   height: 36px;
-  gap: 4px;
   position: absolute;
   right: 16px;
   bottom: 32px;
   padding: 8px;
+  gap: 4px;
   font-size: 14px;
   background-color: #FEFEFE;
   color: #2C2C2C;

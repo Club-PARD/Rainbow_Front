@@ -6,7 +6,7 @@ import styled from "styled-components";  // styled-components 라이브러리를
 import BlankImage from "../Assets/Img/BlankImage.png";
 import { postAPI } from '../APIs/AxiosAPI';
 
-function WritingPage(userId) {
+function WritingPage() {
   const location = useLocation();
   const { selectedQuestion } = location.state || {};
   const { userId } = location.state || {};
