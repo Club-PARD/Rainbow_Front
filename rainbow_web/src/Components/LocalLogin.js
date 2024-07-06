@@ -7,6 +7,7 @@ import { loginAPI } from '../APIs/LoginAPI';
 import { Link, useNavigate } from "react-router-dom";
 import { LoginState } from '../Atom';
 import { useRecoilState } from 'recoil';
+import { UserID } from '../Atom';
 
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
@@ -14,6 +15,7 @@ const Login = () => {
     const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    const [ userID, setUserID ] = useRecoilState(UserID);
 
     const navigate = useNavigate();
 
@@ -21,11 +23,14 @@ const Login = () => {
         try{
             const response = await loginAPI(email, password);
             // const response = "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg3YmJlMDgxNWIwNjRlNmQ0NDljYWM5OTlmMGU1MGU3MmEzZTQzNzQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzg0ODc0NzAwNDEtcW8yaGFucjI3OTFidnIzdGg0dHVudm03MjlncWJicXMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTQ2MjQ4NjgzNjg3MTE3NTgyNTkiLCJlbWFpbCI6InVtaW5uYW5jeTAzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3MjAwNjIzNTAsIm5hbWUiOiLtmansnKDrr7wiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS3JRRlhTTklZaVVEMkFyTVpNVi0yTUhObWtBWUQwaTVIVF9NbEp2cXdsYnVmUmFRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IuycoOuvvCIsImZhbWlseV9uYW1lIjoi7ZmpIiwiaWF0IjoxNzIwMDYyNjUwLCJleHAiOjE3MjAwNjYyNTAsImp0aSI6ImExMDU1NmFmYzZlNjU3ZmRhMTVkOTBkODE2MTliNWVkYmNjZjU3ZDQifQ.aldKYvsf_uSvftAOlJVl8X1WfCgYY2JhGldF2AxPWBrVrAjitSMlumG0Ut2D-281l9eHnNnYOMioeCOP76cDMZAHLNXfreje0nC9cL9QvXcFKBLSwueRwkGYRRKczJnYpEdg6kDTBODX1JaIBcaYNEjHGZqKnuSpZvUIzl1vH2-lteC5PBQk9iayPD9Sv1sexrP4l18aTp6tFpvd4RWdwYo43-5btjj2J5ugPGJBF7IWi1bcag8c7Ar_Wn-kx5MDwHRUG0r-jV-mfTvUAw9i2Ekayu-6Fq3mHVi6Z4f-7m0sf6riZ1YaMm8GPesdln9EjizY0OnLgr48hAXi6Jj0_Q";
-            localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+            // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+            
             // server login 결과
             console.log(response);
-            console.log(localStorage.getItem("token"));
+            // console.log(localStorage.getItem("token"));
             setIsLoggedIn(true);
+            setUserID(response);
+            console.log(userID);
             navigate("../main");
         } catch(err) {
             console.log(err);

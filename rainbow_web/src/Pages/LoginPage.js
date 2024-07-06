@@ -34,6 +34,7 @@ function LoginPage() {
       console.log(response);
       setIsLoggedIn(true);
       setUserID(response);
+      console.log(userID);
       navigate("../main");
     } catch(err) {
       console.log(err);

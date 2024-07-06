@@ -1,14 +1,15 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";  // AWS SDK를 가져옵니다.
-import { useState, useRef } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
+import { useState, useRef, useEffect } from "react";  // React의 useState와 useRef 훅을 가져옵니다.
 import styled from "styled-components";  // styled-components 라이브러리를 가져옵니다.
 import BlankImage from "../Assets/Img/BlankImage.png";
 import { postAPI } from '../APIs/AxiosAPI';
 
-function WritingPage(userId) {
+function WritingPage() {
   const location = useLocation();
   const { selectedQuestion } = location.state || {};
+  const { userId } = location.state || {};
 
   //여기서부터 동운 코드
   const [imageSrc, setImageSrc] = useState(BlankImage);  // 이미지 소스를 상태로 관리합니다.
@@ -84,19 +85,28 @@ function WritingPage(userId) {
         try {
             await uploadS3();
 
-            // After upload to S3, prepare data to send to server
-            const formData = new FormData();
-            formData.append('question', selectedQuestion || ''); // Assuming selectedQuestion is a string
-            formData.append('imageFile', imageFile);
-            formData.append('text', textContent); // Replace with actual text input
-
+            const obj = {
+                id : userId,
+                data : {
+                    'question' : selectedQuestion,
+                    'imageFile' : imageFile,
+                    'text' : textContent,
+                }
+            };
+            
+            const json = JSON.stringify(obj);
             // Send data to server using Axios
-            const response = await postAPI(userId, formData);
+            const response = await postAPI(userId, json);
             console.log(response);
         } catch (err) {
             console.log(err);
         }
     };
+
+    useEffect(() => {
+        console.log(selectedQuestion);
+        console.log(userId);
+    }, []);
 
     return (
         <Container>
