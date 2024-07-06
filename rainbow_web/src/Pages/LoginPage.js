@@ -7,7 +7,7 @@ import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState, UserID } from '../Atom';
+import { LoginState, UserID, UserEmail } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
@@ -15,6 +15,7 @@ const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
   const [ userID, setUserID ] = useRecoilState(UserID);
+  const [ userEmail, setUserEmail ] = useRecoilState(UserEmail);
 
   const navigate = useNavigate();
 
@@ -23,19 +24,28 @@ function LoginPage() {
       console.log("Encoded JWT ID token: " + res.credential);
       const googleUser = jwtDecode(res.credential);
       // google login 결과
-      console.log(googleUser);
+      console.log(googleUser.email);
+      setUserEmail(googleUser.email);
+      console.log(userEmail);
 
-      const response = await googleLoginAPI(res.credential);
+      const response = await googleLoginAPI(googleUser.email);
+      // const response = await googleLoginAPI(res.credential);
       // const response = await googleLoginAPI(googleUser.email);
       // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
       // console.log(localStorage.getItem("token"));
 
       // server login 결과
-      console.log(response);
-      setIsLoggedIn(true);
-      setUserID(response);
-      console.log(userID);
-      navigate("../main");
+      if(response) {
+        console.log(response);
+        setIsLoggedIn(true);
+        setUserID(response);
+        console.log(userID);
+        navigate("../main");
+      }
+      else {
+        console.log("to google register");
+        navigate("../register-google");
+      }
     } catch(err) {
       console.log(err);
     }
@@ -141,6 +151,14 @@ const Input = styled.input`
   border: solid 1px #DDD;
   border-radius: 8px;
 
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+
+  &::placeholder {
+    color: #B0B0B0;
+  }
+
   &:focus {
     outline: none;
     border-color: #B0B0B0;
@@ -231,7 +249,7 @@ const GoogleBtn = styled.div`
 `
 
 const Footer = styled.div`
-  height: 30%;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

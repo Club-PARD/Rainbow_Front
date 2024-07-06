@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import styled from "styled-components";
 import LoginHeader from '../Components/LoginHeader';
 import { postMemberAPI } from '../APIs/RegisterAPI';
+import { useNavigate } from 'react-router-dom';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -41,6 +42,8 @@ function LocalSignUp() {
         password: '',
         petName: '',
       });
+
+    const navigate = useNavigate();
 
     const handlePasswordType = (e) => {
         setpwType(() => {
@@ -135,7 +138,7 @@ function LocalSignUp() {
             const response =
               await postMemberAPI(newData);
         } catch (err) {
-        console.error(err);
+            console.error(err);
         }
 
         if (email === '' || !emailValid) {
@@ -164,6 +167,7 @@ function LocalSignUp() {
         else {
             console.log( newData );
             alert("회원가입이 완료되었습니다!");
+            navigate("../");
             //window.location.reload();
         }
     }
@@ -260,6 +264,7 @@ align-items: flex-start;
 border: 1px solid #DDD;
 border-radius: 8px;
 background-color: #FFFFFF;
+box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 //제목과 Input 태그를 합친 공간
@@ -308,6 +313,14 @@ border: solid 1px;
 border-radius: 8px;
 align-self: stretch;
 border-color: #DDD;
+font-family: Pretendard;
+font-size: 14px;
+font-weight: 400;
+
+&::placeholder {
+    color: #B0B0B0;
+}
+
 &:focus{
  border-color: ${(props) => props.color || "#B0B0B0"};
  outline: none;

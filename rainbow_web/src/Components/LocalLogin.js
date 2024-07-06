@@ -96,6 +96,10 @@ const Login = () => {
     border: solid 1px #DDD;
     border-radius: 8px;
 
+    &::placeholder {
+        color: #B0B0B0;
+    }
+
     &:focus {
         outline: none;
         border-color: #B0B0B0;
