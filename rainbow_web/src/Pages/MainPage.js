@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
 import Delete from '../Assets/Img/삭제버튼.png';
-import Flowers from '../Components/Flowers';
-import { getCountAPI } from '../APIs/AxiosAPI';
 
 Modal.setAppElement('#root');
 
@@ -14,19 +12,8 @@ function MainPage() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const questionsPerPage = 8;
-  const [questions, setQuestions] = useState([]);
-  const userId = 1; // Replace with actual user ID
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      const data = await getQuestionAPI(userId);
-      if (data) {
-        setQuestions(data);
-      }
-    };
-    fetchQuestions();
-  }, [userId]);
-
+  const questions = Array.from({ length: 40 }, (_, i) => `${i + 1}. 질문 `);
   const totalPages = Math.ceil(questions.length / questionsPerPage);
 
   const openModal = () => {
@@ -49,43 +36,9 @@ function MainPage() {
   const startIndex = (currentPage - 1) * questionsPerPage;
   const selectedQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
-  // 유민 코드: # of post API 호출
-  const [count, setCount] = useState();
-
-  // 실제 count 값을 서버로부터 받아오는 함수
-  const getCount = async () => {
-    try {
-      // const response = await getCountAPI/(id); // getCountAPI에서 서버로부터 데이터를 가져옴
-      const response = 5;     // 임시 데이터
-      if (count < response) {
-        setCount(response); // Recoil 상태 업데이트
-      }
-    } catch (err) {
-      console.error('Error fetching count:', err);
-    }
-  };
-
-  useEffect(() => {
-    getCount(); // 페이지 로드 시 getCount 함수 호출
-  }, []);
-
   return (
-    <Container>
+    <div>
       <Header />
-      {/* 유민 코드 추가 */}
-      {/* [상세 설명 추가] */}
-      <Explained>
-        기억의 꽃밭은 반려동물과의 소중한 추억을 떠올리며<br/>
-        한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br/><br/>
-        꽃은 추억을 상징하며, 40개의 질문에 답변하면<br/>
-        사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br/><br/>
-        00이에 대한 이야기를 들려주세요
-      </Explained>
-      {/* [꽃 피우기] 대략적인 설명:
-       - postCount는 실제 서버에서 받아온 값
-       - Flowers.js에서는 리코일에 저장된 previous count 값과 비교하여 하나 더 커졌을 경우에 꽃을 애니메이션과 함께 하나 더 피우도록 구현함
-      */}
-      <Flowers postCount={count} />
       <Button onClick={openModal}>
         글쓰기
       </Button>
@@ -97,13 +50,13 @@ function MainPage() {
         <Title>추억할 질문을 선택해주세요</Title>
         <ExitButton onClick={closeModal}><img src={Delete} alt="Button" style={{ width: '100%', height: '100%' }} /></ExitButton>
         <QuestionList>
-          {selectedQuestions.map((questionItem, index) => {
-            const { id, questionText } = questionItem.question;
+          {selectedQuestions.map((question, index) => {
+            const [number, ...rest] = question.split('. ');
             return (
-              <li key={id}>
-                <QuestionButton onClick={() => selectQuestion(questionText)}>
-                  <QuestionNumber>{id}.</QuestionNumber>
-                  <QuestionText>{questionText}</QuestionText>
+              <li key={index}>
+                <QuestionButton onClick={() => selectQuestion(question)}>
+                  <QuestionNumber>{number}.</QuestionNumber>
+                  <QuestionText>{rest.join('. ')}</QuestionText>
                 </QuestionButton>
               </li>
             );
@@ -121,39 +74,11 @@ function MainPage() {
           ))}
         </div>
       </CustomModal>
-    </Container>
+    </div>
   );
 }
 
 export default MainPage;
-
-const Explained = styled.div`
-text-align: center;
-font-size: 18px;
-font-weight: 400;
-color: #2C2C2C;
-
-width: 482px;
-height: 196px;
-`
-
-const Container = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-
-width: 100%;
-height: 100%;
-max-height: 300vh;
-overflow: scroll;
-
-margin: 0;
-
-background: radial-gradient(ellipse at 50%, #E5DBF7, #FFFFFD), radial-gradient(ellipse at 50%, #E5DBF7, #191919);
-
-// background: radial-gradient(ellipse at 50%, #8952FF, transparent), radial-gradient(ellipse at 50%, #8952FF, #191919);
-`
 
 const CustomModal = styled(Modal)`
   display: flex;
@@ -176,6 +101,7 @@ const Title = styled.div`
   display: flex;
   color: #2C2C2C;
   text-align: center;
+  /* Headlines/H5-20 */
   font-family: "Geist Mono";
   font-size: 20px;
   font-style: normal;
@@ -184,13 +110,12 @@ const Title = styled.div`
 `;
 
 const Button = styled.button`
-  display: flex;
   width: 50px;
   height: 36px;
-  position: fixed;
-  top: 100px;
-  right: 40px;
   border: none;
+  position: fixed;
+  top: 200px;
+  right: 40px;
   background-color: #FEFEFE;
 `;
 
@@ -216,14 +141,13 @@ const QuestionButton = styled.button`
   border: none;
   border-radius: 8px;
   background-color: #FEFEFE;
-  &:hover {
-    background-color: #F3F3F3;
-  }
 `;
 
-const QuestionNumber = styled.span``;
+const QuestionNumber = styled.span`
+`;
 
-const QuestionText = styled.span``;
+const QuestionText = styled.span`
+`;
 
 const QuestionList = styled.ul`
   list-style-type: none;
@@ -234,12 +158,11 @@ const PaginationButton = styled.button`
   width: 23px;
   height: 32px;
   margin: 8px;
-  border: none;
+  border: 2px solid ${props => (props.selected ? '#D3D3D3' : '#FEFEFE')};
   border-radius: 8px;
-  background-color: ${props => (props.selected ? '#2C2C2C' : '#FFFFFF')};
-  color: ${props => (props.selected ? '#FFFFFF' : '#2C2C2C')}; 
+  background-color: #FEFEFE;
+  color: ${props => (props.selected ? '#000' : '#000')}; 
   &:hover {
-    color: #2C2C2C;
-    background-color: #F3F3F3;
+    background-color: #FEFEFE;
   }
 `;

@@ -5,12 +5,14 @@ import CommunityPage from './Pages/CommunityPage';
 import MainPage from './Pages/MainPage';
 import WritingPage from './Pages/WritingPage';
 import LocalSignUp from './Pages/LocalSignUp';
+import Main from './Pages/Main';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LoginPage />}/>
+        <Route path="/test" element={<Main />}/>
         <Route path="/community" element={<CommunityPage />}/>
         <Route path="/main" element={<MainPage />}/>
         <Route path="/write" element={<WritingPage />}/>
