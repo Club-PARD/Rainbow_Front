@@ -210,7 +210,7 @@ const Span = styled.span`
     color: #8952FF;
 
     &:hover {
-      color: #5952FF;
+      color: #6A3CCA;
     }
   }
 `

@@ -232,7 +232,7 @@ export default LocalSignUp;
 //페이지 전체를 관리하는 css
 const Container = styled.div`
 width: 100vw;
-height: 100vh;
+// height: 100vh;
 
 display: flex;
 flex-direction: column;
