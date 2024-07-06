@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import profile from '../Assets/Img/프로필.png';
-import logo from '../Assets/Img/브랜드로고.png';
+import logo from '../Assets/Img/logo.svg';
 
 Modal.setAppElement('#root');
 
