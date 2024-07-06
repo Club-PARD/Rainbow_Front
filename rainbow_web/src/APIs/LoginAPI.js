@@ -8,7 +8,7 @@ export const googleLoginAPI = async (jwt) => {
             `${server}/auth/loginForm`,
             jwt
         );
-        return response;
+        return response.data;
     } catch(err) {
         console.log(err);
     }
@@ -17,10 +17,10 @@ export const googleLoginAPI = async (jwt) => {
 export const loginAPI = async (email, password) => {
     try{
         const response = await axios.get(
-            `${server}/auth/login`,
+            `${server}/auth/login?email=${email}&password=${password}`,
             email, password
         );
-        return response;
+        return response.data;
     } catch(err) {
         console.log(err);
     }
