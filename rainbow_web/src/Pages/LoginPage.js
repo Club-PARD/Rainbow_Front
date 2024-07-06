@@ -7,13 +7,14 @@ import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState } from '../Atom';
+import { LoginState, UserID } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
+  const [ userID, setUserID ] = useRecoilState(UserID);
 
   const navigate = useNavigate();
 
@@ -26,11 +27,13 @@ function LoginPage() {
 
       const response = await googleLoginAPI(res.credential);
       // const response = await googleLoginAPI(googleUser.email);
-      localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+      // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
+      // console.log(localStorage.getItem("token"));
+
       // server login 결과
-      console.log(localStorage.getItem("token"));
       console.log(response);
       setIsLoggedIn(true);
+      setUserID(response);
       navigate("../main");
     } catch(err) {
       console.log(err);

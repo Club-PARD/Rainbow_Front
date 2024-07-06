@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import { useNavigate } from 'react-router-dom';
 import Delete from '../Assets/Img/삭제버튼.png';
-import { getQuestionAPI } from '../APIs/QuestionAPI'; // Adjust the import path as needed
+import Flowers from '../Components/Flowers';
+import { getCountAPI } from '../APIs/AxiosAPI';
 
 Modal.setAppElement('#root');
 
@@ -48,9 +49,43 @@ function MainPage() {
   const startIndex = (currentPage - 1) * questionsPerPage;
   const selectedQuestions = questions.slice(startIndex, startIndex + questionsPerPage);
 
+  // 유민 코드: # of post API 호출
+  const [count, setCount] = useState();
+
+  // 실제 count 값을 서버로부터 받아오는 함수
+  const getCount = async () => {
+    try {
+      // const response = await getCountAPI/(id); // getCountAPI에서 서버로부터 데이터를 가져옴
+      const response = 5;     // 임시 데이터
+      if (count < response) {
+        setCount(response); // Recoil 상태 업데이트
+      }
+    } catch (err) {
+      console.error('Error fetching count:', err);
+    }
+  };
+
+  useEffect(() => {
+    getCount(); // 페이지 로드 시 getCount 함수 호출
+  }, []);
+
   return (
-    <div>
+    <Container>
       <Header />
+      {/* 유민 코드 추가 */}
+      {/* [상세 설명 추가] */}
+      <Explained>
+        기억의 꽃밭은 반려동물과의 소중한 추억을 떠올리며<br/>
+        한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br/><br/>
+        꽃은 추억을 상징하며, 40개의 질문에 답변하면<br/>
+        사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br/><br/>
+        00이에 대한 이야기를 들려주세요
+      </Explained>
+      {/* [꽃 피우기] 대략적인 설명:
+       - postCount는 실제 서버에서 받아온 값
+       - Flowers.js에서는 리코일에 저장된 previous count 값과 비교하여 하나 더 커졌을 경우에 꽃을 애니메이션과 함께 하나 더 피우도록 구현함
+      */}
+      <Flowers postCount={count} />
       <Button onClick={openModal}>
         글쓰기
       </Button>
@@ -86,11 +121,39 @@ function MainPage() {
           ))}
         </div>
       </CustomModal>
-    </div>
+    </Container>
   );
 }
 
 export default MainPage;
+
+const Explained = styled.div`
+text-align: center;
+font-size: 18px;
+font-weight: 400;
+color: #2C2C2C;
+
+width: 482px;
+height: 196px;
+`
+
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+width: 100%;
+height: 100%;
+max-height: 300vh;
+overflow: scroll;
+
+margin: 0;
+
+background: radial-gradient(ellipse at 50%, #E5DBF7, #FFFFFD), radial-gradient(ellipse at 50%, #E5DBF7, #191919);
+
+// background: radial-gradient(ellipse at 50%, #8952FF, transparent), radial-gradient(ellipse at 50%, #8952FF, #191919);
+`
 
 const CustomModal = styled(Modal)`
   display: flex;
