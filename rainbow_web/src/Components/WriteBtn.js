@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +56,7 @@ function WriteBtn() {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Questions Modal"
-        style={{ overlay: { backgroundColor: 'rgba(0, 0, 0, 0.75)' } }}
+        style={{ overlay: { backgroundColor: 'rgba(0, 0, 0, 0.75)', zIndex: 10000 } }}
       >
         <Title>추억할 질문을 선택해주세요</Title>
         <ExitButton onClick={() => setModalIsOpen(false)}>
@@ -110,9 +110,6 @@ export default WriteBtn;
 const WriteButton = styled.button`
   width: 67px;
   height: 32px;
-  position: fixed;
-  top: 32px;
-  right: 96px;
   padding: 12px;
   font-family: Pretendard;
   font-style: normal;
