@@ -41,7 +41,7 @@ function WritingPage() {
   const uploadS3 = () => {
     const REGION = process.env.REACT_APP_REGION;
     const ACCESS_KEY_ID = process.env.REACT_APP_ACCESS_KEY_ID;
-    const SECRET_ACCESS_KEY = process.env.REACT_APP_SECRET_ACCESS_KEY_ID;
+    const SECRET_ACCESS_KEY = process.env.REACT_APP_SECRET_ACCESS_KEY;
 
     AWS.config.update({
       region: REGION,
@@ -94,14 +94,11 @@ function WritingPage() {
 
   return (
     <Container>
-      <div>
-        <h1>Writing Page</h1>
-        {selectedQuestion ? (
-          <p>선택된 질문: {selectedQuestion.questionText}</p>
-        ) : (
-          <p>질문이 선택되지 않았습니다.</p>
-        )}
-      </div>
+      {selectedQuestion ? (
+        <QuestionText>{selectedQuestion.questionText}</QuestionText>
+      ) : (
+        <QuestionText>질문이 선택되지 않았습니다.</QuestionText>
+      )}
       <ImgLabel htmlFor="file-input">
         <Img
           src={imageSrc}
@@ -122,9 +119,7 @@ function WritingPage() {
         value={textContent}
         onChange={(e) => setTextContent(e.target.value)}
       />
-      <button type="button" onClick={handleUpload}>
-        업로드!
-      </button>
+      <button type="button" onClick={handleUpload}>게시하기</button>
     </Container>
   );
 }
@@ -132,37 +127,48 @@ function WritingPage() {
 export default WritingPage;
 
 const Container = styled.div`
-width: 100vw;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-overflow: scroll;
+  width: 555px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  overflow: scroll;
 `;
 
 const Img = styled.img`
-width: 574px;
-border: 1px solid #DDD;
-border-radius: 8px;
+  width: 535px;
+  border: 1px solid #DDD;
+  border-radius: 8px;
 `;
 
 const ImgLabel = styled.label`
-&:hover{
-cursor: pointer;
-border-radius: 8px;
-}
+  &:hover {
+    cursor: pointer;
+    border-radius: 8px;
+  }
 `;
 
 const Textarea = styled.textarea`
-width: 540px;
-min-height: 244px;
-height: auto;
-font-size: 16px;
-color: #2C2C2C;
-background-color: #FEFEFE;
-border: soild 1px #DDD;
-border-radius: 8px;
-padding: 12px 16px;
-margin: 8px;
-outline: #B0B0B0;
+  width: 507px;
+  min-height: 244px;
+  height: auto;
+  font-size: 16px;
+  color: #2C2C2C;
+  background-color: #FEFEFE;
+  border: solid 1px #DDD;
+  border-radius: 8px;
+  padding: 12px 16px;
+  outline: #B0B0B0;
+`;
+
+const QuestionText = styled.p`
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+  align-self: flex-start;
+  padding-left: 8px;
 `;
