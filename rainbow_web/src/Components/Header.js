@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
@@ -13,7 +13,24 @@ function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false); // 공개 여부 상태 추가
+  const location = useLocation();
+  const [isActive, setIsActive] = useState(false);
+  const [communityDot, setCommunityDot] = useState(false);
+  const [memoryDot, setMemoryDot] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname === '/community') {
+      setCommunityDot(true);
+    } else {
+      setCommunityDot(false);
+    }
+
+    if (location.pathname === '/main') {
+      setMemoryDot(true);
+    } else {
+      setMemoryDot(false);
+    }
+  }, [location.pathname]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -33,13 +50,27 @@ function Header() {
     navigate('/community');
   };
 
+  const goToMain = () => {
+    navigate('/main');
+  };
+
   return (
     <HeaderContainer>
-      <Img>
-        <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
-      </Img>
-      <CustomButton1 onClick={goToCommunity}>기억의 꽃밭</CustomButton1>
-      <CustomButton2 onClick={goToCommunity}>커뮤니티</CustomButton2>
+      <LogoAndButtonContainer>
+        <Img>
+          <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
+        </Img>
+        <CustomButton1 onClick={goToMain} hasDot={memoryDot}>
+          {memoryDot && <PurpleDot />}
+          기억의 꽃밭
+        </CustomButton1>
+      </LogoAndButtonContainer>
+      <ButtonContainer>
+        <CustomButton2 onClick={goToCommunity} hasDot={communityDot}>
+          {communityDot && <PurpleDot />}
+          커뮤니티
+        </CustomButton2>
+      </ButtonContainer>
       <WriteBtn />
       <ImageButtonWrapper onClick={openModal}>
         <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
@@ -77,37 +108,45 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 10vh;
-  background: white; 
-  z-index: 1000; 
-  box-sizing: border-box; 
+  width: 1280px;
+  height: 72px;
+  background: #FEFEFE; 
+  align-items: flex-start;
+  padding: 32px 40px 8px 40px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 42%, rgba(255, 255, 255, 0.00) 100%);
+  backdrop-filter: blur(20px);
+  gap: 16px;
+`;
+
+const LogoAndButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 340.5px;
 `;
 
 const Img = styled.div`
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 32px;
-  left: 40px;
-  margin-right: 2rem;
+  width: 178px;
+  height: 32px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  flex-grow: 1;
 `;
 
 const CustomButton1 = styled.button`
-  display: inline-flex;
-  width: 103px;
-  height: 40px;
+  display: flex;
+  width: 93px;
+  height: 32px;
   padding: 12px;
   justify-content: center;
   align-items: center;
-  gap: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: white;
+  gap: 6px;
+  border-radius: 8px;
+  background-color: #FEFEFE;
   border: none;
   color: #2C2C2C;
   font-family: Pretendard;
@@ -115,25 +154,23 @@ const CustomButton1 = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 16px; 
-  position: absolute;
-  top: 32px;
-  right: 700px;
+  position: relative;
+
   &:hover {
-    border: 1px solid #F3F3F3;
+    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
   }
 `;
 
 const CustomButton2 = styled.button`
   display: flex;
-  width: 80px;
-  height: 40px;
+  width: 76px;
+  height: 32px;
   padding: 12px;
-  justify-content: center;
   align-items: center;
-  gap: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: white;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  background-color: #FEFEFE;
   border: none;
   color: #2C2C2C;
   font-family: Pretendard;
@@ -141,35 +178,37 @@ const CustomButton2 = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 16px; 
-  position: absolute;
-  top: 32px;
-  right: 600px;
+  position: relative;
+
   &:hover {
-    border: 1px solid #F3F3F3;
+    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
   }
+`;
+
+const PurpleDot = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: #C5AAFF;
+  box-shadow: (0px 0px 4px rgba(151, 71, 255, 0.25));
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  right: -4px;
 `;
 
 const ImageButtonWrapper = styled.button`
   display: flex;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   justify-content: center;
   align-items: center;
   background: none;
-  cursor: pointer;
-  border-radius: 25%;
-  overflow: hidden;
-  position: absolute; 
-  top: 32px; 
-  right: 40px; 
   border: none;
-  
   img {
     width: 100%;
     height: 100%;
     object-fit: cover; 
-    border-radius: 25%; 
   }
 `;
 
@@ -181,13 +220,10 @@ const StyledModal = styled(Modal)`
   padding: 8px;
   position: fixed;
   top: 80px;
-  right: 40px;
+  right: 78px;
   border-radius: 8px;
-  border: 0.8px solid #C6C6C6;  
+  border: 1px solid #C6C6C6;  
   background: #FEFEFE;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 4px 0 rgba(0, 0, 0, 0.05);
-  max-height: 90vh;  
-
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -216,7 +252,6 @@ const Reg = styled.div`
 
 const ToggleSwitch = styled.label`
   position: relative;
-  //display: flex;
   width: 32px;
   height: 19px;
   align-items: center;
@@ -225,7 +260,6 @@ const ToggleSwitch = styled.label`
 
 const ToggleSlider = styled.span`
   position: absolute;
-  cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
@@ -258,7 +292,6 @@ const CheckBox = styled.input`
     background-color: #CFF7D3;
   }
 
-
   &:checked + ${ToggleSlider}:before {
     -webkit-transform: translateX(13px);
     -ms-transform: translateX(13px);
@@ -275,7 +308,6 @@ const ModalInfoButton = styled.button`
   align-items: center;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
   background-color: white;
   color: #2C2C2C;
   font-family: Pretendard;

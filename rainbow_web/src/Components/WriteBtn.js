@@ -22,7 +22,7 @@ function WriteBtn() {
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://54.180.163.165:8080/questions/${userId}`)
+      axios.get(`http://54.180.163.165:8080/api/questions/${userId}`)
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));
@@ -108,13 +108,17 @@ function WriteBtn() {
 export default WriteBtn;
 
 const WriteButton = styled.button`
-  width: 80px;
-  height: 40px;
+  width: 67px;
+  height: 32px;
   position: fixed;
   top: 32px;
-  right: 90px;
+  right: 96px;
   padding: 12px;
-  font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 11px;
+  font-size: 15px;
   background-color: #2C2C2C;
   color: #FEFEFE;
   border: none;
