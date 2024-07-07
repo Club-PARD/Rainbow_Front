@@ -73,7 +73,7 @@ function LocalSignUp() {
     }
 
     const onNickNameHandler = (e) => {
-        var regExp = /^.*$/;
+        var regExp = /^[a-zA-Z0-9가-힣]*$/;
         setNickName(e.target.value);
         if(regExp.test(e.target.value)){
             setNickNameColor(null);
@@ -108,7 +108,7 @@ function LocalSignUp() {
 
     const onConfirmPassWordHandler = (e) => {
         setConfirmPassWord(e.target.value)
-        if(passWord == e.target.value){
+        if(passWord === e.target.value){
             setConfirmPassWordColor(null);
             setConfirmPassWordMsg('');
         }
@@ -157,7 +157,7 @@ function LocalSignUp() {
             return petNameInput.current.focus();
         }
         else if (passWord === '' || !passWordValid) {
-            setPassWordMsg("비밀번호는 영문 숫자 특수문자를 포함해야합니다");
+            setPassWordMsg("비밀번호는 영문 숫자 특수문자를 포함한 8-10자여야합니다");
             return passWordInput.current.focus();
         }
         else if (confirmPassWord === '' || passWord !== confirmPassWord) {
