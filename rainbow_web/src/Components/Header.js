@@ -12,7 +12,7 @@ import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
 
-function Header() {
+function Header({ onActiveChange }) { // onActiveChange prop 추가
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -61,6 +61,9 @@ function Header() {
   const handleToggleChange = async () => {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
+    if (onActiveChange) {
+      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+    }
 
     try {
       const response = await patchPublicAPI(userId, newIsActive);
@@ -209,8 +212,8 @@ const StyledModal = styled(Modal)`
   width: 178px;
   padding: 8px;
   position: fixed;
-  top: 80px;
-  right: 78px;
+  top: 100px;
+  right: 70px;
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
@@ -329,4 +332,3 @@ const LogoutButton = styled.button`
     background-color: #F3F3F3;
   }
 `;
-
