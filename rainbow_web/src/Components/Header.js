@@ -113,8 +113,6 @@ const HeaderContainer = styled.div`
   background: #FEFEFE; 
   align-items: flex-start;
   padding: 32px 40px 8px 40px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 42%, rgba(255, 255, 255, 0.00) 100%);
-  backdrop-filter: blur(20px);
   gap: 16px;
 `;
 
@@ -139,11 +137,11 @@ const ButtonContainer = styled.div`
 
 const CustomButton1 = styled.button`
   display: flex;
+  align-items: center;
   width: 93px;
   height: 32px;
   padding: 12px;
   justify-content: center;
-  align-items: center;
   gap: 6px;
   border-radius: 8px;
   background-color: #FEFEFE;
@@ -163,10 +161,10 @@ const CustomButton1 = styled.button`
 
 const CustomButton2 = styled.button`
   display: flex;
+  align-items: center;
   width: 76px;
   height: 32px;
   padding: 12px;
-  align-items: center;
   justify-content: center;
   gap: 6px;
   border-radius: 8px;
@@ -192,8 +190,7 @@ const PurpleDot = styled.div`
   box-shadow: (0px 0px 4px rgba(151, 71, 255, 0.25));
   border-radius: 50%;
   position: absolute;
-  top: -4px;
-  right: -4px;
+  left: -10px;
 `;
 
 const ImageButtonWrapper = styled.button`
@@ -224,6 +221,7 @@ const StyledModal = styled(Modal)`
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
+  z-index: 10000; /* Ensures the modal is above other content */
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -241,6 +239,7 @@ const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000; /* Ensures the overlay is above other content */
 `;
 
 const Reg = styled.div`
@@ -248,7 +247,7 @@ const Reg = styled.div`
   height: 1px;
   align-self: stretch;
   background: #DDDDDD;
-`
+`;
 
 const ToggleSwitch = styled.label`
   position: relative;
