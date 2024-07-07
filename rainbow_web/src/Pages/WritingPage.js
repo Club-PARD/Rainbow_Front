@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AWS from "aws-sdk";
 import styled from "styled-components";
+import Modal from 'react-modal';
 import BlankImage from "../Assets/Img/BlankImage.png";
 import { postAPI } from '../APIs/AxiosAPI';
+
+Modal.setAppElement('#root');
 
 function WritingPage() {
   const location = useLocation();
@@ -14,6 +17,13 @@ function WritingPage() {
   const inputRef = useRef([]);
 
   const [textContent, setTextContent] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const goToMain = () => {
+    navigate('/main');
+  };
 
   const onUpload = (e) => {
     const file = e.target.files[0];
@@ -93,6 +103,14 @@ function WritingPage() {
     console.log(userId);
   }, []);
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <Container>
       {selectedQuestion ? (
@@ -120,7 +138,25 @@ function WritingPage() {
         value={textContent}
         onChange={(e) => setTextContent(e.target.value)}
       />
-      <button type="button" onClick={handleUpload}>게시하기</button>
+      <ButtonContainer>
+        <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
+        <SubmitButton type="button" onClick={handleUpload}>게시하기</SubmitButton>
+      </ButtonContainer>
+
+      <StyledModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Exit Confirmation"
+      >
+        <ModalContent>
+          <h2>지금 나가시겠어요?</h2>
+          <p>작나가시면 지금까지 작성된<br/>내용은 저장되지 않습니다.</p>
+          <ButtonGroup>
+            <StyledButton onClick={closeModal}>취소</StyledButton>
+            <StyledButton onClick={() => { closeModal(); goToMain(); }}>나가기</StyledButton>
+          </ButtonGroup>
+        </ModalContent>
+      </StyledModal>
     </Container>
   );
 }
@@ -172,4 +208,126 @@ const QuestionText = styled.p`
   line-height: 24px; /* 120% */
   align-self: flex-start;
   padding-left: 8px;
+`;
+
+const ButtonContainer = styled.div`
+  width: 540px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  overflow: scroll;
+`;
+
+const ExitButton = styled.button`
+  width: 81px;
+  height: 32px;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+  border: none;
+  border-radius: 8px;
+  &:hover {
+    background: #F3F3F3;
+  }
+`;
+
+const SubmitButton = styled.button`
+  width: 81px;
+  height: 32px;
+  padding: 8px 16px;
+  background-color: #2C2C2C;
+  color: #FEFEFE;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+  border: none;
+  border-radius: 8px;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  margin-left: 190px;
+  gap: 10px;
+`;
+
+const StyledButton = styled.button`
+  width: 75px;
+  height: 40px;
+  padding: 8px 16px;
+  background-color: #2C2C2C;
+  color: #FEFEFE;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background: #1e1e1e;
+  }
+`;
+
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 346px;
+    height: 240px;
+    padding: 32px;
+    border-radius: 8px;
+    background: white;
+  }
+`;
+
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  color: #2C2C2C;
+
+  h2 {
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 28.8px */
+    letter-spacing: -0.48px;
+  }
+
+  p {
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+  }
 `;
