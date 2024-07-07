@@ -7,6 +7,7 @@ import WritingPage from './Pages/WritingPage';
 import LocalSignUp from './Pages/LocalSignUp';
 import GoogleSignUp from './Pages/GoogleSignUp';
 import Comment from './Components/Comment';
+import DetailPage from './Pages/DetailPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/write" element={<WritingPage />}/>
         <Route path="/register" element={<LocalSignUp />}/>
         <Route path="/register-google" element={<GoogleSignUp />}/>
+        <Route path="/detail" element={<DetailPage/>}/>
       </Routes>
     </div>
   );
