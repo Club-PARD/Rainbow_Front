@@ -88,9 +88,9 @@ function WritingPage() {
             const obj = {
                 id : userId,
                 data : {
-                    'question' : selectedQuestion,
-                    'imageFile' : imageFile,
-                    'text' : textContent,
+                    question : selectedQuestion,
+                    image : imageFile,
+                    text : textContent,
                 }
             };
             
