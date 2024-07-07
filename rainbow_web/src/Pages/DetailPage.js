@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { BackBtn } from "./BackBtn";
+import { BackBtn } from "../Components/BackBtn";
 import mainTest from "../Assets/Img/mainTest.png";
+import Header from "../Components/Header";
 
 function DetailPage(){
     const DetailInfo = {
@@ -12,6 +13,7 @@ function DetailPage(){
     }
     return(
         <Container>
+            <Header/>
             <DetailTopMenu>
                 <StyledBackBtn>
                     <BackBtn/>
