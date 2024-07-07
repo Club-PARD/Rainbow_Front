@@ -7,10 +7,10 @@ import { postAPI } from '../APIs/AxiosAPI';
 
 function WritingPage() {
   const location = useLocation();
-  const { selectedQuestion, userId } = location.state || {};
+  const { selectedQuestion, userId, questionIndex } = location.state || {};
 
   const [imageSrc, setImageSrc] = useState(BlankImage);
-  const [imageFile, setImageFile] = useState(BlankImage);
+  const [imageFile, setImageFile] = useState(null);
   const inputRef = useRef([]);
 
   const [textContent, setTextContent] = useState('');
@@ -19,7 +19,7 @@ function WritingPage() {
     const file = e.target.files[0];
     if (!file) {
       setImageSrc(BlankImage);
-      setImageFile(BlankImage);
+      setImageFile(null);
       return;
     }
     const fileExt = file.name.split('.').pop();
@@ -68,19 +68,20 @@ function WritingPage() {
     }
 
     try {
-      await uploadS3();
+      const s3Response = await uploadS3();
+      console.log("S3 Upload Response:", s3Response);
 
       const obj = {
         id: userId,
         data: {
-          'question': selectedQuestion,
-          'imageFile': imageFile,
+          'questionIndex': questionIndex,
+          'imageFile': s3Response.Location,
           'text': textContent,
         }
       };
-
+      console.log(obj.data.questionIndex);
       const json = JSON.stringify(obj);
-      const response = await postAPI(userId, json);
+      const response = await postAPI(`${process.env.REACT_APP_SERVER}/api/questions/${userId}/${selectedQuestion.id}/answer`, json);
       console.log(response);
     } catch (err) {
       console.log(err);
