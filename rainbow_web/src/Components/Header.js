@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
 
@@ -39,6 +40,7 @@ function Header() {
       </Img>
       <CustomButton1 onClick={goToCommunity}>기억의 꽃밭</CustomButton1>
       <CustomButton2 onClick={goToCommunity}>커뮤니티</CustomButton2>
+      <WriteBtn />
       <ImageButtonWrapper onClick={openModal}>
         <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
       </ImageButtonWrapper>
@@ -80,6 +82,7 @@ const HeaderContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  height: 10vh;
   background: white; 
   z-index: 1000; 
   box-sizing: border-box; 
@@ -114,7 +117,7 @@ const CustomButton1 = styled.button`
   line-height: 16px; 
   position: absolute;
   top: 32px;
-  right: 191px;
+  right: 700px;
   &:hover {
     border: 1px solid #F3F3F3;
   }
@@ -140,7 +143,7 @@ const CustomButton2 = styled.button`
   line-height: 16px; 
   position: absolute;
   top: 32px;
-  right: 104px;
+  right: 600px;
   &:hover {
     border: 1px solid #F3F3F3;
   }

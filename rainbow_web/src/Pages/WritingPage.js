@@ -149,9 +149,9 @@ function WritingPage() {
                         return;  // 함수 실행을 중단합니다.
                     }
 
-                    const formData = new FormData();  // 폼 데이터를 생성합니다.
-                    formData.append('file', imageFile);  // 이미지 파일을 폼 데이터에 추가합니다.
-                    formData.append('name', imageFile.name);  // 파일 이름을 폼 데이터에 추가합니다.
+                const formData = new FormData();  // 폼 데이터를 생성합니다.
+                formData.append('file', imageFile);  // 이미지 파일을 폼 데이터에 추가합니다.
+                formData.append('name', imageFile.name);  // 파일 이름을 폼 데이터에 추가합니다.
 
                     uploadS3(formData);  // S3에 파일을 업로드합니다.
                     
