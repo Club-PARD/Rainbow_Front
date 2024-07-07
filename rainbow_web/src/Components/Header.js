@@ -6,6 +6,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
+import { useRecoilValue } from 'recoil';
+import { UserID } from '../Atom';
+import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
 
@@ -17,6 +20,7 @@ function Header() {
   const [isActive, setIsActive] = useState(false);
   const [communityDot, setCommunityDot] = useState(false);
   const [memoryDot, setMemoryDot] = useState(false);
+  const userId = useRecoilValue(UserID);
 
   useEffect(() => {
     if (location.pathname === '/community') {
@@ -54,22 +58,34 @@ function Header() {
     navigate('/main');
   };
 
+  const handleToggleChange = async () => {
+    const newIsActive = !isActive;
+    setIsActive(newIsActive);
+
+    try {
+      const response = await patchPublicAPI(userId, newIsActive);
+      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <HeaderContainer>
       <LogoAndButtonContainer>
         <Img>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
-        <CustomButton1 onClick={goToMain} hasDot={memoryDot}>
+        <CustomButton onClick={goToMain} hasDot={memoryDot}>
           {memoryDot && <PurpleDot />}
           기억의 꽃밭
-        </CustomButton1>
+        </CustomButton>
       </LogoAndButtonContainer>
       <ButtonContainer>
-        <CustomButton2 onClick={goToCommunity} hasDot={communityDot}>
+        <CustomButton onClick={goToCommunity} hasDot={communityDot}>
           {communityDot && <PurpleDot />}
           커뮤니티
-        </CustomButton2>
+        </CustomButton>
       </ButtonContainer>
       <WriteBtn />
       <ImageButtonWrapper onClick={openModal}>
@@ -88,7 +104,7 @@ function Header() {
             <CheckBox
               type="checkbox"
               checked={isActive}
-              onChange={() => setIsActive(!isActive)}
+              onChange={handleToggleChange}
             />
             <ToggleSlider />
           </ToggleSwitch>
@@ -104,6 +120,8 @@ function Header() {
 
 export default Header;
 
+// Styled components remain unchanged
+
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -111,7 +129,6 @@ const HeaderContainer = styled.div`
   width: 1280px;
   height: 72px;
   background: #FEFEFE; 
-  align-items: flex-start;
   padding: 32px 40px 8px 40px;
   gap: 16px;
 `;
@@ -135,34 +152,10 @@ const ButtonContainer = styled.div`
   flex-grow: 1;
 `;
 
-const CustomButton1 = styled.button`
+const CustomButton = styled.button`
   display: flex;
   align-items: center;
   width: 93px;
-  height: 32px;
-  padding: 12px;
-  justify-content: center;
-  gap: 6px;
-  border-radius: 8px;
-  background-color: #FEFEFE;
-  border: none;
-  color: #2C2C2C;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16px; 
-  position: relative;
-
-  &:hover {
-    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
-  }
-`;
-
-const CustomButton2 = styled.button`
-  display: flex;
-  align-items: center;
-  width: 76px;
   height: 32px;
   padding: 12px;
   justify-content: center;
@@ -187,10 +180,10 @@ const PurpleDot = styled.div`
   width: 8px;
   height: 8px;
   background-color: #C5AAFF;
-  box-shadow: (0px 0px 4px rgba(151, 71, 255, 0.25));
+  box-shadow: 0px 0px 4px rgba(151, 71, 255, 0.25);
   border-radius: 50%;
   position: absolute;
-  left: -10px;
+  left: 0px; /* 글씨와 6px 간격을 유지하기 위해 조정 */
 `;
 
 const ImageButtonWrapper = styled.button`
@@ -253,6 +246,7 @@ const ToggleSwitch = styled.label`
   position: relative;
   width: 32px;
   height: 19px;
+  display: flex;
   align-items: center;
   border-radius: 4999.5px;
 `;
@@ -264,7 +258,6 @@ const ToggleSlider = styled.span`
   right: 0;
   bottom: 0;
   background-color: #C6C6C6;
-  -webkit-transition: .4s;
   transition: .4s;
   border-radius: 32px;
 
@@ -276,7 +269,6 @@ const ToggleSlider = styled.span`
     left: 2px;
     bottom: 2px;
     background-color: white;
-    -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
   }
@@ -292,8 +284,6 @@ const CheckBox = styled.input`
   }
 
   &:checked + ${ToggleSlider}:before {
-    -webkit-transform: translateX(13px);
-    -ms-transform: translateX(13px);
     transform: translateX(13px);
     background-color: #14AE5C;
   }
@@ -339,3 +329,4 @@ const LogoutButton = styled.button`
     background-color: #F3F3F3;
   }
 `;
+

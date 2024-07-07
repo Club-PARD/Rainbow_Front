@@ -19,10 +19,11 @@ function WriteBtn() {
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const userId = useRecoilValue(UserID);
   const navigate = useNavigate();
+  const server = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     if (userId) {
-      axios.get(`http://54.180.163.165:8080/api/questions/${userId}`)
+      axios.get(`${server}/api/questions/${userId}`)
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));
