@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { UserID } from '../Atom';
@@ -15,7 +16,9 @@ function WriteBtn() {
   const [questions, setQuestions] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const userId = useRecoilValue(UserID);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
@@ -40,9 +43,11 @@ function WriteBtn() {
     currentPage * ITEMS_PER_PAGE
   );
 
-  const questionIds = currentQuestions.map(item => item.question.id);
-  const questionTexts = currentQuestions.map(item => item.question.questionText);
-  const answeredStatuses = currentQuestions.map(item => item.answered);
+  const handleQuestionSelect = (questionId) => {
+    setSelectedQuestionId(questionId);
+  };
+
+  const selectedQuestion = questions.find(q => q.question.id === selectedQuestionId)?.question;
 
   return (
     <div>
@@ -58,10 +63,15 @@ function WriteBtn() {
           <img src={Delete} alt="Button" style={{ width: '100%', height: '100%' }} />
         </ExitButton>
         <QuestionList>
-          {questionIds.map((id, index) => (
-            <QuestionButton key={id} disabled={answeredStatuses[index]}>
-              <span>{`${id}.`}</span>
-              <span>{questionTexts[index]}</span>
+          {currentQuestions.map(item => (
+            <QuestionButton
+              key={item.question.id}
+              disabled={item.answered}
+              selected={item.question.id === selectedQuestionId}
+              onClick={() => handleQuestionSelect(item.question.id)}
+            >
+              <span>{`${item.question.id}.`}</span>
+              <span>{item.question.questionText}</span>
             </QuestionButton>
           ))}
         </QuestionList>
@@ -80,7 +90,13 @@ function WriteBtn() {
             </PageButtonContainer>
           </Pagination>
         )}
-        <SelectButton onClick={() => alert(`Page ${currentPage} selected`)}>
+        <SelectButton onClick={() => {
+          if (selectedQuestion) {
+            navigate('/write', { state: { selectedQuestion, userId } });
+          } else {
+            alert('질문을 선택해주세요.');
+          }
+        }}>
           <span>다음</span>
           <ArrowImage src={Arrow} alt="Arrow" />
         </SelectButton>
@@ -157,15 +173,12 @@ const QuestionButton = styled.button`
   align-self: stretch;
   width: 100%;
   height: 40px;
+  border: none;
   border-radius: 8px;
-  background-color: #FEFEFE;
+  background-color: ${props => props.selected ? '#4CAF50' : '#FEFEFE'};
   color: ${props => (props.disabled ? '#B0B0B0' : '#2C2C2C')};
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   &:hover {
-    background-color: ${props => (props.disabled ? '#FEFEFE' : '#F3F3F3')};
-  }
-  span:first-child {
-    flex-shrink: 0;
+    background-color: ${props => (props.selected ? '#4CAF50' : (props.disabled ? '#FEFEFE' : '#F3F3F3'))};
   }
 `;
 
@@ -201,9 +214,9 @@ const SelectButton = styled.button`
   justify-content: center;
   width: 65px;
   height: 36px;
-  position: absolute;
-  right: 16px;
-  bottom: 32px;
+  position: fixed;
+  right: 18px;
+  bottom: 24px;
   padding: 8px;
   gap: 4px;
   font-size: 14px;
