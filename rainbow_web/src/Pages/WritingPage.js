@@ -4,7 +4,7 @@ import AWS from "aws-sdk";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import BlankImage from "../Assets/Img/BlankImage.png";
-import Header from '../Components/Header';
+import WriteHeader from '../Components/WriteHeader';
 import { postAPI } from '../APIs/AxiosAPI';
 import { postImgAPI } from '../APIs/AxiosAPI';
 
@@ -72,7 +72,7 @@ function WritingPage() {
 
   return (
     <Div>
-      <Header />
+      <WriteHeader />
     <Container>
       {selectedQuestion ? (
         <QuestionText>{selectedQuestion.questionText}</QuestionText>
