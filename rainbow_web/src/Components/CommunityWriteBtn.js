@@ -193,10 +193,11 @@ const QuestionButton = styled.button`
   height: 40px;
   border: none;
   border-radius: 8px;
-  background-color: ${props => props.selected ? '#DDDDDD' : '#FEFEFE'};
-  color: #2C2C2C;
+  background-color: ${props => props.disabled ? '#FEFEFE' : (props.selected ? '#DDDDDD' : '#FEFEFE')};
+  color: ${props => props.disabled ? '#B0B0B0' : '#2C2C2C'};
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   &:hover {
-    background-color: ${props => (props.selected ? '#DDDDDD' : (props.disabled ? '#FEFEFE' : '#F3F3F3'))};
+    background-color:  ${props => props.disabled ? '#FEFEFE' : (props.selected ? '#DDDDDD' : '#F3F3F3')};
   }
 `;
 
@@ -226,7 +227,6 @@ const PageButtonContainer = styled.div`
 const PageButton = styled.button`
   width: 23px;
   height: 32px;
-  margin: 4px;
   border: none;
   border-radius: 8px;
   background-color: ${props => (props.active ? '#2C2C2C' : '#FEFEFE')};
