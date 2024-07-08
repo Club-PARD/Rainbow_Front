@@ -9,11 +9,13 @@ import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserID } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
+import ExitModal from './ExitModal'; // ExitModal 컴포넌트 추가
 
 Modal.setAppElement('#root');
 
 function Header({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [exitModalIsOpen, setExitModalIsOpen] = useState(false); // ExitModal 상태 추가
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,6 +46,14 @@ function Header({ onActiveChange }) {
     setModalIsOpen(false);
   };
 
+  const openExitModal = () => {
+    setExitModalIsOpen(true);
+  };
+
+  const closeExitModal = () => {
+    setExitModalIsOpen(false);
+  };
+
   const onSignOut = () => {
     handleSignOut();
     closeModal();
@@ -72,7 +82,7 @@ function Header({ onActiveChange }) {
   return (
     <HeaderContainer>
       <LogoAndButtonContainer>
-        <Img onClick={goToMain}>
+        <Img onClick={openExitModal}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
       </LogoAndButtonContainer>
@@ -102,6 +112,11 @@ function Header({ onActiveChange }) {
         <ModalInfoButton>이용 정책</ModalInfoButton>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
       </StyledModal>
+      <ExitModal
+        isOpen={exitModalIsOpen}
+        onRequestClose={closeExitModal}
+        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
+      />
     </HeaderContainer>
   );
 }
@@ -130,6 +145,7 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
+  cursor: pointer;
 `;
 
 const ImageButtonWrapper = styled.button`
