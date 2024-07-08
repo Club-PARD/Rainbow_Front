@@ -161,7 +161,6 @@ const HeaderContainer = styled.div`
   padding: 32px 40px 8px 40px;
   gap: 16px;
   filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
-  transition: filter 0.3s;
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -175,7 +174,6 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`

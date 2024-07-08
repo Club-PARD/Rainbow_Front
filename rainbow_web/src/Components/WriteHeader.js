@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -12,6 +12,23 @@ import { patchPublicAPI } from '../APIs/PublicAPI';
 import ExitModal from './ExitModal'; // ExitModal 컴포넌트 추가
 
 Modal.setAppElement('#root');
+
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+`;
 
 function WriteHeader({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -37,6 +54,14 @@ function WriteHeader({ onActiveChange }) {
       setMemoryDot(false);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (modalIsOpen || exitModalIsOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [modalIsOpen, exitModalIsOpen]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -80,7 +105,8 @@ function WriteHeader({ onActiveChange }) {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer blur={modalIsOpen || exitModalIsOpen}>
+      <GlobalStyle />
       <LogoAndButtonContainer>
         <Img onClick={openExitModal}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
@@ -92,9 +118,7 @@ function WriteHeader({ onActiveChange }) {
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        overlayElement={(props, contentElement) => (
-          <ModalOverlay {...props}>{contentElement}</ModalOverlay>
-        )}
+        overlayClassName="Overlay"
       >
         <ModalInfoButton>
           페이지 공개
@@ -132,6 +156,7 @@ const HeaderContainer = styled.div`
   background: #FEFEFE; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
+  filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -145,7 +170,6 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  cursor: pointer;
 `;
 
 const ImageButtonWrapper = styled.button`
@@ -280,7 +304,6 @@ const LogoutButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
-  cursor: pointer;
   background-color: white;
   color: #2C2C2C;
   font-family: Pretendard;

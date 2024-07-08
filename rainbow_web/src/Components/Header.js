@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,6 +11,23 @@ import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
+
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+`;
 
 function Header({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -35,6 +52,14 @@ function Header({ onActiveChange }) {
       setMemoryDot(false);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [modalIsOpen]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -74,7 +99,8 @@ function Header({ onActiveChange }) {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer blur={modalIsOpen}>
+      <GlobalStyle />
       <LogoAndButtonContainer>
         <Img onClick={goToMain}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
@@ -97,9 +123,7 @@ function Header({ onActiveChange }) {
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        overlayElement={(props, contentElement) => (
-          <ModalOverlay {...props}>{contentElement}</ModalOverlay>
-        )}
+        overlayClassName="Overlay"
       >
         <ModalInfoButton>
           페이지 공개
@@ -123,8 +147,6 @@ function Header({ onActiveChange }) {
 
 export default Header;
 
-// Styled components remain unchanged
-
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -134,6 +156,7 @@ const HeaderContainer = styled.div`
   background: #FEFEFE; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
+  filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -147,7 +170,6 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`
@@ -187,8 +209,8 @@ const PurpleDot = styled.div`
   border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: -16px; /* Adjust this value as needed to position the dot appropriately */
-  margin-left: 10px; /* Adjust this value to set the space between the dot and the text */
+  left: -16px;
+  margin-left: 10px;
   transform: translateY(-50%);
 `;
 
@@ -220,7 +242,7 @@ const StyledModal = styled(Modal)`
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
-  z-index: 10000; /* Ensures the modal is above other content */
+  z-index: 10000;
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -238,7 +260,7 @@ const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000; /* Ensures the overlay is above other content */
+  z-index: 10000;
 `;
 
 const Reg = styled.div`
@@ -323,7 +345,6 @@ const LogoutButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
-  cursor: pointer;
   background-color: white;
   color: #2C2C2C;
   font-family: Pretendard;
