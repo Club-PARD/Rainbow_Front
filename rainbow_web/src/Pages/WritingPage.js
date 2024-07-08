@@ -36,7 +36,7 @@ function WritingPage() {
       return;
     }
 
-    setImageSrc(file);
+    setImageSrc(URL.createObjectURL(file));
     setImageFile(file);
 
     const fileExt = file.name.split('.').pop();
@@ -85,7 +85,7 @@ function WritingPage() {
           alt="Img"
         />
       </ImgLabel>
-      <input
+      <StyledInput
         id="file-input"
         accept="image/*"
         multiple
@@ -144,16 +144,24 @@ const Container = styled.div`
 
 const Img = styled.img`
   width: 535px;
-  border: 1px solid #DDD;
-  border-radius: 8px;
+  height: 100%;
 `;
 
 const ImgLabel = styled.label`
+width: 535px;
+height: 100%;
+border: 1px solid #DDDDDD;
+border-radius: 8px;
   &:hover {
     cursor: pointer;
-    border-radius: 8px;
+    border: 1px solid #C6C6C6;
   }
 `;
+
+const StyledInput = styled.input`
+width: 535px;
+height: auto;
+`
 
 const Textarea = styled.textarea`
   width: 507px;
