@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import BlankImage from "../Assets/Img/BlankImage.png";
 import Header from '../Components/Header';
 import { postAPI } from '../APIs/AxiosAPI';
+import { postImgAPI } from '../APIs/AxiosAPI';
 
 Modal.setAppElement('#root');
 
@@ -26,13 +27,18 @@ function WritingPage() {
     navigate('/main');
   };
 
-  const onUpload = (e) => {
+  const onUpload = async(e) => {
     const file = e.target.files[0];
+    
     if (!file) {
       setImageSrc(BlankImage);
       setImageFile(null);
       return;
     }
+
+    setImageSrc(file);
+    setImageFile(file);
+
     const fileExt = file.name.split('.').pop();
 
     if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
@@ -40,62 +46,14 @@ function WritingPage() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append('image', file);
 
-    reader.onload = () => {
-      setImageSrc(reader.result || null);
-      setImageFile(file);
-    };
-  };
-
-  const uploadS3 = () => {
-    const REGION = process.env.REACT_APP_REGION;
-    const ACCESS_KEY_ID = process.env.REACT_APP_ACCESS_KEY_ID;
-    const SECRET_ACCESS_KEY = process.env.REACT_APP_SECRET_ACCESS_KEY;
-
-    AWS.config.update({
-      region: REGION,
-      accessKeyId: ACCESS_KEY_ID,
-      secretAccessKey: SECRET_ACCESS_KEY,
-    });
-
-    const upload = new AWS.S3.ManagedUpload({
-      params: {
-        ACL: 'public-read',
-        Bucket: '버킷명',
-        Key: `upload/${imageFile.name}`,
-        Body: imageFile,
-      }
-    });
-
-    return upload.promise();
-  };
-
-  const handleUpload = async () => {
-    if (!imageFile) {
-      alert('이미지를 등록해 주세요.');
-      return;
-    }
-
-    try {
-      const s3Response = await uploadS3();
-      console.log("S3 Upload Response:", s3Response);
-
-      const obj = {
-        id: userId,
-        data: {
-          'questionIndex': questionIndex,
-          'imageFile': s3Response.Location,
-          'text': textContent,
-        }
-      };
-      console.log(obj.data.questionIndex);
-      const json = JSON.stringify(obj);
-      const response = await postAPI(`${process.env.REACT_APP_SERVER}/api/questions/${userId}/${selectedQuestion.id}/answer`, json);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
+    try{
+      const response = await postImgAPI(formData);
+      console.log(response.data);
+    } catch(error){
+      console.error('Error uploading file:', error);
     }
   };
 
@@ -143,7 +101,7 @@ function WritingPage() {
       />
       <ButtonContainer>
         <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
-        <SubmitButton type="button" onClick={handleUpload}>게시하기</SubmitButton>
+        <SubmitButton type="button">게시하기</SubmitButton>
       </ButtonContainer>
 
       <StyledModal
