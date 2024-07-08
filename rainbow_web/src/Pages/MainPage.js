@@ -3,8 +3,6 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import Comment from '../Components/Comment';
-
-//여기서 동운 코드
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -14,45 +12,39 @@ import mainTest2 from '../Assets/Img/mainTest2.png';
 import mainTest3 from '../Assets/Img/mainTest3.png';
 
 const postData = {
-  id : {
-      title: "무떡 웹파트",
-      img: mainTest,
-  },
-  id2 : {
-      title: "화이팅",
-      img: mainTest2
-  },
-  id3 : {
-    title: "만만세",
-    img: mainTest3
-  },
-  id4 : {
+  id: {
     title: "무떡 웹파트",
     img: mainTest,
   },
-  id5 : {
-      title: "화이팅",
-      img: mainTest2
+  id2: {
+    title: "화이팅",
+    img: mainTest2
   },
-  id6 : {
+  id3: {
     title: "만만세",
     img: mainTest3
-  },  
+  },
+  id4: {
+    title: "무떡 웹파트",
+    img: mainTest,
+  },
+  id5: {
+    title: "화이팅",
+    img: mainTest2
+  },
+  id6: {
+    title: "만만세",
+    img: mainTest3
+  },
   //계속 이런식으로
 }
 
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const [isActive, setIsActive] = useState(false);
-
-  const handleActiveChange = (active) => {
-    setIsActive(active);
-  };
-
   return (
-    <div>
-      <Header onActiveChange={handleActiveChange} />
+    <Container>
+      <Header />
       <StyledSwiper
         slidesPerView={3}
         spaceBetween={40}
@@ -66,12 +58,23 @@ function MainPage() {
           </StyledSwiperSlide>
         ))}
       </StyledSwiper>
-      {isActive && <Comment />} {/* isActive가 true일 때만 Comment 컴포넌트 렌더링 */}
-    </div>
+      <CommentContainer>
+        <Comment />
+      </CommentContainer>
+    </Container>
   );
 }
 
 export default MainPage;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
 
 const StyledSwiper = styled(Swiper)`
   width: 918px;
@@ -101,4 +104,12 @@ const Text = styled.div`
   padding: 10px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 0 0 6px 6px;
+`;
+
+const CommentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 757px;
 `;
