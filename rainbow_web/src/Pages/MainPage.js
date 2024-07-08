@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import Comment from '../Components/Comment';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
