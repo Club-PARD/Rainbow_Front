@@ -227,7 +227,6 @@ const PageButtonContainer = styled.div`
 const PageButton = styled.button`
   width: 23px;
   height: 32px;
-  margin: 4px;
   border: none;
   border-radius: 8px;
   background-color: ${props => (props.active ? '#2C2C2C' : '#FEFEFE')};
