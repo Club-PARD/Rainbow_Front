@@ -13,7 +13,7 @@ import ExitModal from './ExitModal'; // ExitModal 컴포넌트 추가
 
 Modal.setAppElement('#root');
 
-function Header({ onActiveChange }) {
+function WriteHeader({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [exitModalIsOpen, setExitModalIsOpen] = useState(false); // ExitModal 상태 추가
   const { handleSignOut } = useContext(AuthContext);
@@ -121,7 +121,7 @@ function Header({ onActiveChange }) {
   );
 }
 
-export default Header;
+export default WriteHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -176,6 +176,7 @@ const StyledModal = styled(Modal)`
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
+  backdrop-filter: blur(4px);
   z-index: 10000; /* Ensures the modal is above other content */
   p {
     color: #2C2C2C;
