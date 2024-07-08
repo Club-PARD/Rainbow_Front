@@ -1,29 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Delete from '../Assets/Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
 
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+`;
+
 const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [isOpen]);
+
   return (
-    <StyledModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Exit Confirmation"
-    >
-      <ModalContent>
-        <ExitButton onClick={onRequestClose}>
-          <DeleteIcon src={Delete} alt="Close Button" />
-        </ExitButton>
-        <h2>지금 나가시겠어요?</h2>
-        <p>작성을 중단하면 지금까지 작성된<br/>내용이 저장되지 않습니다.</p>
-        <ButtonGroup>
-          <StyledButton onClick={onRequestClose}>취소</StyledButton>
-          <StyledButton onClick={() => { onRequestClose(); onExit(); }}>나가기</StyledButton>
-        </ButtonGroup>
-      </ModalContent>
-    </StyledModal>
+    <>
+      {isOpen && <GlobalStyle />}
+      <StyledModal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        overlayClassName="Overlay"
+        contentLabel="Exit Confirmation"
+      >
+        <ModalContent>
+          <ExitButton onClick={onRequestClose}>
+            <DeleteIcon src={Delete} alt="Close Button" />
+          </ExitButton>
+          <Title>지금 나가시겠어요?</Title>
+          <Content>나가시면 지금까지 작성된<br/>내용이 저장되지 않습니다.</Content>
+          <ButtonGroup>
+            <StyledButton2 onClick={onRequestClose}>취소</StyledButton2>
+            <StyledButton onClick={() => { onRequestClose(); onExit(); }}>나가기</StyledButton>
+          </ButtonGroup>
+        </ModalContent>
+      </StyledModal>
+    </>
   );
 };
 
@@ -38,49 +67,38 @@ const StyledModal = styled(Modal)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 346px;
-    height: 240px;
-    padding: 32px;
-    border-radius: 8px;
-    background: white;
-  }
 `;
 
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  gap: 8px;
-  color: #2C2C2C;
+  justify-content: flex-start;
+  position: relative;
+  width: 346px;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid #9B9B9B;
+  background: white;
+`;
 
-  h2 {
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 28.8px */
-    letter-spacing: -0.48px;
-  }
+const Title = styled.p`
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin: 15px 0 12px 0;
+`;
 
-  p {
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
-  }
+const Content = styled.p`
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0 0 32px 0;
 `;
 
 const ExitButton = styled.button`
@@ -92,11 +110,6 @@ const ExitButton = styled.button`
   right: 8px;
   border: none;
   background-color: transparent;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
 `;
 
 const DeleteIcon = styled.img`
@@ -109,12 +122,13 @@ const ButtonGroup = styled.div`
   display: flex;
   margin-left: auto;
   gap: 10px;
+  margin-bottom: 0;
 `;
 
 const StyledButton = styled.button`
   width: 75px;
   height: 40px;
-  padding: 8px 16px;
+  padding: 12px;
   background-color: #2C2C2C;
   color: #FEFEFE;
   font-family: Pretendard;
@@ -124,8 +138,25 @@ const StyledButton = styled.button`
   line-height: 16px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   &:hover {
     background: #1e1e1e;
+  }
+`;
+
+const StyledButton2 = styled.button`
+  width: 75px;
+  height: 40px;
+  padding: 12px;
+  background-color: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: 1px solid #9B9B9B;
+  border-radius: 8px;
+  &:hover {
+    background: #F3F3F3;
   }
 `;

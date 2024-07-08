@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import WriteBtn from './WriteBtn';
+import WriteBtn from './CommunityWriteBtn';
 import profile from '../Assets/Img/흰_프로필.png';
 import logo from '../Assets/Img/w_logo.svg';
 import { useRecoilValue } from 'recoil';
@@ -12,7 +12,24 @@ import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
 
-function Header({ onActiveChange }) { // onActiveChange prop 추가
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+`;
+
+function CommunityHeader({ onActiveChange, setModalOpen }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -36,18 +53,28 @@ function Header({ onActiveChange }) { // onActiveChange prop 추가
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [modalIsOpen]);
+
   const openModal = () => {
     setModalIsOpen(true);
+    setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+    setModalOpen(false);
   };
 
   const onSignOut = () => {
     handleSignOut();
     closeModal();
-    navigate('/'); // Navigate to the login page after signing out
+    navigate('/');
   };
 
   const goToCommunity = () => {
@@ -62,68 +89,67 @@ function Header({ onActiveChange }) { // onActiveChange prop 추가
     const newIsActive = !isActive;
     setIsActive(newIsActive);
     if (onActiveChange) {
-      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+      onActiveChange(newIsActive);
     }
 
     try {
       const response = await patchPublicAPI(userData.UserID, newIsActive);
-      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <HeaderContainer>
-      <LogoAndButtonContainer>
-        <Img onClick={goToMain}>
-          <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
-        </Img>
-        <CustomButton onClick={goToMain} hasDot={memoryDot}>
-          {memoryDot && <PurpleDot />}
-          기억의 꽃밭
-        </CustomButton>
-      </LogoAndButtonContainer>
-      <ButtonContainer>
-        <CustomButton onClick={goToCommunity} hasDot={communityDot}>
-          {communityDot && <PurpleDot />}
-          커뮤니티
-        </CustomButton>
-      </ButtonContainer>
-      <WriteBtn />
-      <ImageButtonWrapper onClick={openModal}>
-        <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
-      </ImageButtonWrapper>
-      <StyledModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        overlayElement={(props, contentElement) => (
-          <ModalOverlay {...props}>{contentElement}</ModalOverlay>
-        )}
-      >
-        <ModalInfoButton>
-          페이지 공개
-          <ToggleSwitch>
-            <CheckBox
-              type="checkbox"
-              checked={isActive}
-              onChange={handleToggleChange}
-            />
-            <ToggleSlider />
-          </ToggleSwitch>
-        </ModalInfoButton>
-        <Reg />
-        <ModalInfoButton>회원 정보 수정</ModalInfoButton>
-        <ModalInfoButton>이용 정책</ModalInfoButton>
-        <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
-      </StyledModal>
-    </HeaderContainer>
+    <>
+      <HeaderContainer blur={modalIsOpen}>
+        <LogoAndButtonContainer>
+          <Img onClick={goToMain}>
+            <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
+          </Img>
+          <CustomButton onClick={goToMain} hasDot={memoryDot}>
+            {memoryDot && <PurpleDot />}
+            기억의 꽃밭
+          </CustomButton>
+        </LogoAndButtonContainer>
+        <ButtonContainer>
+          <CustomButton onClick={goToCommunity} hasDot={communityDot}>
+            {communityDot && <PurpleDot />}
+            커뮤니티
+          </CustomButton>
+        </ButtonContainer>
+        <WriteBtn />
+        <ImageButtonWrapper onClick={openModal}>
+          <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
+        </ImageButtonWrapper>
+        <StyledModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          overlayClassName="Overlay"
+        >
+          <ModalInfoButton>
+            페이지 공개
+            <ToggleSwitch>
+              <CheckBox
+                type="checkbox"
+                checked={isActive}
+                onChange={handleToggleChange}
+              />
+              <ToggleSlider />
+            </ToggleSwitch>
+          </ModalInfoButton>
+          <Reg />
+          <ModalInfoButton>회원 정보 수정</ModalInfoButton>
+          <ModalInfoButton>이용 정책</ModalInfoButton>
+          <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
+        </StyledModal>
+      </HeaderContainer>
+      {modalIsOpen && <GlobalStyle />}
+    </>
   );
 }
 
-export default Header;
-
-// Styled components remain unchanged
+export default CommunityHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -133,7 +159,8 @@ const HeaderContainer = styled.div`
   height: 72px;
   background: #131313; 
   padding: 32px 40px 8px 40px;
-  gap: 8px;
+  gap: 16px;
+  filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -147,7 +174,6 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`
@@ -187,7 +213,7 @@ const PurpleDot = styled.div`
   box-shadow: 0px 0px 4px rgba(151, 71, 255, 0.25);
   border-radius: 50%;
   position: absolute;
-  left: 0px; /* 글씨와 6px 간격을 유지하기 위해 조정 */
+  left: 0px;
 `;
 
 const ImageButtonWrapper = styled.button`
@@ -218,7 +244,7 @@ const StyledModal = styled(Modal)`
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
-  z-index: 10000; /* Ensures the modal is above other content */
+  z-index: 10000;
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -227,16 +253,6 @@ const StyledModal = styled(Modal)`
     font-weight: 400;
     line-height: 24px; 
   }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000; /* Ensures the overlay is above other content */
 `;
 
 const Reg = styled.div`
@@ -321,7 +337,6 @@ const LogoutButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
-  cursor: pointer;
   background-color: white;
   color: #2C2C2C;
   font-family: Pretendard;

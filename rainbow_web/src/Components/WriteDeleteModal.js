@@ -1,30 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Delete from '../Assets/Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
 
-const WriteDeleteModal = ({ isOpen, onRequestClose }) => {
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+`;
+
+const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }, [isOpen]);
+
   return (
-    <StyledModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Delete Confirmation"
-    >
-      <ModalContent>
-        <h2>삭제하시겠어요?</h2>
-        <p>지워진 질문은 언제나<br/>다시 입력하실 수 있습니다.</p>
-        <ButtonGroup>
-          <StyledButton onClick={onRequestClose}>취소</StyledButton>
-          <StyledButton onClick={onRequestClose}>삭제하기</StyledButton>
-        </ButtonGroup>
-      </ModalContent>
-    </StyledModal>
+    <>
+      {isOpen && <GlobalStyle />}
+      <StyledModal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        overlayClassName="Overlay"
+        contentLabel="Exit Confirmation"
+      >
+        <ModalContent>
+          <ExitButton onClick={onRequestClose}>
+            <DeleteIcon src={Delete} alt="Close Button" />
+          </ExitButton>
+          <Title>삭제하시겠어요?</Title>
+          <Content>지워진 질문은 언제나<br/>다시 입력하실 수 있습니다..</Content>
+          <ButtonGroup>
+            <StyledButton2 onClick={onRequestClose}>취소</StyledButton2>
+            <StyledButton onClick={() => { onRequestClose(); onExit(); }}>삭제하기</StyledButton>
+          </ButtonGroup>
+        </ModalContent>
+      </StyledModal>
+    </>
   );
 };
 
-export default WriteDeleteModal;
+export default ExitModal;
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -35,56 +67,63 @@ const StyledModal = styled(Modal)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 346px;
-    height: 240px;
-    padding: 32px;
-    border-radius: 8px;
-    background: white;
-  }
 `;
 
 const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  gap: 8px;
-  color: #2C2C2C;
+  justify-content: flex-start;
+  position: relative;
+  width: 346px;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid #9B9B9B;
+  background: white;
+`;
 
-  h2 {
-    color: #EC221F;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 28.8px */
-    letter-spacing: -0.48px;
-  }
+const Title = styled.p`
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin: 15px 0 12px 0;
+  color: #EC221F;
+`;
 
-  p {
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
-  }
+const Content = styled.p`
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0 0 32px 0;
+`;
+
+const ExitButton = styled.button`
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background-color: transparent;
+`;
+
+const DeleteIcon = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
-  margin-left: 190px;
+  margin-left: auto;
   gap: 10px;
+  margin-bottom: 0;
 `;
 
 const StyledButton = styled.button`
@@ -93,14 +132,32 @@ const StyledButton = styled.button`
   padding: 12px;
   background-color: #2C2C2C;
   color: #FEFEFE;
-  border: none;
-  border-radius: 8px;
   font-family: Pretendard;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 16px; /* 106.667% */
+  line-height: 16px;
+  border: none;
+  border-radius: 8px;
   &:hover {
     background: #1e1e1e;
+  }
+`;
+
+const StyledButton2 = styled.button`
+  width: 75px;
+  height: 40px;
+  padding: 12px;
+  background-color: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: 1px solid #9B9B9B;
+  border-radius: 8px;
+  &:hover {
+    background: #F3F3F3;
   }
 `;

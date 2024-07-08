@@ -108,7 +108,7 @@ function WriteHeader({ onActiveChange }) {
     <HeaderContainer blur={modalIsOpen || exitModalIsOpen}>
       <GlobalStyle />
       <LogoAndButtonContainer>
-        <Img onClick={openExitModal}>
+        <Img onClick={goToMain}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
       </LogoAndButtonContainer>
@@ -136,11 +136,6 @@ function WriteHeader({ onActiveChange }) {
         <ModalInfoButton>이용 정책</ModalInfoButton>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
       </StyledModal>
-      <ExitModal
-        isOpen={exitModalIsOpen}
-        onRequestClose={closeExitModal}
-        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
-      />
     </HeaderContainer>
   );
 }
