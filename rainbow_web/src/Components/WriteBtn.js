@@ -71,8 +71,8 @@ function WriteBtn() {
               selected={item.question.id === selectedQuestionId}
               onClick={() => handleQuestionSelect(item.question.id)}
             >
-              <span>{`${item.question.id}.`}</span>
-              <span>{item.question.questionText}</span>
+              <NumberBox>{`${item.question.id}.`}</NumberBox>
+              <QuestionText>{item.question.questionText}</QuestionText>
             </QuestionButton>
           ))}
         </QuestionList>
@@ -170,7 +170,6 @@ const QuestionList = styled.div`
 const QuestionButton = styled.button`
   display: flex;
   padding: 8px;
-  gap: 16px;
   align-items: center;
   align-self: stretch;
   width: 100%;
@@ -182,6 +181,17 @@ const QuestionButton = styled.button`
   &:hover {
     background-color: ${props => (props.selected ? '#DDDDDD' : (props.disabled ? '#FEFEFE' : '#F3F3F3'))};
   }
+`;
+
+const NumberBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 30px; /* 숫자와 질문 사이 간격을 줄이기 위해 조정 */
+`;
+
+const QuestionText = styled.span`
+  margin-left: 8px; /* 간격을 줄이기 위해 조정 */
 `;
 
 const Pagination = styled.div`
