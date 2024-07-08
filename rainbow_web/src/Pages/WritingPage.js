@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import AWS from "aws-sdk";
-import styled from "styled-components";
+import styled from 'styled-components';
 import Modal from 'react-modal';
-import BlankImage from "../Assets/Img/BlankImage.png";
+import BlankImage from '../Assets/Img/BlankImage.png';
+import Delete from '../Assets/Img/삭제버튼.png';
 import WriteHeader from '../Components/WriteHeader';
-import { postAPI } from '../APIs/AxiosAPI';
 import { postImgAPI } from '../APIs/AxiosAPI';
 
 Modal.setAppElement('#root');
@@ -27,9 +26,9 @@ function WritingPage() {
     navigate('/main');
   };
 
-  const onUpload = async(e) => {
+  const onUpload = async (e) => {
     const file = e.target.files[0];
-    
+
     if (!file) {
       setImageSrc(BlankImage);
       setImageFile(null);
@@ -49,10 +48,10 @@ function WritingPage() {
     const formData = new FormData();
     formData.append('image', file);
 
-    try{
+    try {
       const response = await postImgAPI(formData);
       console.log(response.data);
-    } catch(error){
+    } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
@@ -73,52 +72,52 @@ function WritingPage() {
   return (
     <Div>
       <WriteHeader />
-    <Container>
-      {selectedQuestion ? (
-        <QuestionText>{selectedQuestion.questionText}</QuestionText>
-      ) : (
-        <QuestionText>질문이 선택되지 않았습니다.</QuestionText>
-      )}
-      <ImgLabel htmlFor="file-input">
-        <Img
-          src={imageSrc}
-          alt="Img"
+      <Container>
+        {selectedQuestion ? (
+          <QuestionText>{selectedQuestion.questionText}</QuestionText>
+        ) : (
+          <QuestionText>질문이 선택되지 않았습니다.</QuestionText>
+        )}
+        <ImgLabel htmlFor="file-input">
+          <Img src={imageSrc} alt="Img" />
+        </ImgLabel>
+        <StyledInput
+          id="file-input"
+          accept="image/*"
+          multiple
+          type="file"
+          ref={el => (inputRef.current[0] = el)}
+          onChange={e => onUpload(e)}
+          style={{ display: 'none' }}
         />
-      </ImgLabel>
-      <StyledInput
-        id="file-input"
-        accept="image/*"
-        multiple
-        type="file"
-        ref={el => (inputRef.current[0] = el)}
-        onChange={e => onUpload(e)}
-        style={{ display: 'none' }}
-      />
-      <Textarea
-        placeholder="사진과 글을 올릴 수 있습니다."
-        value={textContent}
-        onChange={(e) => setTextContent(e.target.value)}
-      />
-      <ButtonContainer>
-        <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
-        <SubmitButton type="button">게시하기</SubmitButton>
-      </ButtonContainer>
+        <Textarea
+          placeholder="사진과 글을 올릴 수 있습니다."
+          value={textContent}
+          onChange={e => setTextContent(e.target.value)}
+        />
+        <ButtonContainer>
+          <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
+          <SubmitButton type="button">게시하기</SubmitButton>
+        </ButtonContainer>
 
-      <StyledModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Exit Confirmation"
-      >
-        <ModalContent>
-          <h2>지금 나가시겠어요?</h2>
-          <p>작나가시면 지금까지 작성된<br/>내용은 저장되지 않습니다.</p>
-          <ButtonGroup>
-            <StyledButton onClick={closeModal}>취소</StyledButton>
-            <StyledButton onClick={() => { closeModal(); goToMain(); }}>나가기</StyledButton>
-          </ButtonGroup>
-        </ModalContent>
-      </StyledModal>
-    </Container>
+        <StyledModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Exit Confirmation"
+        >
+          <ModalContent>
+            <CloseButton onClick={closeModal}>
+              <DeleteIcon src={Delete} alt="Close Button" />
+            </CloseButton>
+            <h2>지금 나가시겠어요?</h2>
+            <p>작성을 중단하면 지금까지 작성된<br />내용이 저장되지 않습니다.</p>
+            <ButtonGroup>
+              <StyledButton onClick={closeModal}>취소</StyledButton>
+              <StyledButton onClick={() => { closeModal(); goToMain(); }}>나가기</StyledButton>
+            </ButtonGroup>
+          </ModalContent>
+        </StyledModal>
+      </Container>
     </Div>
   );
 }
@@ -129,7 +128,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const Container = styled.div`
   width: 1280px;
@@ -148,10 +147,10 @@ const Img = styled.img`
 `;
 
 const ImgLabel = styled.label`
-width: 535px;
-height: 100%;
-border: 1px solid #DDDDDD;
-border-radius: 8px;
+  width: 535px;
+  height: 100%;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
   &:hover {
     cursor: pointer;
     border: 1px solid #C6C6C6;
@@ -159,9 +158,9 @@ border-radius: 8px;
 `;
 
 const StyledInput = styled.input`
-width: 535px;
-height: auto;
-`
+  width: 535px;
+  height: auto;
+`;
 
 const Textarea = styled.textarea`
   width: 507px;
@@ -230,9 +229,26 @@ const SubmitButton = styled.button`
   border-radius: 8px;
 `;
 
+const CloseButton = styled.button`
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background-color: transparent;
+`;
+
+const DeleteIcon = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const ButtonGroup = styled.div`
   display: flex;
-  margin-left: 190px;
+  margin-left: auto;
   gap: 10px;
 `;
 
@@ -249,7 +265,6 @@ const StyledButton = styled.button`
   line-height: 16px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   &:hover {
     background: #1e1e1e;
   }
@@ -264,7 +279,8 @@ const StyledModal = styled(Modal)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
 
   & > div {
     display: flex;

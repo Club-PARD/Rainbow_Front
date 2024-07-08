@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import Delete from '../Assets/Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
 
@@ -62,6 +63,7 @@ const ModalContent = styled.div`
   color: #2C2C2C;
 
   h2 {
+    color: #EC221F;
     font-family: Pretendard;
     font-size: 24px;
     font-style: normal;
