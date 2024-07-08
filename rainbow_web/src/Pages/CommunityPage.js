@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import axios from 'axios';
 import CommunityHeader from '../Components/CommunityHeader';
-import sampleImage1 from '../Assets/Img/mainTest.png';
-import sampleImage2 from '../Assets/Img/mainTest2.png';
+
+const server = process.env.REACT_APP_API_URL;
 
 function CommunityPage() {
-  const images = [sampleImage1, sampleImage2, sampleImage1, sampleImage2];
+  const [images, setImages] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    axios.get(`${server}/api/post/community`)
+      .then(response => {
+        console.log(response.data);
+        setImages(response.data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   return (
-    <CommunityPageContainer>
+    <CommunityPageContainer isBlurred={isModalOpen}>
       <CommunityPageBackground />
-      <CommunityHeader />
+      <CommunityHeader setModalOpen={setModalOpen} />
       <Tip>
         <Text>Tip!</Text>
         <Text>커뮤니티에 내 게시물 공개 여부는 우측 상단 프로필 버튼을 통해서 설정할 수 있습니다.</Text>
       </Tip>
       <ImageContainer>
-        {images.map((image, index) => (
-          <ImageWrapper key={index}>
-            <Image src={image} alt={`sample ${index + 1}`} />
-            <OverlayText>Sample Text {index + 1}</OverlayText>
+        {images.map((data, index) => (
+          <ImageWrapper key={index} isLastOdd={index === images.length - 1 && images.length % 2 !== 0}>
+            <Image src={data.pictureUrl} alt={`sample ${index + 1}`} />
+            <OverlayText>{data.postTitle}</OverlayText>
           </ImageWrapper>
         ))}
       </ImageContainer>
@@ -42,20 +53,22 @@ const CommunityPageContainer = styled.div`
   align-items: center;
   min-height: 100vh;
   color: white;
+  backdrop-filter: ${props => (props.isBlurred ? 'blur(10px)' : 'none')};
+  transition: backdrop-filter 0.3s, background 0.3s;
 `;
 
 const Tip = styled.div`
   display: flex;
-  flex-direction: row; /* 텍스트를 가로로 배치 */
+  flex-direction: row;
   width: 556px;
   height: auto;
   padding: 16px;
   align-items: center;
   gap: 24px;
   border-radius: 8px;
-  border: 1px solid var(--grayscale-900, #393939);
+  border: 1px solid #393939;
   background: #2C2C2C;
-  margin-bottom: 20px; /* Tip과 ImageContainer 사이에 간격 추가 */
+  margin-bottom: 24px;
 `;
 
 const Text = styled.div`
@@ -72,12 +85,13 @@ const ImageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 556px;
+  height: auto;
   gap: 24px;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const ImageWrapper = styled.div`
-  flex: 0 1 calc(50% - 12px); /* 간격의 절반을 양쪽에 추가 */
+  flex: 0 1 calc(50% - 12px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,19 +101,18 @@ const ImageWrapper = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 262px;
+  height: 318px;
   object-fit: cover;
   border-radius: 8px;
 `;
 
 const OverlayText = styled.div`
   position: absolute;
-  width: 246px;
-  height: 60px;
+  width: 222px;
+  height: 49px;
   bottom: 0;
-  color: #131313;
-  //background: rgba(0, 0, 0, 0.5);
+  color: #FEFEFE;
   padding: 18px 12px 12px 12px;
   border-radius: 4px;
   font-family: "Geist Mono";
