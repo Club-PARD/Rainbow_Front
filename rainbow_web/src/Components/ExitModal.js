@@ -1,8 +1,33 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import Delete from '../Assets/Img/삭제버튼.png';
 
 Modal.setAppElement('#root');
+
+const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
+  return (
+    <StyledModal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      contentLabel="Exit Confirmation"
+    >
+      <ModalContent>
+        <ExitButton onClick={onRequestClose}>
+          <DeleteIcon src={Delete} alt="Close Button" />
+        </ExitButton>
+        <h2>지금 나가시겠어요?</h2>
+        <p>작성을 중단하면 지금까지 작성된<br/>내용이 저장되지 않습니다.</p>
+        <ButtonGroup>
+          <StyledButton onClick={onRequestClose}>취소</StyledButton>
+          <StyledButton onClick={() => { onRequestClose(); onExit(); }}>나가기</StyledButton>
+        </ButtonGroup>
+      </ModalContent>
+    </StyledModal>
+  );
+};
+
+export default ExitModal;
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -58,9 +83,31 @@ const ModalContent = styled.div`
   }
 `;
 
+const ExitButton = styled.button`
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
+const DeleteIcon = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const ButtonGroup = styled.div`
   display: flex;
-  margin-left: 190px;
+  margin-left: auto;
   gap: 10px;
 `;
 
@@ -82,24 +129,3 @@ const StyledButton = styled.button`
     background: #1e1e1e;
   }
 `;
-
-const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
-  return (
-    <StyledModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Exit Confirmation"
-    >
-      <ModalContent>
-        <h2>지금 나가시겠어요?</h2>
-        <p>작나가시면 지금까지 작성된<br/>내용은 저장되지 않습니다.</p>
-        <ButtonGroup>
-          <StyledButton onClick={onRequestClose}>취소</StyledButton>
-          <StyledButton onClick={() => { onRequestClose(); onExit(); }}>나가기</StyledButton>
-        </ButtonGroup>
-      </ModalContent>
-    </StyledModal>
-  );
-};
-
-export default ExitModal;
