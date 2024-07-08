@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { BackBtn } from "../Components/BackBtn";
 import mainTest from "../Assets/Img/mainTest.png";
-import Header from "../Components/Header";
+import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal'; // 모달 컴포넌트 임포트
 
 function DetailPage() {
