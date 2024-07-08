@@ -133,7 +133,7 @@ const HeaderContainer = styled.div`
   height: 72px;
   background: #131313; 
   padding: 32px 40px 8px 40px;
-  gap: 16px;
+  gap: 8px;
 `;
 
 const LogoAndButtonContainer = styled.div`
