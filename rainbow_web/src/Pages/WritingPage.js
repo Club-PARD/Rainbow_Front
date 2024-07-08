@@ -112,7 +112,7 @@ function WritingPage() {
             <p>작성을 중단하면 지금까지 작성된<br />내용이 저장되지 않습니다.</p>
             <ButtonGroup>
               <StyledButton onClick={closeModal}>취소</StyledButton>
-              <StyledButton onClick={() => { closeModal(); goToMain(); }}>나가기</StyledButton>
+              <StyledButton2 onClick={() => { closeModal(); goToMain(); }}>나가기</StyledButton2>
             </ButtonGroup>
           </ModalContent>
         </StyledModal>
@@ -255,6 +255,24 @@ const StyledButton = styled.button`
   width: 75px;
   height: 40px;
   padding: 8px 16px;
+  background-color: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  border: 1px solid #9B9B9B;
+  border-radius: 8px;
+  &:hover {
+    background: #F3F3F3;
+  }
+`;
+
+const StyledButton2 = styled.button`
+  width: 75px;
+  height: 40px;
+  padding: 8px 16px;
   background-color: #2C2C2C;
   color: #FEFEFE;
   font-family: Pretendard;
@@ -265,7 +283,7 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 8px;
   &:hover {
-    background: #1e1e1e;
+    background: #000;
   }
 `;
 

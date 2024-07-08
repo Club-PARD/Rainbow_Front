@@ -3,14 +3,27 @@ import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import styled from 'styled-components';
-import { UserData } from '../Atom';
+import styled, { createGlobalStyle } from 'styled-components';
+import { UserID } from '../Atom';
 import Delete from '../Assets/Img/삭제버튼.png';
 import Arrow from '../Assets/Img/arrow.png';
 
 Modal.setAppElement('#root');
 
 const ITEMS_PER_PAGE = 8;
+
+const GlobalStyle = createGlobalStyle`
+  .Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+  }
+`;
 
 function WriteBtn() {
   const [questions, setQuestions] = useState([]);
@@ -52,12 +65,13 @@ function WriteBtn() {
 
   return (
     <div>
+      <GlobalStyle />
       <WriteButton onClick={() => setModalIsOpen(true)}>글 쓰기</WriteButton>
-      <CustomModal
+      <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Questions Modal"
-        style={{ overlay: { backgroundColor: 'rgba(0, 0, 0, 0.75)', zIndex: 10000 } }}
+        overlayClassName="Overlay"
       >
         <Title>추억할 질문을 선택해주세요</Title>
         <ExitButton onClick={() => setModalIsOpen(false)}>
@@ -101,7 +115,7 @@ function WriteBtn() {
           <span>다음</span>
           <ArrowImage src={Arrow} alt="Arrow" />
         </SelectButton>
-      </CustomModal>
+      </StyledModal>
     </div>
   );
 }
@@ -121,6 +135,7 @@ const WriteButton = styled.button`
   color: #FEFEFE;
   border: none;
   border-radius: 8px;
+  z-index: 10002;
 `;
 
 const ExitButton = styled.button`
@@ -134,7 +149,7 @@ const ExitButton = styled.button`
   background-color: #FEFEFE;
 `;
 
-const CustomModal = styled(Modal)`
+const StyledModal = styled(Modal)`
   display: flex;
   width: 420px;
   height: 452px;
@@ -146,9 +161,11 @@ const CustomModal = styled(Modal)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  background: #FEFEFE;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #C6C6C6;
   border-radius: 8px;
+  z-index: 10002;
 `;
 
 const Title = styled.div`
@@ -187,11 +204,11 @@ const NumberBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 30px; /* 숫자와 질문 사이 간격을 줄이기 위해 조정 */
+  width: 30px;
 `;
 
 const QuestionText = styled.span`
-  margin-left: 8px; /* 간격을 줄이기 위해 조정 */
+  margin-left: 8px;
 `;
 
 const Pagination = styled.div`
