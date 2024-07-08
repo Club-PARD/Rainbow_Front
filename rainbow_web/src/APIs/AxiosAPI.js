@@ -24,6 +24,20 @@ export const postAPI = async (userId, data) => {
   }
 };
 
+//작성페이지 이미지 API
+export const postImgAPI = async (data) => {
+  try {
+    const response = await axios.post(`${server}/api/file/profile`, data, {
+      headers: {
+        'image': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const patchAPI = async (postId, data) => {
   try {
     const response = await axios
