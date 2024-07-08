@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { UserEmail } from "../Atom";
+import { UserData } from "../Atom";
 import LoginHeader from "../Components/LoginHeader";
 import { postMemberAPI } from "../APIs/RegisterAPI";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,8 @@ function GoogleSignUp(){
     //유효성 검사 관련 코드
     //회원가입 버튼을 눌렀을 때 빈칸이 있는지 없는지 확인
     //빈칸이 없다면 이메일과 비밀번호의 형식이 올바른 형식인지 확인
-    const [email, setEmail] = useRecoilState(UserEmail);
+    const [userData, setUserData] = useRecoilState(UserData);
+    const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
     const [nickname, setNickname] = useState("");
     const [petName, setPetName] = useState('');

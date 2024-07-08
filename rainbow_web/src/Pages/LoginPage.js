@@ -1,21 +1,21 @@
 import '../App.css';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { jwtDecode } from "jwt-decode";
 import styled from 'styled-components';
 import LoginHeader from '../Components/LoginHeader';
 import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
-import { LoginState, UserID, UserEmail } from '../Atom';
+import { LoginState, UserData } from '../Atom';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 
 function LoginPage() {
   const [ isLoggedIn, setIsLoggedIn ] = useRecoilState(LoginState);
-  const [ userID, setUserID ] = useRecoilState(UserID);
-  const [ userEmail, setUserEmail ] = useRecoilState(UserEmail);
+  const [ userData, setUserData ] = useRecoilState(UserData);
+  const data = useRecoilValue(UserData);
 
   const navigate = useNavigate();
 
@@ -23,23 +23,18 @@ function LoginPage() {
     try{
       console.log("Encoded JWT ID token: " + res.credential);
       const googleUser = jwtDecode(res.credential);
+      
       // google login 결과
-      console.log(googleUser.email);
-      setUserEmail(googleUser.email);
-      console.log(userEmail);
-
-      const response = await googleLoginAPI(googleUser.email);
-      // const response = await googleLoginAPI(res.credential);
-      // const response = await googleLoginAPI(googleUser.email);
-      // localStorage.setItem("token", response); // 로컬 스토리지에 토큰 저장
-      // console.log(localStorage.getItem("token"));
+      console.log(googleUser);
+      
+      // google login API
+      const response = await googleLoginAPI(googleUser);
 
       // server login 결과
       if(response) {
         console.log(response);
         setIsLoggedIn(true);
-        setUserID(response);
-        console.log(userID);
+        setUserData(response);
         navigate("../main");
       }
       else {
@@ -151,7 +146,6 @@ const Input = styled.input`
   border: solid 1px #DDD;
   border-radius: 8px;
 
-  font-family: Pretendard;
   font-size: 14px;
   font-weight: 400;
 

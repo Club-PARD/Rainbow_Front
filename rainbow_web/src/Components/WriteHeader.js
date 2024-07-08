@@ -7,7 +7,7 @@ import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
-import { UserID } from '../Atom';
+import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
 import ExitModal from './ExitModal'; // ExitModal 컴포넌트 추가
 
@@ -22,7 +22,7 @@ function WriteHeader({ onActiveChange }) {
   const [isActive, setIsActive] = useState(false);
   const [communityDot, setCommunityDot] = useState(false);
   const [memoryDot, setMemoryDot] = useState(false);
-  const userId = useRecoilValue(UserID);
+  const userData = useRecoilValue(UserData);
 
   useEffect(() => {
     if (location.pathname === '/community') {
@@ -72,7 +72,7 @@ function WriteHeader({ onActiveChange }) {
     }
 
     try {
-      const response = await patchPublicAPI(userId, newIsActive);
+      const response = await patchPublicAPI(userData.UserID, newIsActive);
       console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
     } catch (err) {
       console.error(err);
