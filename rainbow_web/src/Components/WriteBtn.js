@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled, { createGlobalStyle } from 'styled-components';
-import { UserID } from '../Atom';
+import { UserData } from '../Atom';
 import Delete from '../Assets/Img/삭제버튼.png';
 import Arrow from '../Assets/Img/arrow.png';
 
