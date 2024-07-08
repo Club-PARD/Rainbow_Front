@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Header from '../Components/Header';
 import Comment from '../Components/Comment';
 
-
 //여기서 동운 코드
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';

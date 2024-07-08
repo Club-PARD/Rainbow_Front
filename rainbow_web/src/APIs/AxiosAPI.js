@@ -8,7 +8,7 @@ export const getAPI = async (postId) => {
   // your code here
   try {
     const response = await axios
-    .get(`${server}/post/${postId}`);
+    .get(`${server}/api/post/${postId}`);
     return response.data;
   } catch(err) {
     console.error(err);
@@ -17,7 +17,8 @@ export const getAPI = async (postId) => {
 
 export const postAPI = async (userId, data) => {
   try {
-    const response = await axios.post(`${server}/post/${userId}`, data);
+    const config = {"Content-Type": 'application/json'};
+    const response = await axios.post(`${server}/api/post/${userId}`, data, config);
     return response;
   } catch (err) {
     console.error(err);
@@ -41,7 +42,7 @@ export const postImgAPI = async (data) => {
 export const patchAPI = async (postId, data) => {
   try {
     const response = await axios
-    .patch(`${server}/post/${postId}`, data);
+    .patch(`${server}/api/post/${postId}`, data);
     console.log(response);
     return response;
   } catch (err) {
@@ -53,7 +54,7 @@ export const deleteAPI = async (postId) => {
   // your code here
   try {
     const response = await axios
-    .delete(`${server}/post/${postId}`);
+    .delete(`${server}/api/post/${postId}`);
     console.log(response);
     return response;
   } catch(err) {
@@ -64,7 +65,7 @@ export const deleteAPI = async (postId) => {
 export const getAllAPI = async (userId) => {
   try {
     const response = await axios
-    .get(`${server}/post/find/${userId}`);
+    .get(`${server}/api/post/find/${userId}`);
     return response.data;
   } catch(err) {
     console.error(err);
@@ -74,7 +75,7 @@ export const getAllAPI = async (userId) => {
 export const getCountAPI = async (userId) => {
   try {
     const response = await axios
-    .get(`${server}/post/count/${userId}`);
+    .get(`${server}/api/post/count/${userId}`);
     return response;
   } catch(err) {
     console.log(err);

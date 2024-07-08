@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import BlankImage from '../Assets/Img/BlankImage.png';
 import WriteHeader from '../Components/WriteHeader';
-import { postImgAPI } from '../APIs/AxiosAPI';
+import { postImgAPI, postAPI } from '../APIs/AxiosAPI';
+import { useRecoilValue } from 'recoil';
+import { UserData } from '../Atom';
 import ExitModal from '../Components/ExitModal';
 
 Modal.setAppElement('#root');
@@ -13,12 +15,22 @@ function WritingPage() {
   const location = useLocation();
   const { selectedQuestion, questionIndex } = location.state || {};
 
+  const userData = useRecoilValue(UserData);
+
   const [imageSrc, setImageSrc] = useState(BlankImage);
   const [imageFile, setImageFile] = useState(null);
   const inputRef = useRef([]);
 
+  const [pictureLink, setPictureLink] = useState("");
+
   const [textContent, setTextContent] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  let [data, setData] = useState({
+    "postTitle": "",
+    "pictureURL": "",
+    "postContent": "",
+  });
 
   const navigate = useNavigate();
 
@@ -26,6 +38,7 @@ function WritingPage() {
     navigate('/main');
   };
 
+  // image upload
   const onUpload = async (e) => {
     const file = e.target.files[0];
 
@@ -51,10 +64,41 @@ function WritingPage() {
     try {
       const response = await postImgAPI(formData);
       console.log(response.data);
+      setPictureLink(response.data);
+      console.log(pictureLink);
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
+
+  // post upload
+  const handleUpload = () => {
+    // if (pictureLink == "") {
+    //   alert('이미지를 등록해 주세요.');
+    //   return;
+    // }
+    console.log(pictureLink);
+
+    setData({...data,
+      "postTitle": selectedQuestion.questionText,
+      "pictureURL": pictureLink,
+      "postContent": textContent,
+    });
+
+    console.log(data);
+    handlePost();
+  };
+
+  const handlePost = async () => {
+    try {
+      const response = await postAPI(userData.UserID, data);
+      console.log(response);
+
+      navigate("../main");
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     console.log(selectedQuestion);
@@ -96,7 +140,7 @@ function WritingPage() {
         />
         <ButtonContainer>
           <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
-          <SubmitButton type="button">게시하기</SubmitButton>
+          <SubmitButton type="button" onClick={handleUpload}>게시하기</SubmitButton>
         </ButtonContainer>
 
         <ExitModal
@@ -130,13 +174,8 @@ const Container = styled.div`
 
 const Img = styled.img`
   width: 535px;
-  height: 100%;
-`;
-
-const ImgLabel = styled.label`
-  width: 535px;
-  height: 100%;
-  border: 1px solid #DDDDDD;
+  // height: 100%;
+  border: 1px solid #DDD;
   border-radius: 8px;
   &:hover {
     cursor: pointer;
@@ -144,9 +183,15 @@ const ImgLabel = styled.label`
   }
 `;
 
+const ImgLabel = styled.label`
+  // width: 535px;
+  // height: 100%;
+`;
+
 const StyledInput = styled.input`
   width: 535px;
   height: auto;
+  border
 `;
 
 const Textarea = styled.textarea`
