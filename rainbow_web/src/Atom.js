@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 export const UserData = atom({
     key: 'UserData',
     default: {
-        UserID : "",
+        UserID : "ca183e8f-580e-43ac-b827-d47a1d1d62fe",
         UserEmail : ""
     },
 });

@@ -131,8 +131,8 @@ const WriteButton = styled.button`
   font-weight: 500;
   line-height: 11px;
   font-size: 14px;
-  background-color: #2C2C2C;
-  color: #FEFEFE;
+  background-color: #FEFEFE;
+  color: #2C2C2C;
   border: none;
   border-radius: 8px;
   z-index: 10002;
