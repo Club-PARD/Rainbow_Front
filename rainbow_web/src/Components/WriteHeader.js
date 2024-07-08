@@ -50,10 +50,6 @@ function Header({ onActiveChange }) {
     navigate('/'); // Navigate to the login page after signing out
   };
 
-  const goToCommunity = () => {
-    navigate('/community');
-  };
-
   const goToMain = () => {
     navigate('/main');
   };
@@ -79,18 +75,7 @@ function Header({ onActiveChange }) {
         <Img onClick={goToMain}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
-        <CustomButton onClick={goToMain} hasDot={memoryDot}>
-          {memoryDot && <PurpleDot />}
-          기억의 꽃밭
-        </CustomButton>
       </LogoAndButtonContainer>
-      <ButtonContainer>
-        <CustomButton onClick={goToCommunity} hasDot={communityDot}>
-          {communityDot && <PurpleDot />}
-          커뮤니티
-        </CustomButton>
-      </ButtonContainer>
-      <WriteBtn />
       <ImageButtonWrapper onClick={openModal}>
         <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
       </ImageButtonWrapper>
@@ -123,8 +108,6 @@ function Header({ onActiveChange }) {
 
 export default Header;
 
-// Styled components remain unchanged
-
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -147,49 +130,6 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  cursor: pointer;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  flex-grow: 1;
-`;
-
-const CustomButton = styled.button`
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 32px;
-  padding: 12px;
-  justify-content: center;
-  gap: 6px;
-  border-radius: 8px;
-  background-color: #FEFEFE;
-  border: none;
-  color: #2C2C2C;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16px; 
-
-  &:hover {
-    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
-  }
-`;
-
-const PurpleDot = styled.div`
-  width: 8px;
-  height: 8px;
-  background-color: #C5AAFF;
-  box-shadow: 0px 0px 4px rgba(151, 71, 255, 0.25);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: -16px; /* Adjust this value as needed to position the dot appropriately */
-  margin-left: 10px; /* Adjust this value to set the space between the dot and the text */
-  transform: translateY(-50%);
 `;
 
 const ImageButtonWrapper = styled.button`
