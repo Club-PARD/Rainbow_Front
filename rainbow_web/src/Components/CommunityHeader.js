@@ -4,15 +4,15 @@ import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WriteBtn from './WriteBtn';
-import profile from '../Assets/Img/프로필.png';
-import logo from '../Assets/Img/logo.svg';
+import profile from '../Assets/Img/흰_프로필.png';
+import logo from '../Assets/Img/w_logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserID } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
 
-function Header({ onActiveChange }) {
+function Header({ onActiveChange }) { // onActiveChange prop 추가
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -131,7 +131,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 1280px;
   height: 72px;
-  background: #FEFEFE; 
+  background: #131313; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
 `;
@@ -165,9 +165,9 @@ const CustomButton = styled.button`
   justify-content: center;
   gap: 6px;
   border-radius: 8px;
-  background-color: #FEFEFE;
+  background-color: #131313;
   border: none;
-  color: #2C2C2C;
+  color: #FEFEFE;
   font-family: Pretendard;
   font-size: 15px;
   font-style: normal;
@@ -176,7 +176,7 @@ const CustomButton = styled.button`
   position: relative;
 
   &:hover {
-    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
+    background-color: ${props => (props.hasDot ? '#131313' : '#393939')};
   }
 `;
 

@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 export const UserID = atom({
     key: 'UserID',
-    default: "",
+    default: "b768ff18-2c55-4ea7-a7ba-34352ac16a7f",
 });
 
 export const UserEmail = atom({
