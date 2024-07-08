@@ -4,27 +4,6 @@ import styled from 'styled-components';
 
 Modal.setAppElement('#root');
 
-const WriteDeleteModal = ({ isOpen, onRequestClose }) => {
-  return (
-    <StyledModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Delete Confirmation"
-    >
-      <ModalContent>
-        <h2>삭제하시겠어요?</h2>
-        <p>지워진 질문은 언제나<br/>다시 입력하실 수 있습니다.</p>
-        <ButtonGroup>
-          <StyledButton onClick={onRequestClose}>취소</StyledButton>
-          <StyledButton onClick={onRequestClose}>삭제하기</StyledButton>
-        </ButtonGroup>
-      </ModalContent>
-    </StyledModal>
-  );
-};
-
-export default WriteDeleteModal;
-
 const StyledModal = styled(Modal)`
   display: flex;
   align-items: center;
@@ -88,17 +67,39 @@ const ButtonGroup = styled.div`
 const StyledButton = styled.button`
   width: 75px;
   height: 40px;
-  padding: 12px;
+  padding: 8px 16px;
   background-color: #2C2C2C;
   color: #FEFEFE;
-  border: none;
-  border-radius: 8px;
   font-family: Pretendard;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 16px; /* 106.667% */
+  line-height: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   &:hover {
     background: #1e1e1e;
   }
 `;
+
+const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
+  return (
+    <StyledModal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      contentLabel="Exit Confirmation"
+    >
+      <ModalContent>
+        <h2>지금 나가시겠어요?</h2>
+        <p>작나가시면 지금까지 작성된<br/>내용은 저장되지 않습니다.</p>
+        <ButtonGroup>
+          <StyledButton onClick={onRequestClose}>취소</StyledButton>
+          <StyledButton onClick={() => { onRequestClose(); onExit(); }}>나가기</StyledButton>
+        </ButtonGroup>
+      </ModalContent>
+    </StyledModal>
+  );
+};
+
+export default ExitModal;

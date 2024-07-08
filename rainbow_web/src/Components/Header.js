@@ -159,7 +159,7 @@ const ButtonContainer = styled.div`
 const CustomButton = styled.button`
   display: flex;
   align-items: center;
-  width: 93px;
+  position: relative;
   height: 32px;
   padding: 12px;
   justify-content: center;
@@ -173,7 +173,6 @@ const CustomButton = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 16px; 
-  position: relative;
 
   &:hover {
     background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
@@ -187,7 +186,10 @@ const PurpleDot = styled.div`
   box-shadow: 0px 0px 4px rgba(151, 71, 255, 0.25);
   border-radius: 50%;
   position: absolute;
-  left: 0px; /* 글씨와 6px 간격을 유지하기 위해 조정 */
+  top: 50%;
+  left: -16px; /* Adjust this value as needed to position the dot appropriately */
+  margin-left: 10px; /* Adjust this value to set the space between the dot and the text */
+  transform: translateY(-50%);
 `;
 
 const ImageButtonWrapper = styled.button`
