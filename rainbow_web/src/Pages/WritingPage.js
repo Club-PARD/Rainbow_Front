@@ -11,7 +11,7 @@ Modal.setAppElement('#root');
 
 function WritingPage() {
   const location = useLocation();
-  const { selectedQuestion, userId, questionIndex } = location.state || {};
+  const { selectedQuestion, questionIndex } = location.state || {};
 
   const [imageSrc, setImageSrc] = useState(BlankImage);
   const [imageFile, setImageFile] = useState(null);
@@ -58,7 +58,6 @@ function WritingPage() {
 
   useEffect(() => {
     console.log(selectedQuestion);
-    console.log(userId);
   }, []);
 
   const openModal = () => {

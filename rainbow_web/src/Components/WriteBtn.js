@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { UserID } from '../Atom';
+import { UserData } from '../Atom';
 import Delete from '../Assets/Img/삭제버튼.png';
 import Arrow from '../Assets/Img/arrow.png';
 
@@ -17,13 +17,13 @@ function WriteBtn() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-  const userId = useRecoilValue(UserID);
+  const userData = useRecoilValue(UserData);
   const navigate = useNavigate();
   const server = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    if (userId) {
-      axios.get(`${server}/api/questions/${userId}`)
+    if (userData) {
+      axios.get(`${server}/api/questions/${userData.UserID}`)
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));
@@ -35,7 +35,7 @@ function WriteBtn() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [userId]);
+  }, [userData.UserID]);
 
   const totalPages = Math.ceil(questions.length / ITEMS_PER_PAGE);
 
@@ -93,7 +93,7 @@ function WriteBtn() {
         )}
         <SelectButton onClick={() => {
           if (selectedQuestion) {
-            navigate('/write', { state: { selectedQuestion, userId } });
+            navigate('/write', { state: { selectedQuestion } });
           } else {
             alert('질문을 선택해주세요.');
           }
