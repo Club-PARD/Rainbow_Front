@@ -34,13 +34,11 @@ const Img = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 10vh;
-  backdrop-filter: blur(5px);
-  box-sizing: border-box; 
+  box-sizing: border-box;
 `;
 
 const ToLogin = styled.button`
-    width: 80px;
+  width: 80px;
   height: 40px;
   position: fixed;
   top: 32px;
@@ -51,6 +49,7 @@ const ToLogin = styled.button`
   color: #FEFEFE;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 `
 
 export default LandingHeader;

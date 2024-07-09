@@ -16,7 +16,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={LoginState ? (<MainPage />) : (<LandingPage />)}/>
+        {/* <Route path="/" element={LoginState ? (<MainPage />) : (<LandingPage />)}/> */}
+        <Route path="/" element={<LandingPage />}/>
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/comment" element={<Comment />}/>
         <Route path="/community" element={<CommunityPage />}/>

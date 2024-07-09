@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function WriteBtn() {
+function CommunityWriteBtn() {
   const [questions, setQuestions] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -120,7 +120,7 @@ function WriteBtn() {
   );
 }
 
-export default WriteBtn;
+export default CommunityWriteBtn;
 
 const WriteButton = styled.button`
   width: 67px;
