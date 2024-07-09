@@ -33,6 +33,7 @@ export const postImgAPI = async (data) => {
         'image': 'multipart/form-data',
       },
     });
+    console.log(response);
     return response;
   } catch (err) {
     console.error(err);

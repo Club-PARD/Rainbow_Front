@@ -28,7 +28,7 @@ function WritingPage() {
 
   const [data, setData] = useState({
     postTitle: "",
-    pictureURL: "",
+    pictureUrl: "",
     postContent: "",
   });
 
@@ -40,15 +40,11 @@ function WritingPage() {
 
   const onTextContentHandler = (e) => {
     setTextContent(e.target.value);
-    setData({...data, textContent: e.target.value});
+    setData({...data, postContent: e.target.value});
   };
 
   const onQuestionHandler = () => {
-    setData({...data, postTitle: selectedQuestion});
-  };
-
-  const onPictureHandler = () => {
-    setData({...data, pictureURL: pictureLink});
+    setData({...data, postTitle: selectedQuestion.questionText});
   };
 
   // image upload
@@ -67,7 +63,7 @@ function WritingPage() {
     const fileExt = file.name.split('.').pop();
 
     if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
-      alert('jpg, png, jpg 파일만 업로드가 가능합니다.');
+      alert('jpg, png, jpeg 파일만 업로드가 가능합니다.');
       return;
     }
 
@@ -76,10 +72,8 @@ function WritingPage() {
 
     try {
       const response = await postImgAPI(formData);
+      setData({...data, pictureUrl: response.data});
       console.log(response.data);
-      setPictureLink(response.data);
-      console.log(pictureLink);
-      onPictureHandler();
     } catch (error) {
       console.error('Error uploading file:', error);
     }
@@ -91,7 +85,6 @@ function WritingPage() {
     //   alert('이미지를 등록해 주세요.');
     //   return;
     // }
-    console.log(pictureLink);
     console.log(data);
     try {
       const response = await postAPI(userData.user_id, data);
