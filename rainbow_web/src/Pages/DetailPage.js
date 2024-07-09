@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { BackBtn } from "../Components/BackBtn";
-import mainTest from "../Assets/Img/mainTest.png";
 import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal'; // 모달 컴포넌트 임포트
 import { getDetailAPI } from "../APIs/AxiosAPI";
@@ -17,13 +16,13 @@ function DetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-        const response = await getDetailAPI(params.postId);
-        console.log(response);
-        setResult(response);
+      const response = await getDetailAPI(params.postId);
+      console.log(response);
+      setResult(response);
     };
 
     fetchData();
-},[])
+  }, [])
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,7 +41,9 @@ function DetailPage() {
             <BackBtn />
           </StyledBackBtn>
           <EdleteBtn>
-            <EditBtn>수정하기</EditBtn>
+            <StyledLink to={`/edit/${params.postId}`}>
+              <EditBtn>수정하기</EditBtn>
+            </StyledLink>
             <DeleteBtn onClick={openModal}>삭제하기</DeleteBtn>
           </EdleteBtn>
         </DetailTopMenu>
@@ -108,16 +109,24 @@ const EdleteBtn = styled.div`
 `;
 
 const EditBtn = styled.button`
-  width: 50%;
-  color: #2C2C2C;
-  background-color: inherit;
-  border: none;
-  font-size: 15px;
-  font-weight: 500;
-  &:hover{
-    cursor: pointer;
-  }
-`;
+width: 100%;
+color: #2C2C2C;
+background-color: inherit;
+border: none;
+font-size: 15px;
+font-weight: 500;
+&:hover{
+cursor: pointer;
+}
+`
+
+const StyledLink = styled(Link)`
+width: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+text-decoration: none;
+`
 
 const DeleteBtn = styled.button`
   width: 50%;

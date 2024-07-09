@@ -11,6 +11,7 @@ import DetailPage from './Pages/DetailPage';
 import LandingPage from './Pages/LandingPage';
 import { LoginState } from './Atom';
 import { useRecoilValue } from 'recoil';
+import EditPage from './Pages/EditPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/register" element={<LocalSignUp />}/>
         <Route path="/register-google" element={<GoogleSignUp />}/>
         <Route path="/detail/:postId" element={<DetailPage/>}/>
+        <Route path="/edit/:postId" element={<EditPage/>}/>
       </Routes>
     </div>
   );
