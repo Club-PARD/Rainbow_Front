@@ -16,19 +16,17 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
-  width: 95%;
-
-  margin: 2rem;
+  width: 1280px;
+  height: 72px;
+  padding: 32px 40px 8px 40px;
+  gap: 16px;
 `
 
 const Img = styled.div`
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 32px;
-  left: 40px;
-  margin-right: 2rem;
+  width: 178px;
+  height: 32px;
 `;
 
 export default LoginHeader;
