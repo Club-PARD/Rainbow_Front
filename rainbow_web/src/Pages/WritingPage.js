@@ -191,7 +191,6 @@ const ImgLabel = styled.label`
 const StyledInput = styled.input`
   width: 535px;
   height: auto;
-  border
 `;
 
 const Textarea = styled.textarea`
@@ -244,6 +243,9 @@ const ExitButton = styled.button`
   &:hover {
     background: #F3F3F3;
   }
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -259,4 +261,7 @@ const SubmitButton = styled.button`
   line-height: 16px; /* 114.286% */
   border: none;
   border-radius: 8px;
+  &:hover{
+    cursor: pointer;
+  }
 `;

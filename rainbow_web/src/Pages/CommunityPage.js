@@ -98,6 +98,9 @@ const ImageWrapper = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 8px;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const Image = styled.img`
