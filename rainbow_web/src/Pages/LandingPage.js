@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function LandingPage () {
   return (
-    <div>
+    <Container>
       <TopBlurr />
       <LandingWrapper>
         <LandingHeader />
@@ -79,15 +79,22 @@ function LandingPage () {
         </LandingContent>
       </LandingWrapper>
       <BottomBlur />
-    </div>
+    </Container>
   );
 };
 
-const LandingWrapper = styled.div`
-  width: 100vw;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: auto;
+`;
 
-  padding: 15vh;
+const LandingWrapper = styled.div`
+  width: 100%;
+  height: auto;
 
   display: flex;
   flex-direction: column;
