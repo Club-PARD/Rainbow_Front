@@ -1,19 +1,20 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 import { postImgAPI } from "../APIs/AxiosAPI";
-import { getDetailAPI } from "../APIs/AxiosAPI";
+import { getDetailAPI } from "../APIs/PublicAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { patchDetailAPI } from "../APIs/PublicAPI";
+import Header from "../Components/Header";
 
 function EditPage() {
     const params = useParams();
     console.log(params);
-    const [result, setResult] = useState([]); //getAPI로 받은 값 저장할 useState
-    const [text, setText] = useState(""); //여기에 content
+    const [result, setResult] = useState([]); // getAPI로 받은 값 저장할 useState
+    const [text, setText] = useState(""); // 여기에 content
     const [data, setData] = useState({
         pictureUrl: "",
         postContent: "",
-      });
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,76 +22,78 @@ function EditPage() {
             console.log(response);
             setResult(response);
             setText(response.postContent);
+            setImageSrc(response.pictureUrl); // 초기 이미지를 설정
         };
 
         fetchData();
-    },[params])
+    }, [params]);
 
     console.log(text);
 
-    const contentHandler = (e) =>{
+    const contentHandler = (e) => {
         setText(e.target.value);
-        setData({...data, postContent: e.target.value});
-    }
+        setData({ ...data, postContent: e.target.value });
+    };
 
-    const [imageSrc, setImageSrc] = useState(result.pictureUrl);
-    const [imageFile, setImageFile] = useState(result.pictureUrl);
+    const [imageSrc, setImageSrc] = useState(""); // 초기값을 빈 문자열로 설정
+    const [imageFile, setImageFile] = useState(null);
     const inputRef = useRef([]);
 
     const onUpload = async (e) => {
         const file = e.target.files[0];
-    
+
         if (!file) {
-          setImageSrc(result.pictureUrl);
-          setImageFile(result.pictureUrl);
-          return;
+            setImageSrc(result.pictureUrl);
+            setImageFile(null);
+            return;
         }
-    
+
         setImageSrc(URL.createObjectURL(file));
         setImageFile(file);
-    
+
         const fileExt = file.name.split('.').pop();
-    
+
         if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
-          alert('jpg, png, jpg 파일만 업로드가 가능합니다.');
-          return;
+            alert('jpg, png, jpg 파일만 업로드가 가능합니다.');
+            return;
         }
-    
+
         const formData = new FormData();
         formData.append('image', file);
-    
-        try {
-          const response = await postImgAPI(formData);
-          setData({...data, pictureUrl: response.data});
-          console.log(response.data);
-        } catch (error) {
-          console.error('Error uploading file:', error);
-        }
-      };
-    
-      const navigate = useNavigate();
-    
-      const goToMain = () => {
-        navigate('/main');
-      };
 
-      const patchHandler = async() => {
+        try {
+            const response = await postImgAPI(formData);
+            setData({ ...data, pictureUrl: response.data });
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
+    const navigate = useNavigate();
+
+    const goToMain = () => {
+        navigate('/main');
+    };
+
+    const patchHandler = async () => {
         try {
             const response = await patchDetailAPI(params.postId, data);
             console.log(response);
-      
+
             navigate("../main");
-          } catch (err) {
+        } catch (err) {
             console.log(err);
-          }
-      }
+        }
+    };
 
     return (
         <Container>
+            <Header />
             <ContentWrapper>
                 <Title>{result.postTitle}</Title>
                 <ImgLabel htmlFor="file-input">
-                    <Img src={result.pictureUrl} alt="Img" />
+                    <Img src={imageSrc || result.pictureUrl} alt="Img" />
                 </ImgLabel>
                 <StyledInput
                     id="file-input"
@@ -103,12 +106,12 @@ function EditPage() {
                 />
                 <Content value={text} onChange={contentHandler}></Content>
                 <DetailBottomMenu>
-                    <CancelBtn>나가기</CancelBtn>
+                    <CancelBtn onClick={goToMain}>나가기</CancelBtn>
                     <UploadBtn onClick={patchHandler}>게시하기</UploadBtn>
                 </DetailBottomMenu>
             </ContentWrapper>
         </Container>
-    )
+    );
 }
 
 export default EditPage;
@@ -131,14 +134,6 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
-// const EdleteBtn = styled.div`
-//   width: 160px;
-//   height: 40px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
 
 const CancelBtn = styled.button`
   width: 69px;
@@ -165,21 +160,9 @@ const UploadBtn = styled.button`
   padding: 8px 16px 8px 16px;
   font-size: 14px;
   font-weight: 500;
-
   &:hover{
     cursor: pointer;
   }
-`;
-
-const Detail = styled.div`
-  width: 507px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #C6C6C6;
-  border-radius: 8px;
-  background-color: #FEFEFE;
-  padding: 24px;
 `;
 
 const Title = styled.div`

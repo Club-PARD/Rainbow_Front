@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { BackBtn } from "../Components/BackBtn";
 import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal'; // 모달 컴포넌트 임포트
-import { getDetailAPI } from "../APIs/AxiosAPI";
+import { getDetailAPI } from "../APIs/PublicAPI";
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
