@@ -36,7 +36,7 @@ function WriteBtn() {
 
   useEffect(() => {
     if (userData) {
-      axios.get(`${server}/api/questions/${userData.UserID}`)
+      axios.get(`${server}/api/questions/${userData.user_id}`)
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));

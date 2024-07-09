@@ -131,9 +131,9 @@ const Flower = styled.img`
   height: 100%;
   
   ${({ animate }) => animate && `
-    // animation: ${bloomAnimation} 2s;
-    animation: ${boingAnimation} 1s;
+    animation: ${bloomAnimation} 2s;
+    /* animation: ${boingAnimation} 1s; */ /* 주석 처리 */
   `}
-`;
+`
 
 export default Flowers;
