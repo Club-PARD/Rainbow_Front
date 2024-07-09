@@ -19,7 +19,7 @@ function GoogleSignUp(){
     const userInfo = {
         user : {
             email: {email},
-            nickname: {nickname},
+            name: {nickname},
             petName: {petName},
         }
     };
