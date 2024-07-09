@@ -91,8 +91,8 @@ function Header({ onActiveChange }) {
     }
 
     try {
-      const response = await patchPublicAPI(userData.UserID, newIsActive);
-      console.log(response.data);
+      const response = await patchPublicAPI(userData.user_id, newIsActive);
+      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
     } catch (err) {
       console.error(err);
     }
