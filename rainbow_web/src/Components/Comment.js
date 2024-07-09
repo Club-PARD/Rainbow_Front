@@ -15,7 +15,7 @@ const Comment = () => {
     // 서버에서 데이터를 가져오는 함수
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`${server}/comment/readAll/${ownerId.UserID}`);
+        const response = await axios.get(`${server}/comment/readAll/${ownerId.user_id}`);
         const fetchedComments = response.data.map((comment) => ({
           nickname: 'cheche',
           text: comment.userComment,

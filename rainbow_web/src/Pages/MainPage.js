@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
@@ -10,6 +10,12 @@ import { Pagination, Navigation } from 'swiper/modules';
 import mainTest from '../Assets/Img/mainTest.png';
 import mainTest2 from '../Assets/Img/mainTest2.png';
 import mainTest3 from '../Assets/Img/mainTest3.png';
+import { getPetNameAPI } from '../APIs/RegisterAPI';
+import { getCountAPI } from '../APIs/AxiosAPI';
+import { PostCount, UserData } from '../Atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import Flowers from '../Components/Flowers';
+import { Link } from 'react-router-dom';
 
 const postData = {
   id: {
@@ -36,15 +42,47 @@ const postData = {
     title: "만만세",
     img: mainTest3
   },
-  //계속 이런식으로
+  // 계속 이런식으로
 }
 
 Modal.setAppElement('#root');
 
 function MainPage() {
+  const userData = useRecoilValue(UserData);
+  const [petName, setPetName] = useState("");
+  const [postCount, setPostCount] = useRecoilState(PostCount);
+
+  const getPetName = async () => {
+    console.log(userData.user_id);
+    const response = await getPetNameAPI(userData.user_id);
+    console.log(response);
+    setPetName(response);
+  };
+
+  const getPostCount = async () => {
+    const response = await getCountAPI(userData.user_id);
+    console.log(response);
+    setPostCount(response);
+  };
+  
+  useEffect(() => {
+    getPostCount();
+    getPetName();
+  }, []);
+  
   return (
     <Container>
       <Header />
+      <Title>기억의 꽃밭은</Title>
+      <Explained>
+          반려동물과의 소중한 추억을 떠올리며<br/>
+          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br/><br/>
+          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br/>
+          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br/><br/>
+          {petName} 에 대한 이야기를 들려주세요
+      </Explained>
+      <Link to="./write" style={{textDecoration: "none"}}><ToWrite>글 작성하러 가기</ToWrite></Link>
+      <Flowers postCount={postCount} />
       <StyledSwiper
         slidesPerView={3}
         spaceBetween={40}
@@ -74,6 +112,46 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  background: radial-gradient(at 50% 50%, #C5AAFF, #FFFFFD, #FFFFFD);
+`;
+
+const Title = styled.div`
+  width: 362px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #2C2C2C;
+  font-family: "Geist Mono";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+`;
+
+const Explained = styled.div`
+  width: 362px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 16px;
+`;
+
+const ToWrite = styled.div`
+  width: 362px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #8952FF;
+  &:hover {
+    color: #6A3CCA;
+  }
 `;
 
 const StyledSwiper = styled(Swiper)`
