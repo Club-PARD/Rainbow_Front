@@ -49,6 +49,7 @@ const ToLogin = styled.button`
   color: #FEFEFE;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 `
 
 export default LandingHeader;

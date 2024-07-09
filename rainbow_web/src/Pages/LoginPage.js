@@ -170,6 +170,7 @@ const Label = styled.div`
 `
 
 const Intro = styled.div`
+  font-family: "GeistMono";
   text-align: center;
   font-size: 1.5rem;
   margin: 1.6rem;
