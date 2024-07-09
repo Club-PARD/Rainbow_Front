@@ -66,7 +66,7 @@ function WriteBtn() {
   return (
     <div>
       <GlobalStyle />
-      <WriteButton onClick={() => setModalIsOpen(true)}>글 쓰기</WriteButton>
+      <ToWrite onClick={() => setModalIsOpen(true)}>글 쓰기</ToWrite>
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -122,20 +122,20 @@ function WriteBtn() {
 
 export default WriteBtn;
 
-const WriteButton = styled.button`
-  width: 67px;
-  height: 32px;
-  padding: 12px;
-  font-family: Pretendard;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 11px;
-  font-size: 14px;
-  background-color: #2C2C2C;
-  color: #FEFEFE;
-  border: none;
-  border-radius: 8px;
+const ToWrite = styled.div`
+  width: 362px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #8952FF;\
   z-index: 10002;
+  &:hover {
+    color: #6A3CCA;
+  }
 `;
 
 const ExitButton = styled.button`
