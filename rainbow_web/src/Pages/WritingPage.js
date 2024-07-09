@@ -91,7 +91,7 @@ function WritingPage() {
 
   const handlePost = async () => {
     try {
-      const response = await postAPI(userData.UserID, data);
+      const response = await postAPI(userData.user_id, data);
       console.log(response);
 
       navigate("../main");
