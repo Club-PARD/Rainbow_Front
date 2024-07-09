@@ -64,7 +64,6 @@ const Comment = () => {
             </CommentItem>
           ))}
         </CommentList>
-        <ShadowBox />
       </Container>
       <CommentForm onSubmit={handleCommentSubmit}>
         <CommentFormContainer>
@@ -139,15 +138,6 @@ const CommentTextarea = styled.textarea`
   ::placeholder {
     color: #FEFEFE;
   }
-`;
-
-const ShadowBox = styled.div`
-  width: 500px;
-  height: 39px;
-  position: absolute;
-  bottom: 0px;
-  background: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
-  pointer-events: none;
 `;
 
 const CommentList = styled.ul`

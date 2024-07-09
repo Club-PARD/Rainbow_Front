@@ -93,6 +93,18 @@ export const getPostDataAPI = async (userId) => {
   }
 };
 
+export const getPostDetailAPI = async (postId) => {
+  try {
+    const response = await axios.get(`${server}/api/posts/${postId}`);
+    return response.data;
+    console.log(response.data);
+  } catch (error) {
+    console.error("Error fetching post details:", error);
+    return null;
+  }
+};
+
+
 // 참고용
 // export const getDataAPI = async () => {
 //     try {
