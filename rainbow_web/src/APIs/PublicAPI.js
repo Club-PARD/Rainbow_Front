@@ -6,3 +6,14 @@ export const patchPublicAPI = async (userId, check) => {
   const url = `${server}/api/user/update/publicCheck/${userId}?check=${check}`;
   return axios.patch(url);
 };
+
+export const patchDetailAPI = async (postId, data) => {
+  try {
+      const response = await axios
+          .patch(`${server}/api/post/${postId}`, data);
+      console.log(response);
+      return response;
+  } catch (err) {
+      console.error(err);
+  }
+};

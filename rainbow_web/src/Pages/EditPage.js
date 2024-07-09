@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { postImgAPI } from "../APIs/AxiosAPI";
 import { getDetailAPI } from "../APIs/AxiosAPI";
+import { useParams, useNavigate } from "react-router-dom";
+import { patchDetailAPI } from "../APIs/PublicAPI";
 
 function EditPage() {
     const params = useParams();
     console.log(params);
-    const [result, setResult] = useState([]);
-    const [text, setText] = useState("");
+    const [result, setResult] = useState([]); //getAPI로 받은 값 저장할 useState
+    const [text, setText] = useState(""); //여기에 content
+    const [data, setData] = useState({
+        pictureUrl: "",
+        postContent: "",
+      });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +30,7 @@ function EditPage() {
 
     const contentHandler = (e) =>{
         setText(e.target.value);
+        setData({...data, postContent: e.target.value});
     }
 
     const [imageSrc, setImageSrc] = useState(result.pictureUrl);
@@ -55,11 +61,29 @@ function EditPage() {
     
         try {
           const response = await postImgAPI(formData);
+          setData({...data, pictureUrl: response.data});
           console.log(response.data);
         } catch (error) {
           console.error('Error uploading file:', error);
         }
       };
+    
+      const navigate = useNavigate();
+    
+      const goToMain = () => {
+        navigate('/main');
+      };
+
+      const patchHandler = async() => {
+        try {
+            const response = await patchDetailAPI(params.postId, data);
+            console.log(response);
+      
+            navigate("../main");
+          } catch (err) {
+            console.log(err);
+          }
+      }
 
     return (
         <Container>
@@ -80,7 +104,7 @@ function EditPage() {
                 <Content value={text} onChange={contentHandler}></Content>
                 <DetailBottomMenu>
                     <CancelBtn>나가기</CancelBtn>
-                    <UploadBtn>게시하기</UploadBtn>
+                    <UploadBtn onClick={patchHandler}>게시하기</UploadBtn>
                 </DetailBottomMenu>
             </ContentWrapper>
         </Container>
@@ -95,7 +119,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-height: 100vh;
+  overflow: scroll;
   background-color: #FEFEFE;
 `;
 
