@@ -104,18 +104,20 @@ function MainPage() {
         <Flowers postCount={postCount} />
     
         <StyledSwiper
-          slidesPerView={3}
-          spaceBetween={40}
-          navigation
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {result && result.map((data, index) => (
-            <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-              <Text>{data.postTitle}</Text>
-            </StyledSwiperSlide>
-          ))}
-        </StyledSwiper>
+        slidesPerView={3}
+        spaceBetween={40}
+        navigation
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
+        {result.map((data, index) => (
+          <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+          <Link to={`/detail/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+            <Text>{data.postTitle}</Text>
+          </Link>
+        </StyledSwiperSlide>
+        ))}
+      </StyledSwiper>
 
         <CommentContainer>
           <Comment />

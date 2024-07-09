@@ -105,6 +105,17 @@ export const getPostDetailAPI = async (postId) => {
   }
 };
 
+//DetailPage.js 데이터 불러오는 API
+export const getDetailAPI = async (postId) => {
+  try {
+      const response = await axios.get(`${server}/api/post/${postId}`);
+      console.log(response.data);
+      return response.data;
+  } catch (err) {
+      console.error(err);
+  }
+}
+
 
 // 참고용
 // export const getDataAPI = async () => {
