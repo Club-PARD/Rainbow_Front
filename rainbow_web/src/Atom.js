@@ -18,3 +18,8 @@ export const PostCount = atom({
     key: 'PostCount',
     default: 0,
 });
+
+export const Increased = atom({
+    key: 'Increased',
+    default: false,
+});

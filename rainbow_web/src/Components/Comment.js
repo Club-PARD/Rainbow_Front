@@ -204,4 +204,7 @@ const Button = styled.button`
   background-color: #FEFEFE;
   color: #2C2C2C;
   border: none;
+  &:hover{
+    cursor: pointer;
+  }
 `;

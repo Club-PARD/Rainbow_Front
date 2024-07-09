@@ -165,6 +165,9 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const ImageButtonWrapper = styled.button`
@@ -180,6 +183,9 @@ const ImageButtonWrapper = styled.button`
     width: 100%;
     height: 100%;
     object-fit: cover; 
+  }
+  &:hover{
+    cursor: pointer;
   }
 `;
 
@@ -231,6 +237,9 @@ const ToggleSwitch = styled.label`
   display: flex;
   align-items: center;
   border-radius: 4999.5px;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const ToggleSlider = styled.span`
@@ -289,6 +298,9 @@ const ModalInfoButton = styled.button`
   &:hover {
     background-color: #F3F3F3;
   }
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const LogoutButton = styled.button`
@@ -308,5 +320,8 @@ const LogoutButton = styled.button`
   line-height: 22px;
   &:hover {
     background-color: #F3F3F3;
+  }
+  &:hover{
+    cursor: pointer;
   }
 `;

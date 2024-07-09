@@ -5,13 +5,14 @@ import Modal from 'react-modal';
 import BlankImage from '../Assets/Img/BlankImage.png';
 import WriteHeader from '../Components/WriteHeader';
 import { postImgAPI, postAPI } from '../APIs/AxiosAPI';
-import { useRecoilValue } from 'recoil';
-import { UserData } from '../Atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { UserData, Increased } from '../Atom';
 import ExitModal from '../Components/ExitModal';
 
 Modal.setAppElement('#root');
 
 function WritingPage() {
+  const [isIncreased, setIsIncreased] = useRecoilState(Increased);
   const location = useLocation();
   const { selectedQuestion, questionIndex } = location.state || {};
 
@@ -89,7 +90,9 @@ function WritingPage() {
     try {
       const response = await postAPI(userData.user_id, data);
       console.log(response);
-
+      if(response){
+        setIsIncreased(true);
+      }
       navigate("../main");
     } catch (err) {
       console.log(err);
@@ -188,7 +191,6 @@ const ImgLabel = styled.label`
 const StyledInput = styled.input`
   width: 535px;
   height: auto;
-  border
 `;
 
 const Textarea = styled.textarea`
@@ -241,6 +243,9 @@ const ExitButton = styled.button`
   &:hover {
     background: #F3F3F3;
   }
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -256,4 +261,7 @@ const SubmitButton = styled.button`
   line-height: 16px; /* 114.286% */
   border: none;
   border-radius: 8px;
+  &:hover{
+    cursor: pointer;
+  }
 `;

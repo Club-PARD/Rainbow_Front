@@ -173,6 +173,9 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -202,6 +205,7 @@ const CustomButton = styled.button`
 
   &:hover {
     background-color: ${props => (props.hasDot ? '#131313' : '#393939')};
+    cursor: pointer;
   }
 `;
 
@@ -228,6 +232,9 @@ const ImageButtonWrapper = styled.button`
     width: 100%;
     height: 100%;
     object-fit: cover; 
+  }
+  &:hover{
+    cursor: pointer;
   }
 `;
 

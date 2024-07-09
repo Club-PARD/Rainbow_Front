@@ -137,6 +137,9 @@ const WriteButton = styled.button`
   border: none;
   border-radius: 8px;
   z-index: 10002;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const ExitButton = styled.button`
@@ -148,6 +151,9 @@ const ExitButton = styled.button`
   right: 8px;
   border: none;
   background-color: #FEFEFE;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const StyledModal = styled(Modal)`
@@ -236,6 +242,9 @@ const PageButton = styled.button`
     background-color: #F3F3F3;
     color: #2c2c2c;
   }
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const SelectButton = styled.button`
@@ -256,6 +265,9 @@ const SelectButton = styled.button`
   border-radius: 8px;
   &:hover {
     background-color: #F3F3F3;
+  }
+  &:hover{
+    cursor: pointer;
   }
 `;
 

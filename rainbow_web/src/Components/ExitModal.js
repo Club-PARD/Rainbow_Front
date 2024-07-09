@@ -110,6 +110,9 @@ const ExitButton = styled.button`
   right: 8px;
   border: none;
   background-color: transparent;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const DeleteIcon = styled.img`
@@ -141,6 +144,9 @@ const StyledButton = styled.button`
   &:hover {
     background: #1e1e1e;
   }
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 const StyledButton2 = styled.button`
@@ -158,5 +164,8 @@ const StyledButton2 = styled.button`
   border-radius: 8px;
   &:hover {
     background: #F3F3F3;
+  }
+  &:hover{
+    cursor: pointer;
   }
 `;
