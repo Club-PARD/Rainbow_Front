@@ -12,8 +12,8 @@ function CommunityPage() {
   useEffect(() => {
     axios.get(`${server}/api/post/community`)
       .then(response => {
-        console.log(response.data);
         setImages(response.data);
+        console.log(response);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);

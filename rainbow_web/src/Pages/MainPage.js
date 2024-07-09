@@ -13,7 +13,6 @@ import { PostCount, UserData } from '../Atom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Flowers from '../Components/Flowers';
 import { Link } from 'react-router-dom';
-import "./Inter.css"; // CSS 파일을 import
 
 Modal.setAppElement('#root');
 
@@ -126,7 +125,7 @@ function MainPage() {
   );
 }
 
-export default MainPage; // Inter 컴포넌트를 기본 export
+export default MainPage;
 
 const Container = styled.div`
   display: flex;
@@ -134,7 +133,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: auto;
   background: radial-gradient(at 50% 50%, #C5AAFF, #FFFFFD, #FFFFFD);
 `;
 
