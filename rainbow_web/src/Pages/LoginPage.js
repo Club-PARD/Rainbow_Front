@@ -213,7 +213,6 @@ const SignUp = styled.div`
   align-items: center;
   justify-content: flex-end;
 
-  font-family: Pretendard-Regular;
   font-size: 15px;
   color: #2C2C2C;
 
