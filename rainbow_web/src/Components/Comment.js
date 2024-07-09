@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Profile from '../Assets/Img/회_프로필.png';
 import { UserData } from '../Atom';
+import { getUserByIDAPI } from '../APIs/RegisterAPI'; // Adjust the import path accordingly
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
@@ -12,12 +13,11 @@ const Comment = () => {
   const server = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    // 서버에서 데이터를 가져오는 함수
     const fetchComments = async () => {
       try {
         const response = await axios.get(`${server}/comment/readAll/${ownerId.user_id}`);
         const fetchedComments = response.data.map((comment) => ({
-          nickname: comment.writerNickName,
+          nickname: comment.writerName,
           text: comment.userComment,
         }));
         setComments(fetchedComments.reverse());
@@ -38,11 +38,19 @@ const Comment = () => {
     e.preventDefault();
     if (newComment.trim()) {
       try {
+        const userData = await getUserByIDAPI(ownerId.user_id);
+        const nickname = userData.name;
+        console.log(userData);
+        console.log(nickname);
+
         const newCommentData = {
+          nickname: nickname,
           userComment: newComment,
         };
+
         await axios.post(`${server}/comment/${ownerId.user_id}/${ownerId.user_id}`, newCommentData);
-        setComments([{ nickname: 'cheche', text: newComment }, ...comments]);
+        //추후에 페이지 연결후 writerId로 수정 필요
+        setComments([{ nickname: nickname, text: newComment }, ...comments]);
         setNewComment('');
       } catch (error) {
         console.error('Failed to post comment:', error);
@@ -64,7 +72,6 @@ const Comment = () => {
             </CommentItem>
           ))}
         </CommentList>
-        <ShadowBox />
       </Container>
       <CommentForm onSubmit={handleCommentSubmit}>
         <CommentFormContainer>
@@ -139,15 +146,6 @@ const CommentTextarea = styled.textarea`
   ::placeholder {
     color: #FEFEFE;
   }
-`;
-
-const ShadowBox = styled.div`
-  width: 500px;
-  height: 39px;
-  position: absolute;
-  bottom: 0px;
-  background: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
-  pointer-events: none;
 `;
 
 const CommentList = styled.ul`
