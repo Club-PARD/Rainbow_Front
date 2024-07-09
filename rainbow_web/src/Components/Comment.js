@@ -17,10 +17,11 @@ const Comment = () => {
       try {
         const response = await axios.get(`${server}/comment/readAll/${ownerId.user_id}`);
         const fetchedComments = response.data.map((comment) => ({
-          nickname: 'cheche',
+          nickname: comment.writerNickName,
           text: comment.userComment,
         }));
         setComments(fetchedComments.reverse());
+        console.log(response);
       } catch (error) {
         console.error('Failed to fetch comments:', error);
       }
@@ -40,7 +41,7 @@ const Comment = () => {
         const newCommentData = {
           userComment: newComment,
         };
-        await axios.post(`${server}/comment/${ownerId.UserID}/${ownerId.UserID}`, newCommentData);
+        await axios.post(`${server}/comment/${ownerId.user_id}/${ownerId.user_id}`, newCommentData);
         setComments([{ nickname: 'cheche', text: newComment }, ...comments]);
         setNewComment('');
       } catch (error) {

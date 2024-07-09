@@ -36,10 +36,11 @@ function CommunityWriteBtn() {
 
   useEffect(() => {
     if (userData) {
-      axios.get(`${server}/api/questions/${userData.UserID}`)
+      axios.get(`${server}/api/questions/${userData.user_id}`)
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));
+            console.log(response);
           } else {
             console.error('Unexpected response data format:', response.data);
           }
@@ -48,7 +49,7 @@ function CommunityWriteBtn() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [userData.UserID]);
+  }, [userData.user_id]);
 
   const totalPages = Math.ceil(questions.length / ITEMS_PER_PAGE);
 

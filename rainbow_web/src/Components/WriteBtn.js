@@ -40,6 +40,7 @@ function WriteBtn() {
         .then(response => {
           if (response.data && Array.isArray(response.data)) {
             setQuestions(response.data.slice(0, 40));
+            console.log(response);
           } else {
             console.error('Unexpected response data format:', response.data);
           }
