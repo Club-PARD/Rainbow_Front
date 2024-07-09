@@ -26,16 +26,29 @@ function WritingPage() {
   const [textContent, setTextContent] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  let [data, setData] = useState({
-    "postTitle": "",
-    "pictureURL": "",
-    "postContent": "",
+  const [data, setData] = useState({
+    postTitle: "",
+    pictureURL: "",
+    postContent: "",
   });
 
   const navigate = useNavigate();
 
   const goToMain = () => {
     navigate('/main');
+  };
+
+  const onTextContentHandler = (e) => {
+    setTextContent(e.target.value);
+    setData({...data, textContent: e.target.value});
+  };
+
+  const onQuestionHandler = () => {
+    setData({...data, postTitle: selectedQuestion});
+  };
+
+  const onPictureHandler = () => {
+    setData({...data, pictureURL: pictureLink});
   };
 
   // image upload
@@ -66,30 +79,20 @@ function WritingPage() {
       console.log(response.data);
       setPictureLink(response.data);
       console.log(pictureLink);
+      onPictureHandler();
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
 
   // post upload
-  const handleUpload = () => {
+  const handleUpload = async () => {
     // if (pictureLink == "") {
     //   alert('이미지를 등록해 주세요.');
     //   return;
     // }
     console.log(pictureLink);
-
-    setData({...data,
-      "postTitle": selectedQuestion.questionText,
-      "pictureURL": pictureLink,
-      "postContent": textContent,
-    });
-
     console.log(data);
-    handlePost();
-  };
-
-  const handlePost = async () => {
     try {
       const response = await postAPI(userData.user_id, data);
       console.log(response);
@@ -102,6 +105,7 @@ function WritingPage() {
 
   useEffect(() => {
     console.log(selectedQuestion);
+    onQuestionHandler();
   }, []);
 
   const openModal = () => {
@@ -136,7 +140,7 @@ function WritingPage() {
         <Textarea
           placeholder="사진과 글을 올릴 수 있습니다."
           value={textContent}
-          onChange={e => setTextContent(e.target.value)}
+          onChange={onTextContentHandler}
         />
         <ButtonContainer>
           <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
