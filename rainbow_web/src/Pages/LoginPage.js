@@ -92,14 +92,11 @@ function LoginPage() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  width: 100vw;
-  min-height: 100vh;
-  
-  color: #2C2C2C;
-  font-size: 0.9rem;
-`
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+`;
 
 const Wrapper = styled.div`
   display: flex;
