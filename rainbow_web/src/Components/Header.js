@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(4px);
     z-index: 10001;
   }
   
@@ -53,14 +52,6 @@ function Header({ onActiveChange }) {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (modalIsOpen) {
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.classList.remove('modal-open');
-    }
-  }, [modalIsOpen]);
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -72,7 +63,7 @@ function Header({ onActiveChange }) {
   const onSignOut = () => {
     handleSignOut();
     closeModal();
-    navigate('/'); // Navigate to the login page after signing out
+    navigate('/');
   };
 
   const goToCommunity = () => {
@@ -87,19 +78,19 @@ function Header({ onActiveChange }) {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
     if (onActiveChange) {
-      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+      onActiveChange(newIsActive);
     }
 
     try {
-      const response = await patchPublicAPI(userData.UserID, newIsActive);
-      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
+      const response = await patchPublicAPI(userData.user_id, newIsActive);
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <HeaderContainer blur={modalIsOpen}>
+    <HeaderContainer>
       <GlobalStyle />
       <LogoAndButtonContainer>
         <Img onClick={goToMain}>
@@ -156,7 +147,6 @@ const HeaderContainer = styled.div`
   background: #FEFEFE; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
-  filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -251,16 +241,6 @@ const StyledModal = styled(Modal)`
     font-weight: 400;
     line-height: 24px; 
   }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
 `;
 
 const Reg = styled.div`

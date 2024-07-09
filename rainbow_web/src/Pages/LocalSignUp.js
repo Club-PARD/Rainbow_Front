@@ -79,7 +79,7 @@ function LocalSignUp() {
             setNickNameColor(null);
             setNickNameMsg('');
         }
-        setNewData({ ...newData, nickName: e.target.value })
+        setNewData({ ...newData, name: e.target.value })
     }
 
     const onPetNameHandler = (e) => {

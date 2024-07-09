@@ -21,7 +21,7 @@ export const loginAPI = async (email, password) => {
         const response = await axios.get(
             `${server}/api/auth/login?email=${email}&password=${password}`
         );
-        return response;
+        return response.data;
     } catch(err) {
         console.log(err);
     }
