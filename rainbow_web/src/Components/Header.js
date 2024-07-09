@@ -87,12 +87,12 @@ function Header({ onActiveChange }) {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
     if (onActiveChange) {
-      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+      onActiveChange(newIsActive);
     }
 
     try {
       const response = await patchPublicAPI(userData.UserID, newIsActive);
-      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
