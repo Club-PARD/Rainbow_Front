@@ -19,3 +19,12 @@ export const getPetNameAPI = async (userId) => {
     console.error(err);
   }
 };
+
+export const getUserByIDAPI = async (userId) => {
+  try {
+    const response = await axios.get(`${server}/api/user/find/id/${userId}`);
+    return response.data;
+  } catch(err) {
+    console.error(err);
+  }
+}
