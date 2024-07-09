@@ -5,13 +5,14 @@ import Modal from 'react-modal';
 import BlankImage from '../Assets/Img/BlankImage.png';
 import WriteHeader from '../Components/WriteHeader';
 import { postImgAPI, postAPI } from '../APIs/AxiosAPI';
-import { useRecoilValue } from 'recoil';
-import { UserData } from '../Atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { UserData, Increased } from '../Atom';
 import ExitModal from '../Components/ExitModal';
 
 Modal.setAppElement('#root');
 
 function WritingPage() {
+  const [isIncreased, setIsIncreased] = useRecoilState(Increased);
   const location = useLocation();
   const { selectedQuestion, questionIndex } = location.state || {};
 
@@ -89,7 +90,9 @@ function WritingPage() {
     try {
       const response = await postAPI(userData.user_id, data);
       console.log(response);
-
+      if(response){
+        setIsIncreased(true);
+      }
       navigate("../main");
     } catch (err) {
       console.log(err);

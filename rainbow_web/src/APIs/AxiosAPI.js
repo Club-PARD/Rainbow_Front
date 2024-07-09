@@ -77,7 +77,7 @@ export const getCountAPI = async (userId) => {
   try {
     const response = await axios
     .get(`${server}/api/post/count/${userId}`);
-    return response;
+    return response.data;
   } catch(err) {
     console.log(err);
   }
@@ -93,29 +93,6 @@ export const getPostDataAPI = async (userId) => {
     console.error(err);
   }
 };
-
-export const getPostDetailAPI = async (postId) => {
-  try {
-    const response = await axios.get(`${server}/api/posts/${postId}`);
-    return response.data;
-    console.log(response.data);
-  } catch (error) {
-    console.error("Error fetching post details:", error);
-    return null;
-  }
-};
-
-//DetailPage.js 데이터 불러오는 API
-export const getDetailAPI = async (postId) => {
-  try {
-      const response = await axios.get(`${server}/api/post/${postId}`);
-      console.log(response.data);
-      return response.data;
-  } catch (err) {
-      console.error(err);
-  }
-}
-
 
 // 참고용
 // export const getDataAPI = async () => {
