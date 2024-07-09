@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import logo from '../Assets/Img/logo.svg';
 import { Link } from 'react-router-dom';
 
+
 function LandingHeader() {
   return (
     <Header>
@@ -16,40 +17,42 @@ function LandingHeader() {
 
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-
-  width: 95%;
-
-  margin: 2rem;
+  justify-content: space-between;
+  width: 1280px;
+  height: 72px;
+  background: #FEFEFE; 
+  padding: 32px 40px 8px 40px;
+  gap: 16px;
 `
 
 const Img = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
+  width: 178px;
+  height: 32px;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
+  top: 32px;
+  left: 90px;
 `;
 
 const ToLogin = styled.button`
-  width: 80px;
-  height: 40px;
+  width: 66px;
+  height: 32px;
   position: fixed;
   top: 32px;
   right: 90px;
   padding: 12px;
-  font-size: 14px;
   background-color: #2C2C2C;
   color: #FEFEFE;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 106.667% */
 `
 
 export default LandingHeader;
