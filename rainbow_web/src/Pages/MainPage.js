@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Header from '../Components/Header';
@@ -7,50 +7,64 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper/modules';
-import mainTest from '../Assets/Img/mainTest.png';
-import mainTest2 from '../Assets/Img/mainTest2.png';
-import mainTest3 from '../Assets/Img/mainTest3.png';
 import { getPetNameAPI } from '../APIs/RegisterAPI';
-import { getCountAPI } from '../APIs/AxiosAPI';
+import { getCountAPI, getPostDataAPI } from '../APIs/AxiosAPI';
 import { PostCount, UserData } from '../Atom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Flowers from '../Components/Flowers';
 import { Link } from 'react-router-dom';
-
-const postData = {
-  id: {
-    title: "무떡 웹파트",
-    img: mainTest,
-  },
-  id2: {
-    title: "화이팅",
-    img: mainTest2
-  },
-  id3: {
-    title: "만만세",
-    img: mainTest3
-  },
-  id4: {
-    title: "무떡 웹파트",
-    img: mainTest,
-  },
-  id5: {
-    title: "화이팅",
-    img: mainTest2
-  },
-  id6: {
-    title: "만만세",
-    img: mainTest3
-  },
-  // 계속 이런식으로
-}
+import "./Inter.css"; // CSS 파일을 import
 
 Modal.setAppElement('#root');
 
 function MainPage() {
+  const outerDivRef = useRef(); // outerDivRef를 생성하여 DOM 요소에 접근
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 관리하는 useState
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0); // 배경 불투명도 상태를 관리하는 useState
+
   const userData = useRecoilValue(UserData);
+  const [result, setResult] = useState([]); // 초기 값을 빈 배열로 설정
   const [petName, setPetName] = useState("");
   const [postCount, setPostCount] = useRecoilState(PostCount);
+
+  const handleScroll = () => {
+    // 스크롤 이벤트 핸들러 함수
+    const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; // 스크롤 위치 및 높이 정보를 가져옴
+    const pageHeight = window.innerHeight;
+
+    const newPage = Math.round(scrollTop / pageHeight) + 1; // 현재 스크롤 위치에 따른 페이지 계산
+    if (newPage !== currentPage) {
+      setCurrentPage(newPage); // 페이지가 변경되면 상태 업데이트
+    }
+
+    const maxScrollTop = scrollHeight - clientHeight; // 최대 스크롤 가능한 높이 계산
+    const startDarkeningPoint = maxScrollTop / 2; // 어두워지기 시작하는 지점 설정
+    let newOpacity = 0;
+
+    if (scrollTop > startDarkeningPoint) {
+      // 스크롤이 어두워지기 시작하는 지점을 넘었을 때
+      newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); // 불투명도 계산
+    }
+
+    setBackgroundOpacity(newOpacity); // 배경 불투명도 상태 업데이트
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPostDataAPI(userData.user_id);
+      setResult(data || []); // 데이터가 없을 경우 빈 배열로 설정
+    };
+    fetchData();
+  }, [userData.user_id]);
+
+  useEffect(() => {
+    const outerDivRefCurrent = outerDivRef.current; // DOM 요소 참조 저장
+    outerDivRefCurrent.addEventListener("scroll", handleScroll); // 스크롤 이벤트 리스너 추가
+
+    return () => {
+      outerDivRefCurrent.removeEventListener("scroll", handleScroll); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    };
+  }, [currentPage]); // currentPage가 변경될 때마다 useEffect 재실행
 
   const getPetName = async () => {
     console.log(userData.user_id);
@@ -64,46 +78,55 @@ function MainPage() {
     console.log(response);
     setPostCount(response);
   };
-  
+
   useEffect(() => {
     getPostCount();
     getPetName();
   }, []);
-  
+
   return (
-    <Container>
-      <Header />
-      <Title>기억의 꽃밭은</Title>
-      <Explained>
-          반려동물과의 소중한 추억을 떠올리며<br/>
-          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br/><br/>
-          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br/>
-          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br/><br/>
+    <Container
+      ref={outerDivRef}
+      className="outer"
+      style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
+    >
+      {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
+      
+        <Header />
+        <Title>기억의 꽃밭은</Title>
+        <Explained>
+          반려동물과의 소중한 추억을 떠올리며<br />
+          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
+          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
+          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
           {petName} 에 대한 이야기를 들려주세요
-      </Explained>
-      <Link to="./write" style={{textDecoration: "none"}}><ToWrite>글 작성하러 가기</ToWrite></Link>
-      <Flowers postCount={postCount} />
-      <StyledSwiper
-        slidesPerView={3}
-        spaceBetween={40}
-        navigation
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {Object.entries(postData).map(([key, value]) => (
-          <StyledSwiperSlide key={key} ima={value.img}>
-            <Text>{value.title}</Text>
-          </StyledSwiperSlide>
-        ))}
-      </StyledSwiper>
-      <CommentContainer>
-        <Comment />
-      </CommentContainer>
+        </Explained>
+        <Link to="./write" style={{ textDecoration: "none" }}><ToWrite>글 작성하러 가기</ToWrite></Link>
+        <Flowers postCount={postCount} />
+    
+        <StyledSwiper
+          slidesPerView={3}
+          spaceBetween={40}
+          navigation
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {result && result.map((data, index) => (
+            <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+              <Text>{data.postTitle}</Text>
+            </StyledSwiperSlide>
+          ))}
+        </StyledSwiper>
+
+        <CommentContainer>
+          <Comment />
+        </CommentContainer>
+        {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
     </Container>
   );
 }
 
-export default MainPage;
+export default MainPage; // Inter 컴포넌트를 기본 export
 
 const Container = styled.div`
   display: flex;
