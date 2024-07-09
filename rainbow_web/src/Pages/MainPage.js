@@ -9,8 +9,8 @@ import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper/modules';
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getCountAPI, getPostDataAPI } from '../APIs/AxiosAPI';
-import { PostCount, UserData } from '../Atom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { UserData } from '../Atom';
+import { useRecoilValue } from 'recoil';
 import Flowers from '../Components/Flowers';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +24,6 @@ function MainPage() {
   const userData = useRecoilValue(UserData);
   const [result, setResult] = useState([]); // 초기 값을 빈 배열로 설정
   const [petName, setPetName] = useState("");
-  const [postCount, setPostCount] = useRecoilState(PostCount);
 
   const handleScroll = () => {
     // 스크롤 이벤트 핸들러 함수
@@ -72,14 +71,7 @@ function MainPage() {
     setPetName(response);
   };
 
-  const getPostCount = async () => {
-    const response = await getCountAPI(userData.user_id);
-    console.log(response);
-    setPostCount(response);
-  };
-
   useEffect(() => {
-    getPostCount();
     getPetName();
   }, []);
 
@@ -101,23 +93,21 @@ function MainPage() {
           {petName} 에 대한 이야기를 들려주세요
         </Explained>
         <Link to="./write" style={{ textDecoration: "none" }}><ToWrite>글 작성하러 가기</ToWrite></Link>
-        <Flowers postCount={postCount} />
+        <Flowers />
     
         <StyledSwiper
-        slidesPerView={3}
-        spaceBetween={40}
-        navigation
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {result.map((data, index) => (
-          <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-          <Link to={`/detail/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
-            <Text>{data.postTitle}</Text>
-          </Link>
-        </StyledSwiperSlide>
-        ))}
-      </StyledSwiper>
+          slidesPerView={3}
+          spaceBetween={40}
+          navigation
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {result && result.map((data, index) => (
+            <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+              <Text>{data.postTitle}</Text>
+            </StyledSwiperSlide>
+          ))}
+        </StyledSwiper>
 
         <CommentContainer>
           <Comment />
