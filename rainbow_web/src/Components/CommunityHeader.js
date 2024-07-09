@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(4px);
     z-index: 10001;
   }
   

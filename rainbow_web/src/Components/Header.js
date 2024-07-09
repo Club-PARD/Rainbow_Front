@@ -87,7 +87,7 @@ function Header({ onActiveChange }) {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
     if (onActiveChange) {
-      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+      onActiveChange(newIsActive);
     }
 
     try {
