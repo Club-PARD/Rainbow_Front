@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from "react"; // React hooks를 import
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled from "styled-components"; // styled-components 라이브러리를 import
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
@@ -27,6 +27,11 @@ function MainPage() {
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
+
+  //어두워지는 코드
+  const outerDivRef = useRef(); // outerDivRef를 생성하여 DOM 요소에 접근
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 관리하는 useState
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0); // 배경 불투명도 상태를 관리하는 useState
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,16 +63,47 @@ function MainPage() {
     };
   }, []);
 
-  const getBackgroundColor = () => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollFraction = scrollY / maxScroll;
-    const darkenAmount = Math.min(scrollFraction * 0.6, 0.6);
-    return `rgba(0, 0, 0, ${darkenAmount})`;
-  };
+  //어두워지는 코드
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때와 currentPage가 변경될 때마다 실행되는 useEffect
+    const handleScroll = () => {
+      // 스크롤 이벤트 핸들러 함수
+      const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; // 스크롤 위치 및 높이 정보를 가져옴
+      const pageHeight = window.innerHeight;
+
+      const newPage = Math.round(scrollTop / pageHeight) + 1; // 현재 스크롤 위치에 따른 페이지 계산
+      if (newPage !== currentPage) {
+        setCurrentPage(newPage); // 페이지가 변경되면 상태 업데이트
+      }
+
+      const maxScrollTop = scrollHeight - clientHeight; // 최대 스크롤 가능한 높이 계산
+      const startDarkeningPoint = maxScrollTop / 2; // 어두워지기 시작하는 지점 설정
+      let newOpacity = 0;
+
+      if (scrollTop > startDarkeningPoint) {
+        // 스크롤이 어두워지기 시작하는 지점을 넘었을 때
+        newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); // 불투명도 계산
+      }
+
+      setBackgroundOpacity(newOpacity); // 배경 불투명도 상태 업데이트
+    };
+
+    const outerDivRefCurrent = outerDivRef.current; // DOM 요소 참조 저장
+    outerDivRefCurrent.addEventListener("scroll", handleScroll); // 스크롤 이벤트 리스너 추가
+
+    return () => {
+      outerDivRefCurrent.removeEventListener("scroll", handleScroll); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    };
+  }, [currentPage]); // currentPage가 변경될 때마다 useEffect 재실행
 
   return (
-
-    <Container style={{ backgroundColor: getBackgroundColor() }}>
+    <OuterDiv
+      ref={outerDivRef}
+      backgroundOpacity={backgroundOpacity}
+    >
+      <Container>
+      {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
+      <InnerDiv>
       <Header />
       <TopBlurr />
       <ExplainWrapper>
@@ -110,10 +146,13 @@ function MainPage() {
         >
           <FlowerCount />
         </motion.div>
-        
+      </InnerDiv>
+      {/* 첫 번째 페이지 콘텐츠 */}
+      <InnerDiv>
+      <SwiperWrapper>
         <StyledSwiper
           slidesPerView={3}
-          spaceBetween={40}
+          spaceBetween={20}
           navigation
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -126,6 +165,10 @@ function MainPage() {
             </StyledSwiperSlide>
           ))}
         </StyledSwiper>
+        </SwiperWrapper>
+      </InnerDiv>
+      {/* 두 번째 페이지 콘텐츠 */}
+      <InnerDiv>
       <CommentContainer>
           <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -141,11 +184,14 @@ function MainPage() {
           </motion.div>
         <Comment />
       </CommentContainer>
-    </Container>
+        {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
+      </InnerDiv>
+      </Container>
+    </OuterDiv>
   );
 }
 
-export default MainPage;
+export default MainPage; // Inter 컴포넌트를 기본 export
 
 const TopBlurr = styled.div`
   width: 100%;
@@ -158,18 +204,6 @@ const TopBlurr = styled.div`
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
   z-index: 999;
 `
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: auto;
-  background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
-  //padding: 10vh;
-  transition: background-color 0.5s ease;
-`;
 
 const ExplainWrapper = styled.div`
   display: flex;
@@ -238,8 +272,14 @@ const ToWrite = styled.div`
   }
 `;
 
+const SwiperWrapper = styled.div`
+display: flex;
+justify-content: center;
+transition: transform 0.3s ease-in-out;
+`
+
 const StyledSwiper = styled(Swiper)`
-  width: 918px;
+  width: 100%;
   height: 318px;
   padding: 10px;
 `;
@@ -247,7 +287,8 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 246px !important;
   height: 298px !important;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 20px;
   border-radius: 6px;
   background-image: url(${(props) => props.ima});
   background-position: center;
@@ -278,5 +319,39 @@ const CommentContainer = styled.div`
   width: 100%;
   margin-top: 91px;
 
-  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: auto;
+  padding-top: 300px;
+  //padding: 10vh;
+`;
+
+const OuterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
+
+  /* 화면에서 스크롤바 안보이게 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const InnerDiv = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
 `;
