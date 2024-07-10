@@ -24,13 +24,10 @@ function LoginPage() {
       console.log("Encoded JWT ID token: " + res.credential);
       const googleUser = jwtDecode(res.credential);
       
-      // google login 결과
       console.log(googleUser);
       
-      // google login API
       const response = await googleLoginAPI(googleUser);
 
-      // server login 결과
       if(response) {
         console.log(response);
         setIsLoggedIn(true);
@@ -62,7 +59,7 @@ function LoginPage() {
 
   return (
     <Container>
-      <LoginHeader onClick={navigate('../main')} />
+      <LoginHeader />
       <Wrapper>
         <Intro>
           <span>
