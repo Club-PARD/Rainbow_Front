@@ -66,7 +66,7 @@ function WriteBtn() {
   return (
     <div>
       <GlobalStyle />
-      <ToWrite onClick={() => setModalIsOpen(true)}>글 쓰기</ToWrite>
+      <ToWrite onClick={() => setModalIsOpen(true)}>글 작성하러 가기</ToWrite>
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
