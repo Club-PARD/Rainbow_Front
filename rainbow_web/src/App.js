@@ -27,7 +27,7 @@ function App() {
         <Route path="/register" element={<LocalSignUp />}/>
         <Route path="/register-google" element={<GoogleSignUp />}/>
         <Route path="/detail/:userId/:postId" element={<DetailPage/>}/>
-        <Route path="/edit/:postId" element={<EditPage/>}/>
+        <Route path="/edit/:userId/:postId" element={<EditPage/>}/>
       </Routes>
     </div>
   );
