@@ -240,7 +240,7 @@ export default LocalSignUp;
 //페이지 전체를 관리하는 css
 const Container = styled.div`
 width: 100vw;
-height: 100vh;
+min-height: 100vh;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -248,6 +248,7 @@ align-items: center;
 
 color: #2C2C2C;
 font-size: 0.9rem;
+padding: 25px;
 `
 
 // calc(100vw * 450 / 1920);
@@ -274,13 +275,13 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 align-self: stretch;
-margin-bottom: 16px;
+margin: 8px;
 height: 76px;
 `
 
 //Input요소들 제목
 const InputTitle = styled.div`
-color: var(--grayscale-Black, #2C2C2C);
+color: #2C2C2C;
 font-family: "Pretendard Variable";
 font-size: 14px;
 font-style: normal;
@@ -301,10 +302,10 @@ align-items: center;
 justify-content: center;
 font-size: 20px;
 font-weight: 400;
-margin-top: 150px;
+margin-top: 90px;
 margin-bottom: 32px;
 text-align: center;
-font-family: GeistMono;
+font-family: "GeistMono";
 `
 
 //회원가입 input들
@@ -354,7 +355,6 @@ color: red;
 `
 //Footer
 const Footer = styled.div`
-  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -362,5 +362,5 @@ const Footer = styled.div`
   font-family: "Pretendard-Regular";
   font-weight: 500;
   color: #5E5E5E;
-  margin-bottom: 3.5rem;
-  `
+  margin-top: 69px;
+`
