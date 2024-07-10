@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { UserData } from "../Atom";
 import LoginHeader from "../Components/LoginHeader";
-import { postMemberAPI } from "../APIs/RegisterAPI";
+import { patchGoogleMemberAPI } from "../APIs/RegisterAPI";
 import { useNavigate } from "react-router-dom";
 
 function GoogleSignUp(){
@@ -11,6 +11,7 @@ function GoogleSignUp(){
     //회원가입 버튼을 눌렀을 때 빈칸이 있는지 없는지 확인
     //빈칸이 없다면 이메일과 비밀번호의 형식이 올바른 형식인지 확인
     const [userData, setUserData] = useRecoilState(UserData);
+    const userId = useRecoilValue(UserData.user_id);
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
     const [nickname, setNickname] = useState("");
@@ -44,9 +45,10 @@ function GoogleSignUp(){
 
     const onSubmitHandler = async (e) => {
         try {
-            // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
-            const response =
-              await postMemberAPI(userInfo);
+          console.log(userId);          
+          // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
+          const response =
+            await patchGoogleMemberAPI(userId, userInfo);
         } catch (err) {
         console.error(err);
         }

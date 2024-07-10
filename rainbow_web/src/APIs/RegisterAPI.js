@@ -12,6 +12,15 @@ export const postMemberAPI = async (data) => {
   }
 };
 
+export const patchGoogleMemberAPI = async (userId, data) => {
+  try {
+    const response = await axios.patch(`${server}/api/user/google/register/${userId}`, data);
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const getPetNameAPI = async (userId) => {
   try {
     const response = await axios.get(`${server}/api/user/find/pet/${userId}`);

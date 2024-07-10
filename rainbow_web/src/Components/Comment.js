@@ -9,6 +9,7 @@ import { getUserByIDAPI } from '../APIs/RegisterAPI'; // Adjust the import path 
 const Comment = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [placeholderVisible, setPlaceholderVisible] = useState(true);
   const ownerId = useRecoilValue(UserData);
   const server = process.env.REACT_APP_API_URL;
 
@@ -79,7 +80,9 @@ const Comment = () => {
             rows="1"
             value={newComment}
             onChange={handleCommentChange}
-            placeholder="방명록을 입력해주세요"
+            placeholder={placeholderVisible ? "방명록을 입력해주세요" : ""}
+            onFocus={() => setPlaceholderVisible(false)}
+            onBlur={() => setPlaceholderVisible(true)}
           />
           <Button type="submit">보내기</Button>
         </CommentFormContainer>
@@ -143,8 +146,8 @@ const CommentTextarea = styled.textarea`
   resize: none;
   outline: none;
   box-sizing: border-box;
-  ::placeholder {
-    color: #FEFEFE;
+  &::placeholder {
+    color: #868686;
   }
 `;
 
