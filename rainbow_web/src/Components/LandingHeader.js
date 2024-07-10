@@ -21,7 +21,6 @@ const Header = styled.div`
   justify-content: space-between;
   width: 1280px;
   height: 72px;
-  margin: 2.5rem;
   padding: 32px 40px 8px 40px;
   gap: 16px;
   position: fixed;

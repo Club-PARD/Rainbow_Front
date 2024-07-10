@@ -137,7 +137,7 @@ const HeaderContainer = styled.div`
   gap: 16px;
   position: fixed;
   top: 0;
-  z-index: 1000; /* Ensures the header is above other content */
+  z-index: 1000;
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -171,7 +171,7 @@ const CustomButton = styled.button`
   justify-content: center;
   gap: 6px;
   border-radius: 8px;
-  background-color: #FEFEFE;
+  background-color: transparent;
   border: none;
   color: #2C2C2C;
   font-family: Pretendard;
@@ -181,7 +181,7 @@ const CustomButton = styled.button`
   line-height: 16px; 
 
   &:hover {
-    background-color: ${props => (props.hasDot ? '#FEFEFE' : '#F3F3F3')};
+    background-color: ${props => (props.hasDot ? 'transparent' : '#F3F3F3')};
     cursor: pointer;
   }
 `;
