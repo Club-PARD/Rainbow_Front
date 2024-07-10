@@ -11,10 +11,9 @@ function LandingPage () {
   return (
     <Container>
       <TopBlurr />
+      <LandingHeader />
       <LandingWrapper>
-        <LandingHeader />
         <LandingContent>
-          {/* Typed Logo */}
           <img src={TypeLogo} alt="Sincerely," style={{ width: '130px' }} />
           <Text>
             반려동물이 무지개별로 떠난 후, 많이 힘드셨죠?<br/><br/>
@@ -80,9 +79,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
   height: auto;
-  margin: 20vh;
+  padding: 10vh;
 `;
 
 const LandingWrapper = styled.div`

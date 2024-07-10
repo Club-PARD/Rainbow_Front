@@ -4,13 +4,13 @@ import { postImgAPI } from "../APIs/AxiosAPI";
 import { getDetailAPI } from "../APIs/PublicAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { patchDetailAPI } from "../APIs/PublicAPI";
-import Header from "../Components/Header";
+import Header from "../Components/DetailHeader";
 
 function EditPage() {
     const params = useParams();
     console.log(params);
-    const [result, setResult] = useState([]); // getAPI로 받은 값 저장할 useState
-    const [text, setText] = useState(""); // 여기에 content
+    const [result, setResult] = useState([]);
+    const [text, setText] = useState("");
     const [data, setData] = useState({
         pictureUrl: "",
         postContent: "",
@@ -22,7 +22,7 @@ function EditPage() {
             console.log(response);
             setResult(response);
             setText(response.postContent);
-            setImageSrc(response.pictureUrl); // 초기 이미지를 설정
+            setImageSrc(response.pictureUrl);
         };
 
         fetchData();
@@ -35,7 +35,7 @@ function EditPage() {
         setData({ ...data, postContent: e.target.value });
     };
 
-    const [imageSrc, setImageSrc] = useState(""); // 초기값을 빈 문자열로 설정
+    const [imageSrc, setImageSrc] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const inputRef = useRef([]);
 

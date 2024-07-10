@@ -19,14 +19,14 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1280px;
-  height: 72px;
+  width: 96vw;
+  height: auto;
   padding: 32px 40px 8px 40px;
   gap: 16px;
   position: fixed;
-  top: 0;
-  z-index: 1000; /* Ensures the header is above other content */
-`
+  top: -10px;
+  z-index: 1000;
+`;
 
 const Img = styled.div`
   display: flex;
