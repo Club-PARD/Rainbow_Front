@@ -172,7 +172,6 @@ const ProfileImg = styled.img`
 const CommentContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
 `;
 
 const Nickname = styled.span`
