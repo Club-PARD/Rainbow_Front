@@ -5,18 +5,30 @@ import { BackBtn } from "../Components/BackBtn";
 import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal';
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
+import { getPostDataAPI } from "../APIs/AxiosAPI";
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const [result, setResult] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getDetailAPI(params.postId);
+      const response = await getDetailAPI(params.userId, params.postId);
       console.log(response);
       setResult(response);
+    };
+
+    fetchData();
+  }, [params.postId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPostDataAPI(params.userId);
+      console.log(response);
+      setPosts(response);
     };
 
     fetchData();
@@ -36,6 +48,23 @@ function DetailPage() {
       navigate("/main");
     } catch (error) {
       console.error("Failed to delete post:", error);
+    }
+  };
+
+  const handleNext = () => {
+    const currentIndex = result.index;
+    if (navigate(`/detail/${params.userId}/${posts[currentIndex + 1].postId}`)) {
+    } else {
+      alert('마지막 게시물입니다.');
+    }
+  };
+
+  const handlePrevious = () => {
+    const currentIndex = result.index;
+    if (currentIndex > 0) {
+      navigate(`/detail/${params.userId}/${posts[currentIndex - 1].postId}`);
+    } else {
+      alert('첫 번째 게시물입니다.');
     }
   };
 
@@ -64,8 +93,8 @@ function DetailPage() {
         </Detail>
 
         <DetailBottomMenu>
-          <DetailBottomBtn>&larr;&nbsp;&nbsp;Previos</DetailBottomBtn>
-          <DetailBottomBtn>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
+          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previos</DetailBottomBtn>
+          <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
       <WriteDeleteModal isOpen={isModalOpen} onRequestClose={closeModal} onExit={handleDelete} />
