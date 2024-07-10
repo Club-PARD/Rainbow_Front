@@ -29,10 +29,11 @@ function CommunityPage() {
         <Text>커뮤니티에 내 게시물 공개 여부는 우측 상단 프로필 버튼을 통해서 설정할 수 있습니다.</Text>
       </Tip>
       <ImageContainer>
-        {images.map((data, index) => (
+        {images.slice().reverse().map((data, index) => (
           <ImageWrapper key={index} isLoaded={isLoaded} index={index}>
             <Image src={data.pictureUrl} alt={`sample ${index + 1}`} />
             <OverlayText>{data.postTitle}</OverlayText>
+            <TopBlurr2 />
           </ImageWrapper>
         ))}
       </ImageContainer>
@@ -66,13 +67,23 @@ const CommunityPageContainer = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 108px;
-
+  height: 64px;
   position: fixed;
   top: 0;
   left: 0;
+  backdrop-filter:blur(3px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+  z-index: 999;
+`
 
-  backdrop-filter:blur(2px);
+const TopBlurr2 = styled.div`
+  width: 100%;
+  height: 99px;
+  position: fixed;
+  top: 245px;
+  left: 0;
+  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+  z-index: 998;
 `
 
 const Tip = styled.div`
@@ -98,7 +109,7 @@ const Text = styled.div`
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 150% */
+  line-height: 24px;
 `;
 
 const ImageContainer = styled.div`
@@ -119,12 +130,12 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 1.5px 3px 10px 0px rgba(0, 0, 0, 0.25), 0px 0px 13.125px 0px rgba(12, 12, 13, 0.10);
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
   opacity: ${props => (props.isLoaded ? 1 : 0)};
   animation: ${props => props.isLoaded ? fadeIn : 'none'} 0.8s ease-in-out;
-  animation-delay: ${props => `calc(0.9s + ${props.index * 0.2}s)`}; /* 0.8s for Tip animation + 0.1s delay */
+  animation-delay: ${props => `calc(0.9s + ${props.index * 0.2}s)`};
   animation-fill-mode: both;
 `;
 
@@ -148,4 +159,5 @@ const OverlayText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 22.5px; /* 150% */
+  z-index: 999;
 `;
