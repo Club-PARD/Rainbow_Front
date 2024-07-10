@@ -84,8 +84,8 @@ function MainPage() {
       className="outer"
       style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
     >
-      <TopBlurr />
       <Header />
+      <TopBlurr />
       <ExplainWrapper>
         <Title>기억의 꽃밭은</Title>
         <Explained>
@@ -165,13 +165,13 @@ export default MainPage;
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 108px;
-
+  height: 64px;
   position: fixed;
   top: 0;
   left: 0;
-
-  backdrop-filter:blur(16px);
+  background-color: rgba(255, 255, 255, 0.7); /* 흰색 배경에 50% 불투명도 */
+  
+  z-index: 999; /* 다른 요소들보다 위에 배치 */
 `
 
 const Container = styled.div`
