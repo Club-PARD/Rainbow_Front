@@ -88,6 +88,21 @@ const bloomAnimation = keyframes`
   }
 `;
 
+const boingAnimation = keyframes`
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.7) rotate(40deg);
+  }
+  95% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`;
+
 const FlowerBox = styled.div`
   width: 40px;
   height: 40px;
@@ -101,7 +116,8 @@ const FlowerBox = styled.div`
 const Flower = styled.img`
   width: 100%;
   height: 100%;
-  animation: ${bloomAnimation} 2s;
+  
+  animation: ${boingAnimation} 2s;
 `;
 
 export default Flowers;
