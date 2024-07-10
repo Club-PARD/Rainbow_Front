@@ -62,7 +62,7 @@ function LoginPage() {
 
   return (
     <Container>
-      <LoginHeader />
+      <LoginHeader onClick={navigate('../main')} />
       <Wrapper>
         <Intro>
           <span>
@@ -93,10 +93,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100vw;
-  height: auto;
-  padding-top: 108px;
+  height: 100vh;
 `;
 
 const Wrapper = styled.div`
@@ -104,6 +103,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 108px;
 `
 
 const LoginWrapper = styled.div`
@@ -249,7 +249,7 @@ const Footer = styled.div`
   font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
-  //margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
 `
 
 export default LoginPage;
