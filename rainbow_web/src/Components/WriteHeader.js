@@ -9,7 +9,7 @@ import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
-import ExitModal from './ExitModal'; // ExitModal 컴포넌트 추가
+import ExitModal from './ExitModal';
 
 Modal.setAppElement('#root');
 
@@ -20,8 +20,7 @@ const GlobalStyle = createGlobalStyle`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.20);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0);
     z-index: 10001;
   }
   
@@ -32,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
 
 function WriteHeader({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [exitModalIsOpen, setExitModalIsOpen] = useState(false); // ExitModal 상태 추가
+  const [exitModalIsOpen, setExitModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,7 +81,7 @@ function WriteHeader({ onActiveChange }) {
   const onSignOut = () => {
     handleSignOut();
     closeModal();
-    navigate('/'); // Navigate to the login page after signing out
+    navigate('/');
   };
 
   const goToMain = () => {
@@ -93,19 +92,19 @@ function WriteHeader({ onActiveChange }) {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
     if (onActiveChange) {
-      onActiveChange(newIsActive); // isActive 상태 변경 시 부모 컴포넌트에 알림
+      onActiveChange(newIsActive);
     }
 
     try {
-      const response = await patchPublicAPI(userData.UserID, newIsActive);
-      console.log(response.data); // 백엔드에서 반환된 값을 출력합니다.
+      const response = await patchPublicAPI(userData.user_id, newIsActive);
+      console.log(response.data);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <HeaderContainer blur={modalIsOpen || exitModalIsOpen}>
+    <HeaderContainer>
       <GlobalStyle />
       <LogoAndButtonContainer>
         <Img onClick={openExitModal}>
@@ -139,7 +138,7 @@ function WriteHeader({ onActiveChange }) {
       <ExitModal
         isOpen={exitModalIsOpen}
         onRequestClose={closeExitModal}
-        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
+        onExit={goToMain}
       />
     </HeaderContainer>
   );
@@ -156,7 +155,6 @@ const HeaderContainer = styled.div`
   background: #FEFEFE; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
-  filter: ${props => (props.blur ? 'blur(4px)' : 'none')};
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -202,12 +200,11 @@ const StyledModal = styled(Modal)`
   padding: 8px;
   position: fixed;
   top: 100px;
-  right: 70px;
+  right: 78px;
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
-  backdrop-filter: blur(4px);
-  z-index: 10000; /* Ensures the modal is above other content */
+  z-index: 10000;
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -225,7 +222,7 @@ const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000; /* Ensures the overlay is above other content */
+  z-index: 10000;
 `;
 
 const Reg = styled.div`
