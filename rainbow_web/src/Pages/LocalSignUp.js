@@ -94,7 +94,7 @@ function LocalSignUp() {
 
     const onPassWordHandler = (e) => {
         //  8 ~ 10자 영문, 숫자 조합
-        var regExp = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{6,30}$/
+        var regExp = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,30}$/
         // 형식에 맞는 경우 true 리턴
         console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
         setPassWordValid(regExp.test(e.target.value));
@@ -133,14 +133,6 @@ function LocalSignUp() {
 
 
     const onSubmitHandler = async (e) => {
-        try {
-            // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
-            const response =
-              await postMemberAPI(newData);
-        } catch (err) {
-            console.error(err);
-        }
-
         if (email === '' || !emailValid) {
             setEmailMsg("이메일의 형식이 올바르지 않습니다");
             setEmailColor("red");
@@ -157,7 +149,7 @@ function LocalSignUp() {
             return petNameInput.current.focus();
         }
         else if (passWord === '' || !passWordValid) {
-            setPassWordMsg("비밀번호는 6글자 이상인 영문 숫자 특수문자를 포함한 문자여야합니다");
+            setPassWordMsg("비밀번호는 8글자 이상인 영문 숫자 특수문자를 포함한 문자여야합니다");
             return passWordInput.current.focus();
         }
         else if (confirmPassWord === '' || passWord !== confirmPassWord) {
@@ -166,9 +158,21 @@ function LocalSignUp() {
         }
         else {
             console.log( newData );
-            alert("회원가입이 완료되었습니다!");
-            navigate("../");
-            //window.location.reload();
+            try {
+                const response = await postMemberAPI(newData);
+                  console.log(response);
+                if(response.success === false){
+                    setNickNameMsg("이미 사용 중인 닉네임입니다");
+                    setNickNameColor("red");
+                    return nickNameInput.current.focus();
+                }
+                else {
+                    alert("회원가입이 완료되었습니다!");
+                    navigate("../login");
+                }
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
 
@@ -221,9 +225,9 @@ function LocalSignUp() {
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
             </SignUpForm>
             <Footer>
-        계속 진행할 경우 Sincerely,의 개인정보 약관<br />
-        및 이용정책에 동의하는 것으로 간주됩니다.
-      </Footer>
+                계속 진행할 경우 Sincerely,의 개인정보 약관<br />
+                및 이용정책에 동의하는 것으로 간주됩니다.
+            </Footer>
         </Container>
     )
 }
@@ -236,16 +240,12 @@ export default LocalSignUp;
 //페이지 전체를 관리하는 css
 const Container = styled.div`
 width: 100vw;
-min-height: 100vh;
-
-overflow: scroll;
-
+height: 100vh;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 
-// background: radial-gradient(at 50% 160%, #8952FF, #E5DBF7, #FFFFFD, #FFFFFD);
 color: #2C2C2C;
 font-size: 0.9rem;
 `
@@ -256,12 +256,13 @@ font-size: 0.9rem;
 //회원가입 Form
 const SignUpForm = styled.div`
 display: flex;
-width: 450px;
+width: 362px;
 min-width: 320px;
-padding: 24px;
+height: 534px;
+padding: 16px;
 flex-direction: column;
 align-items: flex-start;
-border: 1px solid #DDD;
+border: 1px solid #C6C6C6;
 border-radius: 8px;
 background-color: #FFFFFF;
 box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
@@ -273,7 +274,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 align-self: stretch;
-margin-bottom: 24px;
+margin-bottom: 16px;
 height: 76px;
 `
 
@@ -293,14 +294,17 @@ const SignUpTitle = styled.div`
 display: flex;
 padding-left: 29px;
 padding-right: 22px;
-width: 450px;
+width: 362px;
+height: 60px;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-font-size: 24px;
-font-weight: 500;
-margin-bottom: 29px;
+font-size: 20px;
+font-weight: 400;
+margin-top: 150px;
+margin-bottom: 32px;
 text-align: center;
+font-family: GeistMono;
 `
 
 //회원가입 input들
@@ -335,6 +339,11 @@ border-radius: 10px;
 background: #2C2C2C;
 color: #FEFEFE;
 font-size: 14px;
+
+&:hover{
+background: #000;
+cursor: pointer;
+}
 `
 
 //error 내용 설명해주는 문자
@@ -350,8 +359,8 @@ const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
-  font-family: Pretendard;
+  font-family: "Pretendard-Regular";
   font-weight: 500;
   color: #5E5E5E;
-  margin-bottom: 1.6rem;
-`
+  margin-bottom: 3.5rem;
+  `
