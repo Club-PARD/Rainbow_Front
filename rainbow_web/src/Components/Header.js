@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -143,7 +143,7 @@ const HeaderContainer = styled.div`
 const LogoAndButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 340.5px;
+  gap: 410px;
 `;
 
 const Img = styled.div`

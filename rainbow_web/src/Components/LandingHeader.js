@@ -55,6 +55,9 @@ const ToLogin = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 10px; /* 106.667% */
+  &:hover{
+    background-color: #000;
+  }
 `
 
 export default LandingHeader;

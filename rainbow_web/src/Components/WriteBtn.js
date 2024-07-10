@@ -139,6 +139,7 @@ const WriteButton = styled.button`
   z-index: 10002;
   &:hover{
     cursor: pointer;
+    background-color: #000;
   }
 `;
 
