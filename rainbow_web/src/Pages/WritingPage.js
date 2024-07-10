@@ -48,7 +48,6 @@ function WritingPage() {
     setData({...data, postTitle: selectedQuestion.questionText});
   };
 
-  // image upload
   const onUpload = async (e) => {
     const file = e.target.files[0];
 
@@ -113,10 +112,8 @@ function WritingPage() {
   };
 
   return (
-    <Div>
-      <TopBlurr />
-      <WriteHeader />
       <Container>
+        <WriteHeader />
         {selectedQuestion ? (
           <QuestionText>{selectedQuestion.questionText}</QuestionText>
         ) : (
@@ -150,39 +147,20 @@ function WritingPage() {
           onExit={goToMain}
         />
       </Container>
-    </Div>
   );
 }
 
 export default WritingPage;
 
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 108px;
-`;
-
-const TopBlurr = styled.div`
-  width: 100%;
-  height: 108px;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  backdrop-filter:blur(2px);
-`
-
 const Container = styled.div`
-  width: 1280px;
-  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  overflow: scroll;
+  justify-content: center;
+  width: 100vw;
+  height: auto;
+  background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
+  padding: 10vh;
 `;
 
 const Img = styled.img`

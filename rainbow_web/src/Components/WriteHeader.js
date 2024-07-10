@@ -3,7 +3,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
@@ -150,13 +149,13 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1280px;
-  height: 72px;
+  width: 96vw;
+  height: auto;
   padding: 32px 40px 8px 40px;
   gap: 16px;
   position: fixed;
-  top: 0;
-  z-index: 1000; /* Ensures the header is above other content */
+  top: -10px;
+  z-index: 1000;
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -215,16 +214,6 @@ const StyledModal = styled(Modal)`
     font-weight: 400;
     line-height: 24px; 
   }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
 `;
 
 const Reg = styled.div`

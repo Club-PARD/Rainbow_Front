@@ -22,52 +22,50 @@ import FlowerCount from '../Components/FlowerCount';
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const outerDivRef = useRef(); // outerDivRef를 생성하여 DOM 요소에 접근
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 관리하는 useState
-  const [backgroundOpacity, setBackgroundOpacity] = useState(0); // 배경 불투명도 상태를 관리하는 useState
+  const outerDivRef = useRef();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0);
 
   const userData = useRecoilValue(UserData);
-  const [result, setResult] = useState([]); // 초기 값을 빈 배열로 설정
+  const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
 
   const handleScroll = () => {
-    // 스크롤 이벤트 핸들러 함수
-    const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; // 스크롤 위치 및 높이 정보를 가져옴
+    const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current;
     const pageHeight = window.innerHeight;
 
-    const newPage = Math.round(scrollTop / pageHeight) + 1; // 현재 스크롤 위치에 따른 페이지 계산
+    const newPage = Math.round(scrollTop / pageHeight) + 1;
     if (newPage !== currentPage) {
-      setCurrentPage(newPage); // 페이지가 변경되면 상태 업데이트
+      setCurrentPage(newPage);
     }
 
-    const maxScrollTop = scrollHeight - clientHeight; // 최대 스크롤 가능한 높이 계산
-    const startDarkeningPoint = maxScrollTop / 2; // 어두워지기 시작하는 지점 설정
+    const maxScrollTop = scrollHeight - clientHeight;
+    const startDarkeningPoint = maxScrollTop / 2;
     let newOpacity = 0;
 
     if (scrollTop > startDarkeningPoint) {
-      // 스크롤이 어두워지기 시작하는 지점을 넘었을 때
-      newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); // 불투명도 계산
+      newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint);
     }
 
-    setBackgroundOpacity(newOpacity); // 배경 불투명도 상태 업데이트
+    setBackgroundOpacity(newOpacity);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllAPI(userData.user_id);
-      setResult(data || []); // 데이터가 없을 경우 빈 배열로 설정
+      setResult(data || []);
     };
     fetchData();
   }, [userData.user_id]);
 
   useEffect(() => {
-    const outerDivRefCurrent = outerDivRef.current; // DOM 요소 참조 저장
-    outerDivRefCurrent.addEventListener("scroll", handleScroll); // 스크롤 이벤트 리스너 추가
+    const outerDivRefCurrent = outerDivRef.current;
+    outerDivRefCurrent.addEventListener("scroll", handleScroll);
 
     return () => {
-      outerDivRefCurrent.removeEventListener("scroll", handleScroll); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      outerDivRefCurrent.removeEventListener("scroll", handleScroll);
     };
-  }, [currentPage]); // currentPage가 변경될 때마다 useEffect 재실행
+  }, [currentPage]); 
 
   const getPetName = async () => {
     console.log(userData.user_id);
@@ -87,8 +85,6 @@ function MainPage() {
       style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
     >
       <TopBlurr />
-      {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
-
       <Header />
       <ExplainWrapper>
         <Title>기억의 꽃밭은</Title>
@@ -146,10 +142,7 @@ function MainPage() {
             </StyledSwiperSlide>
           ))}
         </StyledSwiper>
-      {/* </StickyWrapper> */}
-
       <CommentContainer>
-        {/* <StickyWrapper> */}
           <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -162,10 +155,8 @@ function MainPage() {
           >
             <FlowerCount />
           </motion.div>
-        {/* </StickyWrapper> */}
         <Comment />
       </CommentContainer>
-      {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
     </Container>
   );
 }

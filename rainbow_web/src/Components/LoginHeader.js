@@ -22,7 +22,7 @@ const Header = styled.div`
   gap: 16px;
   position: fixed;
   top: 0;
-  z-index: 1000; /* Ensures the header is above other content */
+  z-index: 1000;
 `;
 
 const Img = styled.div`
