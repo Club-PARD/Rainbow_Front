@@ -110,10 +110,10 @@ function MainPage() {
         >
           <FlowerCount />
         </motion.div>
-        
+        <SwiperWrapper>
         <StyledSwiper
           slidesPerView={3}
-          spaceBetween={40}
+          spaceBetween={20}
           navigation
           modules={[Pagination, Navigation]}
           className="mySwiper"
@@ -126,6 +126,7 @@ function MainPage() {
             </StyledSwiperSlide>
           ))}
         </StyledSwiper>
+        </SwiperWrapper>
       <CommentContainer>
           <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -238,8 +239,14 @@ const ToWrite = styled.div`
   }
 `;
 
+const SwiperWrapper = styled.div`
+display: flex;
+justify-content: center;
+transition: transform 0.3s ease-in-out;
+`
+
 const StyledSwiper = styled(Swiper)`
-  width: 918px;
+  width: 100%;
   height: 318px;
   padding: 10px;
 `;
@@ -247,7 +254,8 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 246px !important;
   height: 298px !important;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 20px;
   border-radius: 6px;
   background-image: url(${(props) => props.ima});
   background-position: center;
