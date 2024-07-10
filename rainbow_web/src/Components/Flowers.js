@@ -13,6 +13,7 @@ const Flowers = () => {
   const [postNumber, setPostNumber] = useRecoilState(PostCount);
 
   const flowerArray = Array.from({ length: postNumber }, (_, index) => index + 1);
+  const blankArray = Array.from({ length: 40 - postNumber }, (_, index) => index + 1);
 
   const getPostCount = async () => {
     const response = await getCountAPI(userData.user_id);
@@ -32,11 +33,9 @@ const Flowers = () => {
           <Flower src={flowerImage} alt="flower" />
         </FlowerBox>
       ))}
-      {saveIncreased && (
-        <FlowerBox key={postNumber}>
-          <Flower src={flowerImage} alt="flower" animate={saveIncreased} />
-        </FlowerBox>
-      )}
+      {blankArray.map((i) => (
+        <FlowerBox key={i} alt="blank" />
+      ))}
     </FlowersWrapper>
   );
 };
@@ -45,14 +44,16 @@ const Flowers = () => {
 const FlowersWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   width: 556px;
-  height: auto;
-  min-height: 63px;
+  height: 244px;
   background-color: #FEFEFE;
   border: solid 1.5px #C6C6C6;
   border-radius: 8px;
-  padding: 24px;
+  padding: 12px;
   margin-bottom: 7%;
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `;
 
 const floatAnimation = keyframes`
@@ -93,17 +94,14 @@ const FlowerBox = styled.div`
   border: solid 1px #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
-  margin: 8px;
-  padding: 1px;
+  margin: 6px;
   animation: ${floatAnimation} 1s ease-in-out;
 `;
 
 const Flower = styled.img`
   width: 100%;
   height: 100%;
-  ${({ animate }) => animate && `
-    animation: ${bloomAnimation} 2s;
-  `}
+  animation: ${bloomAnimation} 2s;
 `;
 
 export default Flowers;
