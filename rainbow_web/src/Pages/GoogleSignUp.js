@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { UserData } from "../Atom";
 import LoginHeader from "../Components/LoginHeader";
@@ -11,18 +11,16 @@ function GoogleSignUp(){
     //회원가입 버튼을 눌렀을 때 빈칸이 있는지 없는지 확인
     //빈칸이 없다면 이메일과 비밀번호의 형식이 올바른 형식인지 확인
     const [userData, setUserData] = useRecoilState(UserData);
-    const userId = useRecoilValue(UserData.user_id);
+    const data = useRecoilValue(UserData);
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
     const [nickname, setNickname] = useState("");
     const [petName, setPetName] = useState('');
 
     const userInfo = {
-        user : {
-            email: {email},
-            name: {nickname},
-            petName: {petName},
-        }
+      email: email,
+      name: nickname,
+      petName: petName,
     };
 
     const navigate = useNavigate();
@@ -45,10 +43,10 @@ function GoogleSignUp(){
 
     const onSubmitHandler = async (e) => {
         try {
-          console.log(userId);          
+          console.log(userInfo);          
           // 원래 여기도 구현하라고 하려했지만 patch를 위해 남겨두겠습니다.
           const response =
-            await patchGoogleMemberAPI(userId, userInfo);
+            await patchGoogleMemberAPI(data.user_id, userInfo);
         } catch (err) {
         console.error(err);
         }
@@ -65,9 +63,14 @@ function GoogleSignUp(){
         else{
             console.log({userInfo});
             alert("회원가입이 완료되었습니다!");
-            navigate("../");
+            navigate("/main");
         }
     }
+
+    useEffect(() => {
+      setEmail(userData.email);
+      console.log(email);
+    });
 
     return(
         <Container>
