@@ -13,4 +13,5 @@
 
 body {
   font-family: "Pretendard-Regular";
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 }
