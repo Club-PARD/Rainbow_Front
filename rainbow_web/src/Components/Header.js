@@ -12,22 +12,6 @@ import { patchPublicAPI } from '../APIs/PublicAPI';
 
 Modal.setAppElement('#root');
 
-const GlobalStyle = createGlobalStyle`
-  .Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.20);
-    z-index: 10001;
-  }
-  
-  body.modal-open {
-    overflow: hidden;
-  }
-`;
-
 function Header({ onActiveChange }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { handleSignOut } = useContext(AuthContext);
@@ -91,7 +75,6 @@ function Header({ onActiveChange }) {
 
   return (
     <HeaderContainer>
-      <GlobalStyle />
       <LogoAndButtonContainer>
         <Img onClick={goToMain}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
@@ -114,7 +97,13 @@ function Header({ onActiveChange }) {
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        overlayClassName="Overlay"
+        className="Modal"
+        shouldCloseOnOverlayClick={true}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+          },
+        }}
       >
         <ModalInfoButton>
           페이지 공개
@@ -144,9 +133,11 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 1280px;
   height: 72px;
-  background: #FEFEFE; 
   padding: 32px 40px 8px 40px;
   gap: 16px;
+  position: fixed;
+  top: 0;
+  z-index: 1000; /* Ensures the header is above other content */
 `;
 
 const LogoAndButtonContainer = styled.div`
@@ -235,7 +226,7 @@ const StyledModal = styled(Modal)`
   padding: 8px;
   position: fixed;
   top: 100px;
-  right: 70px;
+  right: 78px;
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
