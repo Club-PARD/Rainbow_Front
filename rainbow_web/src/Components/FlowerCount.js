@@ -20,9 +20,9 @@ const FlowerCountWrapper = styled.div`
     justify-content: center;
     
     width: 362px;
-    margin: 5em;
     padding: 8px 16px;
-
+    margin-bottom: 91px;
+    margin-top: 261px;
     border-radius: 8px;
     border: 1px solid #C6C6C6;
     background: var(--grayscale-White, #FEFEFE);
