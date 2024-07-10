@@ -74,9 +74,8 @@ const Comment = () => {
           ))}
         </CommentList>
       </Container>
-      <CommentForm onSubmit={handleCommentSubmit}>
-        <CommentFormContainer>
-          <CommentTextarea
+      <CommentFormContainer>
+        <CommentTextarea
             rows="1"
             value={newComment}
             onChange={handleCommentChange}
@@ -84,9 +83,8 @@ const Comment = () => {
             onFocus={() => setPlaceholderVisible(false)}
             onBlur={() => setPlaceholderVisible(true)}
           />
-          <Button type="submit">보내기</Button>
-        </CommentFormContainer>
-      </CommentForm>
+        <Button type="submit">보내기</Button>
+      </CommentFormContainer>
     </BigContainer>
   );
 };
@@ -118,19 +116,12 @@ const Container = styled.div`
   position: relative;
 `;
 
-const CommentForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 108.25%;
-  gap: 8px;
-`;
-
 const CommentFormContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 600px;
   height: 50px;
-  padding: 8px 8px 12px;
+  padding: 8px;
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
@@ -202,10 +193,14 @@ const Button = styled.button`
   width: 76px;
   height: 32px;
   padding: 12px;
-  font-size: 14px;
   background-color: #FEFEFE;
   color: #2C2C2C;
   border: none;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 11px;
   &:hover{
     cursor: pointer;
   }
