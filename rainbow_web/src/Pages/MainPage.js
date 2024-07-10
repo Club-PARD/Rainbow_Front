@@ -104,7 +104,7 @@ function MainPage() {
       
       <FlowersWrapper>
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{
@@ -191,7 +191,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
-  padding-top: 160px;
+  padding: 10vh;
 `;
 
 const ExplainWrapper = styled.div`
