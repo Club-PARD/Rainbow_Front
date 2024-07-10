@@ -298,4 +298,6 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 30%;
+
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 `;

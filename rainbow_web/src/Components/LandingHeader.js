@@ -21,9 +21,12 @@ const Header = styled.div`
   justify-content: space-between;
   width: 1280px;
   height: 72px;
-  background: #FEFEFE; 
+  margin: 2.5rem;
   padding: 32px 40px 8px 40px;
   gap: 16px;
+  position: fixed;
+  top: 0;
+  z-index: 1000; /* Ensures the header is above other content */
 `
 
 const Img = styled.div`
@@ -31,17 +34,17 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
-  position: fixed;
-  top: 32px;
-  left: 90px;
+  // position: fixed;
+  // top: 32px;
+  // left: 90px;
 `;
 
 const ToLogin = styled.button`
   width: 66px;
   height: 32px;
-  position: fixed;
-  top: 32px;
-  right: 90px;
+  // position: fixed;
+  // top: 32px;
+  // right: 90px;
   padding: 12px;
   background-color: #2C2C2C;
   color: #FEFEFE;

@@ -3,12 +3,8 @@ import styled from "styled-components";
 import TypeLogo from "../Assets/Img/Type_Logo.svg";
 import Ex1 from "../Assets/Img/example1.svg";
 import Ex2 from "../Assets/Img/example2.svg";
-import Ex3_1 from "../Assets/Img/example3_1.png";
-import Ex3_2 from "../Assets/Img/example3_2.png";
-import Ex3_3 from "../Assets/Img/example3_3.png";
-import Bubble1 from "../Assets/Img/bubble1.svg";
-import Bubble2 from "../Assets/Img/bubble2.svg";
-import Bubble3 from "../Assets/Img/bubble3.svg";
+import Ex3 from "../Assets/Img/example3.png";
+import FlowerExample from "../Assets/Img/flowerExample.gif";
 import { Link } from "react-router-dom";
 
 function LandingPage () {
@@ -45,16 +41,14 @@ function LandingPage () {
             여러분의 이야기를 나누고<br/>
             위로와 희망을 얻으세요          
           </SubTitle>
-          <img src={Bubble1} alt="Bubble 1" style={{}} />
-          <img src={Bubble2} alt="Bubble 2" style={{}} />
-          <img src={Bubble3} alt="Bubble 3" style={{}} />
+          <img src={Ex2} alt="Example Page 2" style={{}} />
         </LandingContent>
         <LandingContent>
           <SubTitle>
             사랑했던 반려동물을 추억하며,<br/>
             아름다운 꽃을 피워보세요.      
           </SubTitle>
-          <img src={Ex2} alt="Example Page 2" style={{}} />
+          <GIF src={FlowerExample} alt="Example Flower" style={{}} />
         </LandingContent>
         <LandingContent>
           <SubTitle>
@@ -62,9 +56,7 @@ function LandingPage () {
             소중한 기억들을 차근차근 꺼내보세요    
           </SubTitle>
           <Example>
-            <img src={Ex3_1} alt="Example Page 3-1" style={{}} />
-            <img src={Ex3_2} alt="Example Page 3-2" style={{}} />
-            <img src={Ex3_3} alt="Example Page 3-3" style={{}} />
+            <img src={Ex3} alt="Example Page 3" style={{}} />
           </Example>
         </LandingContent>
         <LandingContent>
@@ -90,6 +82,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
+  margin: 20vh;
 `;
 
 const LandingWrapper = styled.div`
@@ -114,6 +107,24 @@ const LandingContent = styled.div`
   margin: 35px;
 `
 
+const FooterContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 35px;
+  margin-bottom: 30%;
+`
+
+const GIF = styled.img`
+  width: 410px;
+  height: auto;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0px 9.061px 11.326px -6.796px rgba(0, 0, 0, 0.10), 0px 11px 28.315px -5.663px rgba(0, 0, 0, 0.10);
+  object-fit: cover;
+`
+
 const Text = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,13 +137,23 @@ const Text = styled.div`
 `
 
 const TalkTo = styled.div`
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+
   margin: 32px;
+  padding: 0 12px;
   font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #8952FF;
 
   color: #8952FF;
 
   &:hover {
+    border: 1px solid #6A3CCA; 
     color: #6A3CCA;
+    background-color: #D5C1FF;
   }
 `
 
