@@ -33,21 +33,23 @@ function LandingPage () {
             그 누구에게도 하지 못한 이야기,<br/>
             Sincerely, 에서 들어줄게요
           </SubTitle>
-          <img src={Ex1} alt="Example Page 1" style={{}} />
+          <img src={Ex1} alt="Example Page 1" style={{margin: '20px'}} />
         </LandingContent>
         <LandingContent>
           <SubTitle>
             여러분의 이야기를 나누고<br/>
             위로와 희망을 얻으세요          
           </SubTitle>
-          <img src={Ex2} alt="Example Page 2" style={{}} />
+          <img src={Ex2} alt="Example Page 2" style={{margin: '20px'}} />
         </LandingContent>
         <LandingContent>
           <SubTitle>
             사랑했던 반려동물을 추억하며,<br/>
             아름다운 꽃을 피워보세요.      
           </SubTitle>
-          <GIF src={FlowerExample} alt="Example Flower" style={{}} />
+          <GIF>
+            <img src={FlowerExample} alt="Example Flower" style={{width: '410px'}} />
+          </GIF>
         </LandingContent>
         <LandingContent>
           <SubTitle>
@@ -55,7 +57,7 @@ function LandingPage () {
             소중한 기억들을 차근차근 꺼내보세요    
           </SubTitle>
           <Example>
-            <img src={Ex3} alt="Example Page 3" style={{}} />
+            <img src={Ex3} alt="Example Page 3" style={{margin: '20px'}} />
           </Example>
         </LandingContent>
         <LandingContent>
@@ -81,7 +83,6 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: auto;
-  padding: 10vh;
 `;
 
 const LandingWrapper = styled.div`
@@ -92,8 +93,9 @@ const LandingWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 13vh;
 
-  overflow-y: scroll;
+  overflow: scroll;
 
   color: #2C2C2C;
 `
@@ -103,7 +105,7 @@ const LandingContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  margin: 35px;
+  margin: 10vh;
 `
 
 const FooterContent = styled.div`
@@ -115,13 +117,14 @@ const FooterContent = styled.div`
   margin-bottom: 30%;
 `
 
-const GIF = styled.img`
-  width: 410px;
-  height: auto;
+const GIF = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
-  border-radius: 8px;
-  box-shadow: 0px 9.061px 11.326px -6.796px rgba(0, 0, 0, 0.10), 0px 11px 28.315px -5.663px rgba(0, 0, 0, 0.10);
-  object-fit: cover;
+  border-radius: 11.707px;
+  filter: drop-shadow(0px 11.326px 9.061px rgba(0, 0, 0, 0.10)) drop-shadow(0px 28.315px 11px rgba(0, 0, 0, 0.10));
+  backdrop-filter: blur(10.527029037475586px);
 `
 
 const Text = styled.div`
@@ -141,7 +144,7 @@ const TalkTo = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin: 32px;
+  margin: 12px;
   padding: 0 12px;
   font-size: 16px;
   border-radius: 8px;
@@ -165,7 +168,7 @@ const SubTitle = styled.div`
   text-align: center;
   font-size: 24px;
   font-weight: 400;
-  margin-bottom: 50px;
+  margin-bottom: 24px;
 `
 
 const Example = styled.div`
@@ -177,14 +180,14 @@ const Example = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 30vh;
+  height: 20vh;
 
   position: fixed;
   top: 0;
   left: 0;
 
   backdrop-filter:blur(4px);
-  mask: linear-gradient(#FFFFFD, transparent);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
 `
 
 const BottomBlur = styled.div`
