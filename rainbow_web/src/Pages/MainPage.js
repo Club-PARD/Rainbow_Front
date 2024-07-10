@@ -180,7 +180,7 @@ const TopBlurr = styled.div`
   top: 0;
   left: 0;
 
-  backdrop-filter:blur(2px);
+  backdrop-filter:blur(16px);
 `
 
 const Container = styled.div`
@@ -188,7 +188,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
   height: auto;
   background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
   padding: 10vh;

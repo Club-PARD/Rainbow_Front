@@ -94,7 +94,7 @@ function LocalSignUp() {
 
     const onPassWordHandler = (e) => {
         //  8 ~ 10자 영문, 숫자 조합
-        var regExp = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,10}$/
+        var regExp = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{6,30}$/
         // 형식에 맞는 경우 true 리턴
         console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
         setPassWordValid(regExp.test(e.target.value));
@@ -157,7 +157,7 @@ function LocalSignUp() {
             return petNameInput.current.focus();
         }
         else if (passWord === '' || !passWordValid) {
-            setPassWordMsg("비밀번호는 영문 숫자 특수문자를 포함해야합니다");
+            setPassWordMsg("비밀번호는 6글자 이상인 영문 숫자 특수문자를 포함한 문자여야합니다");
             return passWordInput.current.focus();
         }
         else if (confirmPassWord === '' || passWord !== confirmPassWord) {
