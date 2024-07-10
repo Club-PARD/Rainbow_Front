@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
-import { getCountAPI, getPostDataAPI } from '../APIs/AxiosAPI';
+import { getCountAPI, getAllAPI } from '../APIs/AxiosAPI';
 import { UserData } from '../Atom';
 
 import Modal from 'react-modal';
@@ -54,7 +54,7 @@ function MainPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getPostDataAPI(userData.user_id);
+      const data = await getAllAPI(userData.user_id);
       setResult(data || []); // 데이터가 없을 경우 빈 배열로 설정
     };
     fetchData();

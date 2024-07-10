@@ -5,7 +5,7 @@ import { BackBtn } from "../Components/BackBtn";
 import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal';
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
-import { getPostDataAPI } from "../APIs/AxiosAPI";
+import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
 
 function DetailPage() {
@@ -28,7 +28,7 @@ function DetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getPostDataAPI(params.userId);
+      const response = await getAllAPI(params.userId);
       const cnt = await getCountAPI(params.userId);
       console.log(response);
       setPosts(response);

@@ -83,17 +83,6 @@ export const getCountAPI = async (userId) => {
   }
 }
 
-export const getPostDataAPI = async (userId) => {
-  // your code here
-  try {
-    const response = await axios
-    .get(`${server}/api/post/find/${userId}`);
-    return response.data;
-  } catch(err) {
-    console.error(err);
-  }
-};
-
 // 참고용
 // export const getDataAPI = async () => {
 //     try {
