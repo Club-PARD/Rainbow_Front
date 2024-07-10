@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import axios from 'axios';
-import CommunityHeader from '../Components/CommunityHeader';
+import Header from '../Components/Header';
 
 const server = process.env.REACT_APP_API_URL;
 
@@ -20,8 +20,7 @@ function CommunityPage() {
 
   return (
     <CommunityPageContainer isBlurred={isModalOpen}>
-      <CommunityPageBackground />
-      <CommunityHeader setModalOpen={setModalOpen} />
+      <Header setModalOpen={setModalOpen} />
       <Tip>
         <Text>Tip!</Text>
         <Text>커뮤니티에 내 게시물 공개 여부는 우측 상단 프로필 버튼을 통해서 설정할 수 있습니다.</Text>
@@ -39,13 +38,6 @@ function CommunityPage() {
 }
 
 export default CommunityPage;
-
-const CommunityPageBackground = createGlobalStyle`
-  body {
-    background-color: #131313 !important;
-    background-image: none !important;
-  }
-`;
 
 const CommunityPageContainer = styled.div`
   display: flex;
@@ -66,14 +58,14 @@ const Tip = styled.div`
   align-items: center;
   gap: 24px;
   border-radius: 8px;
-  border: 1px solid #393939;
-  background: #2C2C2C;
+  border: 1px solid #C6C6C6;
+  background: #F3F3F3;
   margin-bottom: 24px;
 `;
 
 const Text = styled.div`
   max-width: 420px;
-  color: #FFF;
+  color: #2C2C2C;
   font-family: Pretendard;
   font-size: 16px;
   font-style: normal;
@@ -98,13 +90,14 @@ const ImageWrapper = styled.div`
   position: relative;
   overflow: hidden;
   border-radius: 8px;
+  box-shadow: 1.5px 3px 10px 0px rgba(0, 0, 0, 0.25), 0px 0px 13.125px 0px rgba(12, 12, 13, 0.10);
   &:hover{
     cursor: pointer;
   }
 `;
 
 const Image = styled.img`
-  width: 262px;
+  width: 266px;
   height: 318px;
   object-fit: cover;
   border-radius: 8px;
