@@ -62,7 +62,7 @@ function LoginPage() {
 
   return (
     <Container>
-      <LoginHeader onClick={navigate('../')} />
+      <LoginHeader onClick={navigate('../main')} />
       <Wrapper>
         <Intro>
           <span>
