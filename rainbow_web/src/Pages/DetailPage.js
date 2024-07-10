@@ -6,6 +6,7 @@ import Header from "../Components/DetailHeader";
 import WriteDeleteModal from '../Components/WriteDeleteModal';
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 import { getPostDataAPI } from "../APIs/AxiosAPI";
+import { getCountAPI } from "../APIs/AxiosAPI";
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,7 @@ function DetailPage() {
   const navigate = useNavigate();
   const [result, setResult] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [count, setCount] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +29,10 @@ function DetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getPostDataAPI(params.userId);
+      const cnt = await getCountAPI(params.userId);
       console.log(response);
       setPosts(response);
+      setCount(cnt);
     };
 
     fetchData();
@@ -51,9 +55,14 @@ function DetailPage() {
     }
   };
 
+  const goToMain = () => {
+    navigate('/main');
+  };
+
   const handleNext = () => {
     const currentIndex = result.index;
-    if (navigate(`/detail/${params.userId}/${posts[currentIndex + 1].postId}`)) {
+    if (currentIndex < count) {
+      navigate(`/detail/${params.userId}/${posts[currentIndex].postId}`)
     } else {
       alert('마지막 게시물입니다.');
     }
@@ -62,8 +71,8 @@ function DetailPage() {
   const handlePrevious = () => {
     const currentIndex = result.index;
     console.log(currentIndex);
-    if (currentIndex > 0) {
-      navigate(`/detail/${params.userId}/${posts[currentIndex - 1].postId}`);
+    if (currentIndex - 2 > 0) {
+      navigate(`/detail/${params.userId}/${posts[currentIndex - 2].postId}`);
     } else {
       alert('첫 번째 게시물입니다.');
     }
@@ -75,7 +84,7 @@ function DetailPage() {
       <Header />
       <ContentWrapper>
         <DetailTopMenu>
-          <StyledBackBtn>
+          <StyledBackBtn onClick={goToMain}>
             <BackBtn />
           </StyledBackBtn>
           <EdleteBtn>
