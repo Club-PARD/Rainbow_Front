@@ -18,9 +18,9 @@ export const patchDetailAPI = async (postId, data) => {
   }
 };
 
-export const getDetailAPI = async (postId) => {
+export const getDetailAPI = async (userId, postId) => {
   try {
-      const response = await axios.get(`${server}/api/post/${postId}`);
+      const response = await axios.get(`${server}/api/post/find/${userId}/${postId}`);
       console.log(response.data);
       return response.data;
   } catch (err) {
