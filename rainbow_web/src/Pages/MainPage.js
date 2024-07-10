@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
@@ -22,33 +22,10 @@ import FlowerCount from '../Components/FlowerCount';
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const outerDivRef = useRef();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [backgroundOpacity, setBackgroundOpacity] = useState(0);
-
   const userData = useRecoilValue(UserData);
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
-
-  const handleScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current;
-    const pageHeight = window.innerHeight;
-
-    const newPage = Math.round(scrollTop / pageHeight) + 1;
-    if (newPage !== currentPage) {
-      setCurrentPage(newPage);
-    }
-
-    const maxScrollTop = scrollHeight - clientHeight;
-    const startDarkeningPoint = maxScrollTop / 2;
-    let newOpacity = 0;
-
-    if (scrollTop > startDarkeningPoint) {
-      newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint);
-    }
-
-    setBackgroundOpacity(newOpacity);
-  };
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,15 +34,6 @@ function MainPage() {
     };
     fetchData();
   }, [userData.user_id]);
-
-  useEffect(() => {
-    const outerDivRefCurrent = outerDivRef.current;
-    outerDivRefCurrent.addEventListener("scroll", handleScroll);
-
-    return () => {
-      outerDivRefCurrent.removeEventListener("scroll", handleScroll);
-    };
-  }, [currentPage]); 
 
   const getPetName = async () => {
     console.log(userData.user_id);
@@ -78,12 +46,26 @@ function MainPage() {
     getPetName();
   }, []);
 
+  const handleScroll = () => {
+    setScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const getBackgroundColor = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollFraction = scrollY / maxScroll;
+    const darkenAmount = Math.min(scrollFraction * 0.6, 0.6);
+    return `rgba(0, 0, 0, ${darkenAmount})`;
+  };
+
   return (
-    <Container
-      ref={outerDivRef}
-      className="outer"
-      style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
-    >
+    <Container style={{ backgroundColor: getBackgroundColor() }}>
       <TopBlurr />
       <Header />
       <ExplainWrapper>
@@ -183,6 +165,7 @@ const Container = styled.div`
   height: auto;
   background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
   padding: 10vh;
+  transition: background-color 0.5s ease;
 `;
 
 const ExplainWrapper = styled.div`
