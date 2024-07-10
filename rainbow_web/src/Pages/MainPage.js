@@ -82,37 +82,39 @@ function MainPage() {
       style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
     >
       {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
-      
-        <Header />
-        <Title>기억의 꽃밭은</Title>
-        <Explained>
-          반려동물과의 소중한 추억을 떠올리며<br />
-          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
-          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
-          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
-          {petName} 에 대한 이야기를 들려주세요
-        </Explained>
-        <Link to="./write" style={{ textDecoration: "none" }}><ToWrite>글 작성하러 가기</ToWrite></Link>
-        <Flowers />
-    
-        <StyledSwiper
-          slidesPerView={3}
-          spaceBetween={40}
-          navigation
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {result && result.map((data, index) => (
-            <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-              <Text>{data.postTitle}</Text>
-            </StyledSwiperSlide>
-          ))}
-        </StyledSwiper>
 
-        <CommentContainer>
-          <Comment />
-        </CommentContainer>
-        {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
+      <Header />
+      <Title>기억의 꽃밭은</Title>
+      <Explained>
+        반려동물과의 소중한 추억을 떠올리며<br />
+        한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
+        꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
+        사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
+        {petName} 에 대한 이야기를 들려주세요
+      </Explained>
+      <Link to="./write" style={{ textDecoration: "none" }}><ToWrite>글 작성하러 가기</ToWrite></Link>
+      <Flowers />
+
+      <StyledSwiper
+        slidesPerView={3}
+        spaceBetween={40}
+        navigation
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
+        {result && result.map((data, index) => (
+          <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+            <Link to={`/detail/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+              <Text>{data.postTitle}</Text>
+            </Link>
+          </StyledSwiperSlide>
+        ))}
+      </StyledSwiper>
+
+      <CommentContainer>
+        <Comment />
+      </CommentContainer>
+      {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
     </Container>
   );
 }

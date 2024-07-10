@@ -17,3 +17,13 @@ export const patchDetailAPI = async (postId, data) => {
       console.error(err);
   }
 };
+
+export const getDetailAPI = async (postId) => {
+  try {
+      const response = await axios.get(`${server}/api/post/${postId}`);
+      console.log(response.data);
+      return response.data;
+  } catch (err) {
+      console.error(err);
+  }
+}
