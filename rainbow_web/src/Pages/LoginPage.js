@@ -95,8 +95,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: auto;
-  padding-top: 108px;
+  height: 100vh;
 `;
 
 const Wrapper = styled.div`
