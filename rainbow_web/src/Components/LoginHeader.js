@@ -1,11 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../Assets/Img/logo.svg';
 
 function LoginHeader() {
+  const navigate = useNavigate();
+
+  const goToLanding = () => {
+    navigate('/');
+  };
+
   return (
     <Header>
-      <Img>
+      <Img onClick={goToLanding}>
         <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
       </Img>
     </Header>
@@ -30,6 +37,9 @@ const Img = styled.div`
   align-items: center;
   width: 178px;
   height: 32px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default LoginHeader;
