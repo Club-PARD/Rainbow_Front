@@ -150,6 +150,9 @@ const CommentList = styled.ul`
   list-style-type: none;
   padding: 0;
   width: 100%;
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: -6px;
 `;
 
 const CommentItem = styled.li`
