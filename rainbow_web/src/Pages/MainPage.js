@@ -256,8 +256,10 @@ const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex;
   align-items: end;
   background-repeat: no-repeat;
+  transition: transform 0.4s ease;
   &:hover {
     cursor: pointer;
+    transform: scale(1.05);
   }
 `;
 
