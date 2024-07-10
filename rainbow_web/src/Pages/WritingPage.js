@@ -114,6 +114,7 @@ function WritingPage() {
 
   return (
     <Div>
+      <TopBlurr />
       <WriteHeader />
       <Container>
         {selectedQuestion ? (
@@ -159,7 +160,19 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 108px;
 `;
+
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 108px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  backdrop-filter:blur(2px);
+`
 
 const Container = styled.div`
   width: 1280px;

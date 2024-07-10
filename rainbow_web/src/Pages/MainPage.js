@@ -86,6 +86,7 @@ function MainPage() {
       className="outer"
       style={{ overflowY: "scroll", scrollBehavior: "smooth", backgroundColor: `rgba(0, 0, 0, ${backgroundOpacity})` }}
     >
+      <TopBlurr />
       {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
 
       <Header />
@@ -171,6 +172,17 @@ function MainPage() {
 
 export default MainPage;
 
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 108px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  backdrop-filter:blur(2px);
+`
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -179,6 +191,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
+  padding-top: 160px;
 `;
 
 const ExplainWrapper = styled.div`

@@ -22,6 +22,7 @@ function CommunityPage() {
 
   return (
     <CommunityPageContainer isBlurred={isModalOpen}>
+      <TopBlurr />
       <Header setModalOpen={setModalOpen} />
       <Tip isLoaded={isLoaded}>
         <Text>Tip!</Text>
@@ -60,7 +61,19 @@ const CommunityPageContainer = styled.div`
   color: white;
   backdrop-filter: ${props => (props.isBlurred ? 'blur(10px)' : 'none')};
   transition: backdrop-filter 0.3s, background 0.3s;
+  padding-top: 108px;
 `;
+
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 108px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  backdrop-filter:blur(2px);
+`
 
 const Tip = styled.div`
   display: flex;

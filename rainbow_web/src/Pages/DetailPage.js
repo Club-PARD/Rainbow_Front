@@ -41,6 +41,7 @@ function DetailPage() {
 
   return (
     <Container>
+      <TopBlurr />
       <Header />
       <ContentWrapper>
         <DetailTopMenu>
@@ -82,7 +83,19 @@ const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: #FEFEFE;
+  padding-top: 108px;
 `;
+
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 108px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  backdrop-filter:blur(2px);
+`
 
 const ContentWrapper = styled.div`
   width: 100%;
