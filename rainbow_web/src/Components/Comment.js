@@ -74,16 +74,18 @@ const Comment = () => {
           ))}
         </CommentList>
       </Container>
-      <CommentFormContainer>
+      <CommentFormContainer onSubmit={handleCommentSubmit}>
         <CommentTextarea
-            rows="1"
-            value={newComment}
-            onChange={handleCommentChange}
-            placeholder={placeholderVisible ? "방명록을 입력해주세요" : ""}
-            onFocus={() => setPlaceholderVisible(false)}
-            onBlur={() => setPlaceholderVisible(true)}
-          />
-        <Button type="submit">보내기</Button>
+          rows="1"
+          value={newComment}
+          onChange={handleCommentChange}
+          placeholder={placeholderVisible ? "방명록을 입력해주세요" : ""}
+          onFocus={() => setPlaceholderVisible(false)}
+          onBlur={() => setPlaceholderVisible(true)}
+        />
+        <Button type="submit" disabled={!newComment.trim()} className={!newComment.trim() ? 'disabled' : ''}>
+          보내기
+        </Button>
       </CommentFormContainer>
     </BigContainer>
   );
@@ -116,7 +118,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const CommentFormContainer = styled.div`
+const CommentFormContainer = styled.form`
   display: flex;
   align-items: center;
   width: 600px;
@@ -201,7 +203,10 @@ const Button = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: 11px;
-  &:hover{
+  &:hover {
     cursor: pointer;
+  }
+  &.disabled {
+    color: #9B9B9B;
   }
 `;
