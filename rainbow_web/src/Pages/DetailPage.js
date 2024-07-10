@@ -71,7 +71,7 @@ function DetailPage() {
   const handlePrevious = () => {
     const currentIndex = result.index;
     console.log(currentIndex);
-    if (currentIndex - 2 > 0) {
+    if (currentIndex - 1 > 0) {
       navigate(`/detail/${params.userId}/${posts[currentIndex - 2].postId}`);
     } else {
       alert('첫 번째 게시물입니다.');
@@ -219,7 +219,6 @@ const Title = styled.div`
 `;
 
 const ImgWrapper = styled.div`
-  width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
@@ -227,8 +226,8 @@ const ImgWrapper = styled.div`
 
 const Image = styled.img`
   border-radius: 6px;
-  width: 250px;
-  height: 300px;
+  width: 100%;
+  // height: 300px;
   background-size: cover;
 `;
 
