@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
-import { getCountAPI, getAllAPI } from '../APIs/AxiosAPI';
+import { getAllAPI } from '../APIs/AxiosAPI';
 import { UserData } from '../Atom';
 
 import Modal from 'react-modal';
@@ -18,6 +18,7 @@ import Header from '../Components/Header';
 import Comment from '../Components/Comment';
 import Flowers from '../Components/Flowers';
 import FlowerCount from '../Components/FlowerCount';
+import WriteBtn2 from '../Components/WriteBtn2';
 
 Modal.setAppElement('#root');
 
@@ -78,7 +79,7 @@ function MainPage() {
           사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
           {petName} 에 대한 이야기를 들려주세요
         </Explained>
-        <Link to="./write" style={{ textDecoration: "none" }}><ToWrite>글 작성하러 가기</ToWrite></Link>
+        <WriteBtn2 />
       </ExplainWrapper>
       
       <FlowersWrapper>
@@ -152,9 +153,9 @@ const TopBlurr = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.7); /* 흰색 배경에 50% 불투명도 */
-  
-  z-index: 999; /* 다른 요소들보다 위에 배치 */
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter:blur(3px);
+  z-index: 999;
 `
 
 const Container = styled.div`
@@ -165,7 +166,7 @@ const Container = styled.div`
   width: 100vw;
   height: auto;
   background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
-  padding: 10vh;
+  //padding: 10vh;
   transition: background-color 0.5s ease;
 `;
 
@@ -176,7 +177,7 @@ const ExplainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin: 5%;
+  margin-top: 200px;
 `
 
 const FlowersWrapper = styled.div`
@@ -186,7 +187,7 @@ const FlowersWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-bottom: 15%;
+  margin-top: 225px;
 `
 
 // const StickyWrapper = styled.div`
@@ -272,7 +273,7 @@ const CommentContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 30%;
+  margin-top: 91px;
 
   background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 `;
