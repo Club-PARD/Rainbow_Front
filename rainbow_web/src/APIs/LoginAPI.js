@@ -10,7 +10,7 @@ export const googleLoginAPI = async (data) => {
             `${server}/api/auth/googleLogin`,
             data, config, { withCredentials: true }
         ); 
-        return response.data;
+        return response;
     } catch(err) {
         console.log(err);
     }
