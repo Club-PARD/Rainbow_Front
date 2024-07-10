@@ -194,6 +194,7 @@ const Textarea = styled.textarea`
   border: solid 1px #DDD;
   border-radius: 8px;
   padding: 12px 16px;
+  margin-top: 16px;
   outline: #B0B0B0;
 `;
 
@@ -211,6 +212,7 @@ const QuestionText = styled.p`
 const ButtonContainer = styled.div`
   width: 540px;
   display: flex;
+  margin-top: 16px;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;

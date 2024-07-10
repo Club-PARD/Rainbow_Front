@@ -61,6 +61,7 @@ const Comment = () => {
 
   return (
     <BigContainer>
+      <TopBlurr />
       <Container>
         <CommentList>
           {comments.map((comment, index) => (
@@ -123,7 +124,7 @@ const CommentFormContainer = styled.form`
   align-items: center;
   width: 600px;
   height: 50px;
-  padding: 8px;
+  padding-bottom: 4px;
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
@@ -134,6 +135,7 @@ const CommentTextarea = styled.textarea`
   flex: 1;
   height: 22px;
   padding: 8px;
+  margin-bottom: 4px;
   font-size: 14px;
   border: none;
   resize: none;
@@ -148,6 +150,9 @@ const CommentList = styled.ul`
   list-style-type: none;
   padding: 0;
   width: 100%;
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: -6px;
 `;
 
 const CommentItem = styled.li`
@@ -155,7 +160,7 @@ const CommentItem = styled.li`
   align-items: flex-start;
   width: 100%;
   height: auto;
-  margin-bottom: 14px;
+  margin-bottom: 24px;
 `;
 
 const ProfileImg = styled.img`
@@ -198,11 +203,12 @@ const Button = styled.button`
   background-color: #FEFEFE;
   color: #2C2C2C;
   border: none;
+  border-radius: 8px;
   font-family: Pretendard;
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
-  line-height: 11px;
+  line-height: 16px;
   &:hover {
     cursor: pointer;
   }
@@ -210,3 +216,15 @@ const Button = styled.button`
     color: #9B9B9B;
   }
 `;
+
+const TopBlurr = styled.div`
+  width: 596px;
+  height: 39px;
+  position: relative;
+  top: 392.7px;
+  left: 0;
+  border-radius: 8px;
+  backdrop-filter:blur(1px);
+  mask: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
+  z-index: 999;
+`

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react"; // React hooks를 import
+import { useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from "styled-components"; // styled-components 라이브러리를 import
+import styled from "styled-components";
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
@@ -103,8 +103,8 @@ function MainPage() {
     >
       <Container>
       {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
-      <InnerDiv>
       <Header />
+      <InnerDiv>
       <TopBlurr />
       <ExplainWrapper>
         <Title>기억의 꽃밭은</Title>
@@ -191,7 +191,7 @@ function MainPage() {
   );
 }
 
-export default MainPage; // Inter 컴포넌트를 기본 export
+export default MainPage;
 
 const TopBlurr = styled.div`
   width: 100%;
@@ -199,7 +199,7 @@ const TopBlurr = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  //background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter:blur(3px);
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
   z-index: 999;

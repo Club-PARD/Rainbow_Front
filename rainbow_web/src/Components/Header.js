@@ -105,7 +105,7 @@ function Header({ onActiveChange }) {
           },
         }}
       >
-        <ModalInfoButton>
+        <ModalInfoButtonNoHover>
           페이지 공개
           <ToggleSwitch>
             <CheckBox
@@ -115,7 +115,7 @@ function Header({ onActiveChange }) {
             />
             <ToggleSlider />
           </ToggleSwitch>
-        </ModalInfoButton>
+        </ModalInfoButtonNoHover>
         <Reg />
         <ModalInfoButton>회원 정보 수정</ModalInfoButton>
         <ModalInfoButton>이용 정책</ModalInfoButton>
@@ -225,8 +225,8 @@ const StyledModal = styled(Modal)`
   width: 178px;
   padding: 8px;
   position: fixed;
-  top: 100px;
-  right: 78px;
+  top: 64px;
+  right: 28px;
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
@@ -316,6 +316,13 @@ const ModalInfoButton = styled.button`
   &:hover {
     background-color: #F3F3F3;
     cursor: pointer;
+  }
+`;
+
+const ModalInfoButtonNoHover = styled(ModalInfoButton)`
+  &:hover {
+    background-color: white;
+    cursor: default;
   }
 `;
 
