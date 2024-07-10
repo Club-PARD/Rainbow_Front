@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
+const WriteDeleteModal = ({ isOpen, onRequestClose, onExit }) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('modal-open');
@@ -45,7 +45,7 @@ const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
             <DeleteIcon src={Delete} alt="Close Button" />
           </ExitButton>
           <Title>삭제하시겠어요?</Title>
-          <Content>지워진 질문은 언제나<br/>다시 입력하실 수 있습니다..</Content>
+          <Content>지워진 질문은 언제나<br/>다시 입력하실 수 있습니다.</Content>
           <ButtonGroup>
             <StyledButton2 onClick={onRequestClose}>취소</StyledButton2>
             <StyledButton onClick={() => { onRequestClose(); onExit(); }}>삭제하기</StyledButton>
@@ -56,7 +56,7 @@ const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
   );
 };
 
-export default ExitModal;
+export default WriteDeleteModal;
 
 const StyledModal = styled(Modal)`
   display: flex;

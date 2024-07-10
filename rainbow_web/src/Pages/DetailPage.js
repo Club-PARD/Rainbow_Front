@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BackBtn } from "../Components/BackBtn";
 import Header from "../Components/DetailHeader";
-import WriteDeleteModal from '../Components/WriteDeleteModal'; // 모달 컴포넌트 임포트
-import { getDetailAPI } from "../APIs/PublicAPI";
+import WriteDeleteModal from '../Components/WriteDeleteModal';
+import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 
 function DetailPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
-
-  //동운 코드
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const params = useParams();
-  console.log(params);
+  const navigate = useNavigate();
   const [result, setResult] = useState([]);
 
   useEffect(() => {
@@ -22,7 +20,7 @@ function DetailPage() {
     };
 
     fetchData();
-  }, [])
+  }, [params.postId]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -30,6 +28,15 @@ function DetailPage() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deletePostAPI(params.postId);
+      navigate("/main");
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
   };
 
   return (
@@ -61,9 +68,9 @@ function DetailPage() {
           <DetailBottomBtn>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
-      <WriteDeleteModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <WriteDeleteModal isOpen={isModalOpen} onRequestClose={closeModal} onExit={handleDelete} />
     </Container>
-  )
+  );
 }
 
 export default DetailPage;

@@ -27,3 +27,8 @@ export const getDetailAPI = async (postId) => {
       console.error(err);
   }
 }
+
+export const deletePostAPI = async (postId) => {
+  const response = await axios.delete(`${server}/api/post/${postId}`);
+  return response.data;
+};
