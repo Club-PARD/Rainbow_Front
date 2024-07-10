@@ -180,17 +180,17 @@ const Img = styled.img`
   width: 535px;
   height: 100%;
   border-radius: 8px;
-`;
-
-const ImgLabel = styled.label`
-  width: 535px;
-  height: 100%;
   border: 1px solid #DDDDDD;
   border-radius: 8px;
   &:hover {
     cursor: pointer;
     border: 1px solid #C6C6C6;
   }
+`;
+
+const ImgLabel = styled.label`
+  width: 535px;
+  height: 100%;
 `;
 
 const StyledInput = styled.input`
