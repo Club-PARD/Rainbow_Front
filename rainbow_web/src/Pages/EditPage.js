@@ -18,7 +18,7 @@ function EditPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getDetailAPI(params.postId);
+            const response = await getDetailAPI(params.userId, params.postId);
             console.log(response);
             setResult(response);
             setText(response.postContent);

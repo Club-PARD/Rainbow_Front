@@ -61,6 +61,7 @@ function DetailPage() {
 
   const handlePrevious = () => {
     const currentIndex = result.index;
+    console.log(currentIndex);
     if (currentIndex > 0) {
       navigate(`/detail/${params.userId}/${posts[currentIndex - 1].postId}`);
     } else {
@@ -78,7 +79,7 @@ function DetailPage() {
             <BackBtn />
           </StyledBackBtn>
           <EdleteBtn>
-            <StyledLink to={`/edit/${params.postId}`}>
+            <StyledLink to={`/edit/${params.userId}/${params.postId}`}>
               <EditBtn>수정하기</EditBtn>
             </StyledLink>
             <DeleteBtn onClick={openModal}>삭제하기</DeleteBtn>
