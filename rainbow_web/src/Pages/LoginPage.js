@@ -24,19 +24,23 @@ function LoginPage() {
       console.log("Encoded JWT ID token: " + res.credential);
       const googleUser = jwtDecode(res.credential);
       
+      // google login 결과
       console.log(googleUser);
       
+      // google login API
       const response = await googleLoginAPI(googleUser);
+      console.log((response.name == null));
+      setUserData(response);
+      console.log(userData);
 
-      if(response) {
-        console.log(response);
-        setIsLoggedIn(true);
-        setUserData(response);
-        navigate("../main");
+      // server login 결과
+      if(response.name == null) {
+        console.log("to google register");
+        navigate("/register-google");
       }
       else {
-        console.log("to google register");
-        navigate("../register-google");
+        setIsLoggedIn(true);
+        navigate("/main");
       }
     } catch(err) {
       console.log(err);
