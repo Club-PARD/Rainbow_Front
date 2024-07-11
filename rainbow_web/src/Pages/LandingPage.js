@@ -9,6 +9,20 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 function LandingPage () {
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set.
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+  
   useEffect(()=>{
     window.scrollTo(0, 0);
   });

@@ -17,6 +17,19 @@ function LoginPage() {
   const [ userData, setUserData ] = useRecoilState(UserData);
   const data = useRecoilValue(UserData);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set.
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const handleGoogleLogin = async (res) => {

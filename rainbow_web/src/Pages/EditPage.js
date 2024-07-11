@@ -25,6 +25,19 @@ function EditPage() {
     const userData = useRecoilValue(UserData);
 
     useEffect(() => {
+      const handleBeforeUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = ''; // Chrome requires returnValue to be set.
+      };
+  
+      window.addEventListener('beforeunload', handleBeforeUnload);
+  
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }, []);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await getDetailAPI(params.userId, params.postId);
