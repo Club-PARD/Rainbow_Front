@@ -122,9 +122,10 @@ const Container = styled.div`
 const CommentFormContainer = styled.form`
   display: flex;
   align-items: center;
-  width: 600px;
+  width: 594px;
   height: 50px;
   padding-bottom: 4px;
+  padding-left: 8px;
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
