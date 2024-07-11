@@ -327,8 +327,13 @@ const StyledSwiperSlide = styled(SwiperSlide)`
 `;
 
 const Text = styled.div`
-  width: 246px;
-  padding: 10px;
+  display: flex;
+  width: 262px;
+  height: 49px;
+  font-family: Geist Mono;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 18px 12px 12px 12px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 0 0 6px 6px;
 `;
