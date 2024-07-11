@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     bottom: 0;
     background: rgba(0, 0, 0, 0.20);
     backdrop-filter: blur(4px);
-    z-index: 10001;
+    z-index: 1000;
   }
   
   body.modal-open {

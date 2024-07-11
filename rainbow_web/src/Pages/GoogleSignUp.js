@@ -109,6 +109,7 @@ function GoogleSignUp(){
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
 
   width: 100vw;
@@ -123,6 +124,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 108px;
 `
 
 const LoginWrapper = styled.div`
@@ -134,7 +136,6 @@ const LoginWrapper = styled.div`
   width: 24rem;
 
   padding: 16px;
-
   border-radius: 8px;
   border: solid 1px #C6C6C6;
   background: #FEFEFE;
@@ -189,8 +190,9 @@ const Label = styled.div`
 
 const Intro = styled.div`
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 20px;
   margin: 1.6rem;
+  font-family: "GeistMono";
 `
 
 const Footer = styled.div`
@@ -199,10 +201,9 @@ const Footer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
-  font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
-  margin-bottom: 1.6rem;
+  margin-bottom: 2rem;
 `
 
 const SignUpCreateBtn = styled.button`

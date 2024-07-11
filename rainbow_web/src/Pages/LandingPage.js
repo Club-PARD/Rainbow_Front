@@ -148,14 +148,14 @@ const TalkTo = styled.div`
   padding: 0 12px;
   font-size: 16px;
   border-radius: 8px;
-  border: 1px solid #8952FF;
+  border: 1px solid #D5C1FF;
 
   color: #8952FF;
 
   &:hover {
-    border: 1px solid #6A3CCA; 
-    color: #6A3CCA;
-    background-color: #D5C1FF;
+    border: 1px solid #F0EAFF; 
+    color: #8952FF;
+    background-color: #F0EAFF;
   }
 `
 

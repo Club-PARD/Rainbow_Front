@@ -137,7 +137,7 @@ const LoginBtnWrapper = styled.div`
 
 const LoginBtn = styled.button`
     width: 100%;
-    height: 46px;
+    height: auto;
 
     margin: 12px;
     padding: 12px;

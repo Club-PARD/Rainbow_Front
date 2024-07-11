@@ -105,20 +105,10 @@ function MainPage() {
       {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
       <Header />
       <InnerDiv>
-      {(backgroundOpacity < 0.2) && <TopBlurr />}
+      {/* {(backgroundOpacity < 0.2) && <TopBlurr />} */}
+      <TopBlurr />
       <ExplainWrapper>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 2,
-            y : { duration: 1},
-          }}
-        >
-          <Title>기억의 꽃밭은</Title>
-        </motion.div>
+        <Title>기억의 꽃밭은</Title>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -221,11 +211,13 @@ const TopBlurr = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+
   //background-color: rgba(255, 255, 255, 0.7);
-  // backdrop-filter:blur(3px);
+  // backdrop-filter: blur(3px);
   // mask: linear-gradient(#FFFFFD, transparent);
-  background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 
-  z-index: 999;
+  // background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 
 `
 
 const ExplainWrapper = styled.div`
@@ -285,13 +277,6 @@ const ToWrite = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  font-size: 16px;
-  font-weight: 400;
-  font-size: 16px;
-  color: #8952FF;
-  &:hover {
-    color: #6A3CCA;
-  }
 `;
 
 const SwiperWrapper = styled.div`
@@ -366,7 +351,7 @@ const OuterDiv = styled.div`
   height: 100vh;
   overflow-y: auto;
   scroll-behavior: smooth;
-  background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
+  // background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
 
   /* 화면에서 스크롤바 안보이게 */
   &::-webkit-scrollbar {
@@ -381,5 +366,5 @@ const InnerDiv = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 100px;
-  padding: 20vh;
+  padding-top: 20vh;
 `;

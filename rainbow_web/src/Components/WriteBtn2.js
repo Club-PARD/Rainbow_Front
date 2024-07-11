@@ -139,16 +139,16 @@ const ToWrite = styled.div`
   justify-content: center;
   font-size: 16px;
   font-weight: 400;
-  color: #8952FF;
   z-index: 10001;
-  &:hover {
-    border: 1px solid #6A3CCA; 
-    border-radius: 8px;
-    padding: 0 12px;
-    color: #6A3CCA;
-    background-color: #D5C1FF;
+  padding: 0 12px;
+  border: 1px solid #D5C1FF;
+  border-radius: 8px;
+  color: #8952FF;
 
-    cursor: pointer;
+  &:hover {
+    border: 1px solid #F0EAFF; 
+    color: #8952FF;
+    background-color: #F0EAFF;
   }
 `
 
