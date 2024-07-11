@@ -22,7 +22,6 @@ function Header({ onActiveChange }) {
   const [communityDot, setCommunityDot] = useState(false);
   const [memoryDot, setMemoryDot] = useState(false);
   const userData = useRecoilValue(UserData);
-  const loggedInUserId = userData.user_id; // 로그인한 사용자의 user_id
 
   useEffect(() => {
     if (location.pathname === '/community') {
@@ -31,12 +30,12 @@ function Header({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === `/main/${userData.user_id}`) {
+    if (location.pathname === `main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
     }
-  }, [location.pathname, userData.user_id]);
+  }, [location.pathname]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -70,19 +69,18 @@ function Header({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate(`/main/${loggedInUserId}`); // 로그인한 사용자의 user_id로 메인 페이지로 이동
+    navigate(`../main/${userData.user_id}`);
   };
 
   const handleToggleChange = async () => {
     const newIsActive = !isActive;
     setIsActive(newIsActive);
-    if (onActiveChange) {
-      onActiveChange(newIsActive);
-    }
 
     try {
-      const response = await patchPublicAPI(userData.user_id, newIsActive);
-      console.log(response.data);
+      await patchPublicAPI(userData.user_id, newIsActive);
+      if (onActiveChange) {
+        onActiveChange(newIsActive); // Invoke the callback function here
+      }
     } catch (err) {
       console.error(err);
     }
@@ -193,7 +191,7 @@ const CustomButton = styled.button`
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
-  line-height: 16px;
+  line-height: 16px; 
 
   &:hover {
     background-color: ${props => (props.hasDot ? 'transparent' : '#F3F3F3')};
@@ -243,7 +241,7 @@ const StyledModal = styled(Modal)`
   top: 64px;
   right: 28px;
   border-radius: 8px;
-  border: 1px solid #C6C6C6;
+  border: 1px solid #C6C6C6;  
   background: #FEFEFE;
   z-index: 10000;
   p {
@@ -252,7 +250,7 @@ const StyledModal = styled(Modal)`
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px;
+    line-height: 24px; 
   }
 `;
 

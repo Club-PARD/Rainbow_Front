@@ -25,8 +25,7 @@ function CommunityPage() {
     };
   }, []);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  const fetchImages = () => {
     axios.get(`${server}/api/post/community`)
       .then(response => {
         setImages(response.data);
@@ -34,6 +33,11 @@ function CommunityPage() {
         console.log(response.data);
       })
       .catch(error => console.error('Error fetching data:', error));
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    fetchImages();
   }, []);
 
   const handleImageClick = (userId) => {
@@ -41,10 +45,16 @@ function CommunityPage() {
     navigate(`../c_main/${userId}`);
   };
 
+  const handleActiveChange = (newIsActive) => {
+    if (newIsActive) {
+      fetchImages();
+    }
+  };
+
   return (
     <CommunityPageContainer isBlurred={isModalOpen}>
       <TopBlurr />
-      <Header setModalOpen={setModalOpen} />
+      <Header setModalOpen={setModalOpen} onActiveChange={handleActiveChange} />
       <Tip isLoaded={isLoaded}>
         <Text>Tip!</Text>
         <Text>커뮤니티에 내 게시물 공개 여부는 우측 상단 프로필 버튼을 통해서 설정할 수 있습니다.</Text>
@@ -167,7 +177,6 @@ const Image = styled.img`
   object-fit: cover;
   border-radius: 8px;
 
-  // 여기 동운코드
   transition: transform 0.3s ease-in-out;
   &:hover{
   cursor: pointer;
