@@ -3,7 +3,6 @@ import styled from "styled-components";
 import LoginHeader from '../Components/LoginHeader';
 import { postMemberAPI } from '../APIs/RegisterAPI';
 import { useNavigate } from 'react-router-dom';
-import mainTest from '../Assets/Img/mainTest.png';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -47,10 +46,16 @@ function LocalSignUp() {
     const navigate = useNavigate();
 
     const handlePasswordType = (e) => {
-        setpwType((prevState) => ({
-            type: prevState.visible ? "password" : "text",
-            visible: !prevState.visible
-        }));
+        setpwType(() => {
+            // 만약 현재 pwType.visible이 false 라면
+            if (!pwType.visible) {
+                return { type: "text", visible: true };
+
+                //현재 pwType.visible이 true 라면
+            } else {
+                return { type: "password", visible: false };
+            }
+        });
     };
 
 
@@ -109,6 +114,24 @@ function LocalSignUp() {
         }
     }
 
+    // if (email === '') {
+    //     // alert("이메일을 입력해주세요");
+    //     //emailInput.current.color = "red"
+    //     setEmailMsg("이메일을 입력해주세요");
+    //     emailInput.current.color = 'red';
+    //     return emailInput.current.focus();
+    // }
+    // else 
+    // else if (passWord === '') {
+    //     setPassWordMsg("비밀번호를 입력해주세요");
+    //     return passWordInput.current.focus();
+    // }
+    // else if (confirmPassWord === '') {
+    //     setConfirmPassWordMsg("비밀번호 확인란을 채워주세요");
+    //     return confirmPassWordInput.current.focus();
+    // }
+
+
     const onSubmitHandler = async (e) => {
         if (email === '' || !emailValid) {
             setEmailMsg("이메일의 형식이 올바르지 않습니다");
@@ -126,7 +149,7 @@ function LocalSignUp() {
             return petNameInput.current.focus();
         }
         else if (passWord === '' || !passWordValid) {
-            setPassWordMsg("비밀번호는 8-30글자의 영문 숫자 특수문자를 포함한 문자여야합니다");
+            setPassWordMsg("비밀번호는 8글자 이상인 영문 숫자 특수문자를 포함한 문자여야합니다");
             return passWordInput.current.focus();
         }
         else if (confirmPassWord === '' || passWord !== confirmPassWord) {
@@ -189,12 +212,7 @@ function LocalSignUp() {
 
                 <InputField>
                     <InputTitle>비밀번호</InputTitle>
-                    <PasswordInputWrapper>
-                        <PasswordInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
-                        <PasswordToggleIcon onClick={handlePasswordType}>
-                            <SeeImg src={mainTest} alt="toggle password visibility" />
-                        </PasswordToggleIcon>
-                    </PasswordInputWrapper>
+                    <SignUpInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
                     <ErrorExplain>{passWordMsg}</ErrorExplain>
                 </InputField>
 
@@ -203,6 +221,7 @@ function LocalSignUp() {
                     <SignUpInput type="password" color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
+                <InputTitle onClick={handlePasswordType}>{pwType.visible ? "비밀번호 숨기기" : "비밀번호 보기"}</InputTitle>
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
             </SignUpForm>
             <Footer>
@@ -311,52 +330,6 @@ font-weight: 400;
  border-color: ${(props) => props.color || "#B0B0B0"};
  outline: none;
 }
-`
-
-// Password input wrapper
-const PasswordInputWrapper = styled.div`
-  position: relative;
-  width: 100%;
-`
-
-// Password input field
-const PasswordInput = styled.input`
-display: flex;
-min-width: 285px;
-padding: 12px 16px 12px 16px;
-align-items: center;
-border: solid 1px;
-border-radius: 8px;
-align-self: stretch;
-border-color: #DDD;
-font-family: Pretendard;
-font-size: 14px;
-font-weight: 400;
-padding-right: 45px; /* Space for the icon */
-
-
-&::placeholder {
-    color: #B0B0B0;
-}
-
-&:focus{
- border-color: ${(props) => props.color || "#B0B0B0"};
- outline: none;
-}
-`
-
-// Password toggle icon
-const PasswordToggleIcon = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-`
-
-const SeeImg = styled.img`
-width: 30px;
-height: 30px;
 `
 
 //회원가입 버튼
