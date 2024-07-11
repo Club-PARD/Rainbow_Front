@@ -136,7 +136,6 @@ const Flower = styled.img`
   width: 80%;
   height: 80%;
   
-  animation: ${boingAnimation} 2s;
-`;
+  animation: ${boingAnimation} 2s 2s;`;
 
 export default Flowers;

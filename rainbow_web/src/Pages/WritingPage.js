@@ -215,6 +215,7 @@ const Textarea = styled.textarea`
   padding: 12px 16px;
   outline: #B0B0B0;
   margin-bottom: 16px;
+  resize: none;
 `;
 
 const QuestionText = styled.div`
