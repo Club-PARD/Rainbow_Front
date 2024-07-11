@@ -24,7 +24,7 @@ function CommunityPage() {
 
   const handleImageClick = (userId) => {
     console.log(userId);
-    navigate(`../main/${userId}`);
+    navigate(`../c_main/${userId}`);
   };
 
   return (
