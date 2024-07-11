@@ -8,6 +8,7 @@ import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
+import { getUserByIDAPI } from '../APIs/RegisterAPI';
 import ExitModal from './ExitModal';
 
 Modal.setAppElement('#root');
@@ -60,6 +61,19 @@ function WriteHeader({ onActiveChange }) {
       document.body.classList.remove('modal-open');
     }
   }, [modalIsOpen, exitModalIsOpen]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await getUserByIDAPI(userData.user_id);
+        setIsActive(response.publicCheck);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUserData();
+  }, [userData.user_id]);
 
   const openModal = () => {
     setModalIsOpen(true);

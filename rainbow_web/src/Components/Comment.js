@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import Profile from '../Assets/Img/회_프로필.png';
 import { UserData } from '../Atom';
-import { getUserByIDAPI } from '../APIs/RegisterAPI'; // Adjust the import path accordingly
+import { getUserByIDAPI } from '../APIs/RegisterAPI';
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
