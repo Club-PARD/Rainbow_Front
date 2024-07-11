@@ -114,6 +114,7 @@ function WritingPage() {
 
   return (
       <Container>
+        <TopBlurr />
         <InputContainer>
         <WriteHeader />
         {selectedQuestion ? (
@@ -154,6 +155,19 @@ function WritingPage() {
 }
 
 export default WritingPage;
+
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 108px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3px);
+  mask: linear-gradient(#FFFFFD, transparent);
+`
 
 const Container = styled.div`
   display: flex;

@@ -131,7 +131,9 @@ const TopBlurr = styled.div`
   top: 0;
   left: 0;
 
-  backdrop-filter:blur(2px);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3px);
+  mask: linear-gradient(#FFFFFD, transparent);
 `
 
 const ContentWrapper = styled.div`
