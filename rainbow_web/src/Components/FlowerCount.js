@@ -18,6 +18,7 @@ const FlowerCountWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: sticky;
     
     width: 362px;
     height: 48px;
