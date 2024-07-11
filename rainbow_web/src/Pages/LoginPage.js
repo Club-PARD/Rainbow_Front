@@ -56,7 +56,7 @@ function LoginPage() {
 
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
-      { theme: "outline", width: "360px" }
+      { theme: "outline", width: "360px", }
     )
     google.accounts.id.prompt();
   }, []);
@@ -124,54 +124,10 @@ const LoginWrapper = styled.div`
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 17rem;
-
-  margin: 16px;
-`
-
-const Input = styled.input`
-  width: 21rem;
-  height: 2.5rem;
-
-  margin: 0.5rem;
-  padding: 0 0.5rem;
-
-  border: solid 1px #DDD;
-  border-radius: 8px;
-
-  font-size: 14px;
-  font-weight: 400;
-
-  &::placeholder {
-    color: #B0B0B0;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #B0B0B0;
-  }
-`
-
-const Label = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  width: 100%;
-
-  margin-left: -4rem;
-`
-
 const Intro = styled.div`
   font-family: "GeistMono";
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 20px;
   margin: 1.6rem;
 `
 
@@ -191,7 +147,7 @@ const LoginBtnWrapper = styled.div`
 
 const LoginBtn = styled.button`
   width: 100%;
-  height: 46px;
+  height: auto;
 
   margin: 16px;
   padding: 12px;

@@ -188,6 +188,7 @@ const Textarea = styled.textarea`
   width: 507px;
   min-height: 244px;
   height: auto;
+  font-family: "Pretendard-Regular";
   font-size: 16px;
   color: #2C2C2C;
   background-color: #FEFEFE;

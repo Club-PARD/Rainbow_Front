@@ -248,7 +248,6 @@ align-items: center;
 
 color: #2C2C2C;
 font-size: 0.9rem;
-padding: 25px;
 `
 
 // calc(100vw * 450 / 1920);
@@ -287,14 +286,12 @@ font-size: 14px;
 font-style: normal;
 font-weight: 400;
 line-height: 22px;
-margin-bottom: 8px;
+margin-bottom: 16px;
 `
 
 //회원가입 제목 css
 const SignUpTitle = styled.div`
 display: flex;
-padding-left: 29px;
-padding-right: 22px;
 width: 362px;
 height: 60px;
 flex-direction: column;
@@ -302,8 +299,8 @@ align-items: center;
 justify-content: center;
 font-size: 20px;
 font-weight: 400;
-margin-top: 90px;
-margin-bottom: 32px;
+margin-top: 113px;
+padding: 16px;
 text-align: center;
 font-family: "GeistMono";
 `
@@ -355,12 +352,13 @@ color: red;
 `
 //Footer
 const Footer = styled.div`
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   text-align: center;
-  font-family: "Pretendard-Regular";
+  font-family: Pretendard-Regular;
   font-weight: 500;
   color: #5E5E5E;
-  margin-top: 69px;
+  margin-bottom: 2rem;
 `
