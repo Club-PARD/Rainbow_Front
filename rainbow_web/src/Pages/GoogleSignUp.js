@@ -63,7 +63,7 @@ function GoogleSignUp(){
         else{
             console.log({userInfo});
             alert("회원가입이 완료되었습니다!");
-            navigate(`/main/${userData.user_id}`);
+            navigate(`/main/${data.user_id}`);
         }
     }
 

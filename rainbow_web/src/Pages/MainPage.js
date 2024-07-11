@@ -29,10 +29,9 @@ function MainPage() {
   const [scrollY, setScrollY] = useState(0);
   const postCount = useRecoilValue(PostCount);
   
-  //어두워지는 코드
-  const outerDivRef = useRef(); // outerDivRef를 생성하여 DOM 요소에 접근
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 관리하는 useState
-  const [backgroundOpacity, setBackgroundOpacity] = useState(0); // 배경 불투명도 상태를 관리하는 useState
+  const outerDivRef = useRef(); 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [backgroundOpacity, setBackgroundOpacity] = useState(0); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,9 +42,7 @@ function MainPage() {
   }, [userData.user_id]);
 
   const getPetName = async () => {
-    console.log(userData.user_id);
     const response = await getPetNameAPI(userData.user_id);
-    console.log(response);
     setPetName(response);
   };
 
@@ -76,38 +73,34 @@ function MainPage() {
     }
   };
 
-  //어두워지는 코드
   useEffect(() => {
-    // 컴포넌트가 마운트될 때와 currentPage가 변경될 때마다 실행되는 useEffect
     const handleScroll = () => {
-      // 스크롤 이벤트 핸들러 함수
-      const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; // 스크롤 위치 및 높이 정보를 가져옴
+      const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; 
       const pageHeight = window.innerHeight;
 
-      const newPage = Math.round(scrollTop / pageHeight) + 1; // 현재 스크롤 위치에 따른 페이지 계산
+      const newPage = Math.round(scrollTop / pageHeight) + 1; 
       if (newPage !== currentPage) {
-        setCurrentPage(newPage); // 페이지가 변경되면 상태 업데이트
+        setCurrentPage(newPage); 
       }
 
-      const maxScrollTop = scrollHeight - clientHeight; // 최대 스크롤 가능한 높이 계산
-      const startDarkeningPoint = maxScrollTop / 2; // 어두워지기 시작하는 지점 설정
+      const maxScrollTop = scrollHeight - clientHeight; 
+      const startDarkeningPoint = maxScrollTop / 2; 
       let newOpacity = 0;
 
       if (scrollTop > startDarkeningPoint) {
-        // 스크롤이 어두워지기 시작하는 지점을 넘었을 때
-        newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); // 불투명도 계산
+        newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); 
       }
 
-      setBackgroundOpacity(newOpacity); // 배경 불투명도 상태 업데이트
+      setBackgroundOpacity(newOpacity); 
     };
 
-    const outerDivRefCurrent = outerDivRef.current; // DOM 요소 참조 저장
-    outerDivRefCurrent.addEventListener("scroll", handleScroll); // 스크롤 이벤트 리스너 추가
+    const outerDivRefCurrent = outerDivRef.current; 
+    outerDivRefCurrent.addEventListener("scroll", handleScroll); 
 
     return () => {
-      outerDivRefCurrent.removeEventListener("scroll", handleScroll); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      outerDivRefCurrent.removeEventListener("scroll", handleScroll); 
     };
-  }, [currentPage]); // currentPage가 변경될 때마다 useEffect 재실행
+  }, [currentPage]); 
 
   return (
     <OuterDiv
@@ -115,10 +108,8 @@ function MainPage() {
       backgroundOpacity={backgroundOpacity}
     >
       <Container>
-      {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
       <Header />
       <InnerDiv>
-      {/* {(backgroundOpacity < 0.2) && <TopBlurr />} */}
         <TopBlurr />
         <ExplainWrapper>
           <motion.div
@@ -166,20 +157,20 @@ function MainPage() {
             <WriteBtn2 />
           </motion.div>
         </ExplainWrapper>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{
-              ease: "easeInOut",
-              duration: 2,
-              y : { duration: 1},
-              delay: 1.5
-            }}
-          >
-            <TalkBubble>
-              {getTalkBubbleText(postCount)}
-            </TalkBubble>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 2,
+            y : { duration: 1},
+            delay: 1.5
+          }}
+        >
+          <TalkBubble>
+            {getTalkBubbleText(postCount)}
+          </TalkBubble>
         </motion.div>
         <FlowersWrapper>
           <motion.div
@@ -196,61 +187,43 @@ function MainPage() {
             <Flowers />
           </motion.div>
         </FlowersWrapper>
-
-        </InnerDiv>
-        {/* 첫 번째 페이지 콘텐츠 */}
-        <InnerDiv>
-          {/* <StickyWrapper> */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{
-                ease: "easeInOut",
-                duration: 2,
-                y: { duration: 1 },
-            }}
+      </InnerDiv>
+      <InnerDiv>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y: { duration: 1 },
+          }}
+        >
+          <FlowerCount />
+        </motion.div>
+        <SwiperWrapper>
+          <StyledSwiper
+            slidesPerView={3}
+            spaceBetween={20}
+            navigation
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
           >
-            <FlowerCount />
-          </motion.div>
-          <SwiperWrapper>
-            <StyledSwiper
-              slidesPerView={3}
-              spaceBetween={20}
-              navigation
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {result && result.map((data, index) => (
-                <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-                  <Link to={`/detail/${userData.user_id}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
-                    <Text>{data.postTitle}</Text>
-                  </Link>
-                </StyledSwiperSlide>
-              ))}
-            </StyledSwiper>
-          </SwiperWrapper>
-        </InnerDiv>
-
-        {/* 두 번째 페이지 콘텐츠 */}
-        <InnerDiv>
-          <CommentContainer>
-            {/* <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false }}
-                transition={{
-                    ease: "easeInOut",
-                    duration: 2,
-                    y: { duration: 1 },
-                }}
-            >
-              <FlowerCount />
-            </motion.div> */}
-            <Comment />
-          </CommentContainer>
-          {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
-        </InnerDiv>
+            {result && result.map((data, index) => (
+              <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+                <Link to={`/detail/${userData.user_id}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                  <Text>{data.postTitle}</Text>
+                </Link>
+              </StyledSwiperSlide>
+            ))}
+          </StyledSwiper>
+        </SwiperWrapper>
+      </InnerDiv>
+      <InnerDiv>
+        <CommentContainer>
+          <Comment />
+        </CommentContainer>
+      </InnerDiv>
       </Container>
     </OuterDiv>
   );
@@ -309,10 +282,6 @@ const TopBlurr = styled.div`
   left: 0;
   backdrop-filter:blur(4px);
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-  //background-color: rgba(255, 255, 255, 0.7);
-  // backdrop-filter: blur(3px);
-  // mask: linear-gradient(#FFFFFD, transparent);
-  // background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 
 `
 
 const ExplainWrapper = styled.div`
@@ -359,18 +328,10 @@ const Explained = styled.div`
   margin: 16px;
 `;
 
-const ToWrite = styled.div`
-  width: 362px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-`;
-
 const SwiperWrapper = styled.div`
-display: flex;
-justify-content: center;
-transition: transform 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out;
 `
 
 const StyledSwiper = styled(Swiper)`
@@ -439,9 +400,7 @@ const OuterDiv = styled.div`
   overflow: scroll;
   scroll-behavior: smooth;
   background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
-  // background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
 
-  /* 화면에서 스크롤바 안보이게 */
   &::-webkit-scrollbar {
     display: none;
   }
