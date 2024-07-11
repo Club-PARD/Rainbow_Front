@@ -9,46 +9,41 @@ import ExitModal from '../Components/ExitModal';
 
 function EditPage() {
     const params = useParams();
-    console.log(params);
-    const [result, setResult] = useState([]);
+    const navigate = useNavigate();
+    const [result, setResult] = useState({});
     const [text, setText] = useState("");
     const [data, setData] = useState({
         pictureUrl: "",
         postContent: "",
     });
+    const [imageSrc, setImageSrc] = useState("");
+    const [imageFile, setImageFile] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const inputRef = useRef([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await getDetailAPI(params.userId, params.postId);
-            console.log(response);
-            setResult(response);
-            setText(response.postContent);
-            setImageSrc(response.pictureUrl);
+            try {
+                const response = await getDetailAPI(params.userId, params.postId);
+                setResult(response);
+                setText(response.postContent);
+                setImageSrc(response.pictureUrl);
+                setData({
+                    pictureUrl: response.pictureUrl,
+                    postContent: response.postContent,
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
         fetchData();
     }, [params]);
 
-    console.log(text);
-
     const contentHandler = (e) => {
         setText(e.target.value);
-        setData({ ...data, postContent: e.target.value });
+        setData(prevData => ({ ...prevData, postContent: e.target.value }));
     };
-
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const openModal = () => {
-      setModalIsOpen(true);
-    };
-  
-    const closeModal = () => {
-      setModalIsOpen(false);
-    };
-
-    const [imageSrc, setImageSrc] = useState("");
-    const [imageFile, setImageFile] = useState(null);
-    const inputRef = useRef([]);
 
     const onUpload = async (e) => {
         const file = e.target.files[0];
@@ -56,51 +51,59 @@ function EditPage() {
         if (!file) {
             setImageSrc(result.pictureUrl);
             setImageFile(null);
+            setData(prevData => ({ ...prevData, pictureUrl: result.pictureUrl }));
+            return;
+        }
+
+        const fileExt = file.name.split('.').pop();
+
+        if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
+            alert('jpg, png, jpg 파일만 업로드가 가능합니다.');
+            setImageSrc(result.pictureUrl);
+            setImageFile(null);
+            setData(prevData => ({ ...prevData, pictureUrl: result.pictureUrl }));
             return;
         }
 
         setImageSrc(URL.createObjectURL(file));
         setImageFile(file);
 
-        const fileExt = file.name.split('.').pop();
-
-        if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
-            alert('jpg, png, jpg 파일만 업로드가 가능합니다.');
-            return;
-        }
-
         const formData = new FormData();
         formData.append('image', file);
 
         try {
             const response = await postImgAPI(formData);
-            setData({ ...data, pictureUrl: response.data });
-            console.log(response.data);
+            setData(prevData => ({ ...prevData, pictureUrl: response.data }));
         } catch (error) {
             console.error('Error uploading file:', error);
         }
     };
 
-    const navigate = useNavigate();
+    const patchHandler = async () => {
+        try {
+            await patchDetailAPI(params.postId, data);
+            alert("수정되었습니다");
+            navigate("../main");
+        } catch (error) {
+            console.error('Error updating post:', error);
+        }
+    };
+
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
 
     const goToMain = () => {
         navigate('/main');
     };
 
-    const patchHandler = async () => {
-        try {
-            const response = await patchDetailAPI(params.postId, data);
-            console.log(response);
-
-            navigate("../main");
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     return (
         <Container>
-          <TopBlurr />
+            <TopBlurr />
             <Header />
             <ContentWrapper>
                 <Title>{result.postTitle}</Title>
@@ -113,7 +116,7 @@ function EditPage() {
                     multiple
                     type="file"
                     ref={el => (inputRef.current[0] = el)}
-                    onChange={e => onUpload(e)}
+                    onChange={onUpload}
                     style={{ display: 'none' }}
                 />
                 <Content value={text} onChange={contentHandler}></Content>
@@ -122,11 +125,11 @@ function EditPage() {
                     <UploadBtn onClick={patchHandler}>수정하기</UploadBtn>
                 </DetailBottomMenu>
             </ContentWrapper>
-          <ExitModal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          onExit={goToMain}
-          />
+            <ExitModal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                onExit={goToMain}
+            />
         </Container>
     );
 }
@@ -136,15 +139,13 @@ export default EditPage;
 const TopBlurr = styled.div`
   width: 100%;
   height: 108px;
-
   position: fixed;
   top: 0;
   left: 0;
-
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(3px);
   mask: linear-gradient(#FFFFFD, transparent);
-`
+`;
 
 const Container = styled.div`
   display: flex;
@@ -176,7 +177,7 @@ const CancelBtn = styled.button`
   border: none;
   font-size: 14px;
   font-weight: 500;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -191,7 +192,7 @@ const UploadBtn = styled.button`
   padding: 8px 16px 8px 16px;
   font-size: 14px;
   font-weight: 500;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -212,7 +213,6 @@ const Img = styled.img`
   height: 100%;
   border-radius: 8px;
   border: 1px solid #DDDDDD;
-  border-radius: 8px;
   &:hover {
     cursor: pointer;
     border: 1px solid #C6C6C6;
