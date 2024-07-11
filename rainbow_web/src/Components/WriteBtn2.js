@@ -148,6 +148,7 @@ const ToWrite = styled.div`
     border: 1px solid #F0EAFF; 
     color: #8952FF;
     background-color: #F0EAFF;
+    cursor: pointer;
   }
 `
 
