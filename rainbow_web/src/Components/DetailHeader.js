@@ -48,7 +48,7 @@ function WriteHeader({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === '/main') {
+    if (location.pathname === `main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
@@ -99,7 +99,7 @@ function WriteHeader({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate('/main');
+    navigate(`main/${userData.user_id}`);
   };
 
   const handleToggleChange = async () => {
@@ -146,13 +146,13 @@ function WriteHeader({ onActiveChange }) {
         </NoHoverModalInfoButton>
         <Reg />
         <ModalInfoButton>회원 정보 수정</ModalInfoButton>
-        <ModalInfoButton>이용 정책</ModalInfoButton>
+        <ModalInfoButton onClick={()=>{window.open("https://zenith-appendix-b29.notion.site/e4dcc388afdd4eaa9067fd5cabede20a?pvs=4")}}>이용 정책</ModalInfoButton>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
       </StyledModal>
       <ExitModal
         isOpen={exitModalIsOpen}
         onRequestClose={closeExitModal}
-        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
+        onExit={goToMain}
       />
     </HeaderContainer>
   );

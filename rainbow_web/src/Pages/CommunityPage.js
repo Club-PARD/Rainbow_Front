@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import Header from '../Components/Header';
+import { useNavigate } from 'react-router-dom';
 
 const server = process.env.REACT_APP_API_URL;
 
@@ -9,6 +10,7 @@ function CommunityPage() {
   const [images, setImages] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${server}/api/post/community`)
@@ -20,6 +22,10 @@ function CommunityPage() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const handleImageClick = (userId) => {
+    navigate(`/main/${userId}`);
+  };
+
   return (
     <CommunityPageContainer isBlurred={isModalOpen}>
       <TopBlurr />
@@ -30,7 +36,7 @@ function CommunityPage() {
       </Tip>
       <ImageContainer>
         {images.slice().reverse().map((data, index) => (
-          <ImageWrapper key={index} isLoaded={isLoaded} index={index}>
+          <ImageWrapper key={index} isLoaded={isLoaded} index={index} onClick={() => handleImageClick(data.userId)}>
             <Image src={data.pictureUrl} alt={`sample ${index + 1}`} />
             <OverlayText>{data.postTitle}</OverlayText>
             <TopBlurr2 />
@@ -131,7 +137,7 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 1.5px 3px 10px 0px rgba(0, 0, 0, 0.25), 0px 0px 13.125px 0px rgba(12, 12, 13, 0.10);
-   &:hover {
+  &:hover {
     cursor: pointer;
   }
   opacity: ${props => (props.isLoaded ? 1 : 0)};
