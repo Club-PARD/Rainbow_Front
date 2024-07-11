@@ -6,6 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { patchDetailAPI } from "../APIs/PublicAPI";
 import Header from "../Components/EditHeader";
 import ExitModal from '../Components/ExitModal';
+import { UserData } from "../Atom";
+import { useRecoilValue } from "recoil";
 
 function EditPage() {
     const params = useParams();
@@ -20,6 +22,7 @@ function EditPage() {
     const [imageFile, setImageFile] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const inputRef = useRef([]);
+    const userData = useRecoilValue(UserData);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -83,7 +86,7 @@ function EditPage() {
         try {
             await patchDetailAPI(params.postId, data);
             alert("수정되었습니다");
-            navigate("../main");
+            navigate(`../main/${userData.user_id}`);
         } catch (error) {
             console.error('Error updating post:', error);
         }
@@ -98,7 +101,7 @@ function EditPage() {
     };
 
     const goToMain = () => {
-        navigate('/main');
+        navigate(`/main/${userData.user_id}`);
     };
 
     return (
