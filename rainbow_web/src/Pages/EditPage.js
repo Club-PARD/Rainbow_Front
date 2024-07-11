@@ -118,6 +118,7 @@ export default EditPage;
 
 const Container = styled.div`
   display: flex;
+  padding-top: 10vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
