@@ -9,6 +9,7 @@ import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
+import { getUserByIDAPI } from '../APIs/RegisterAPI';
 import ExitModal from './ExitModal'; 
 
 Modal.setAppElement('#root');
@@ -61,6 +62,19 @@ function WriteHeader({ onActiveChange }) {
       document.body.classList.remove('modal-open');
     }
   }, [modalIsOpen, exitModalIsOpen]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await getUserByIDAPI(userData.user_id);
+        setIsActive(response.publicCheck);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUserData();
+  }, [userData.user_id]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -215,16 +229,6 @@ const StyledModal = styled(Modal)`
     font-weight: 400;
     line-height: 24px; 
   }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000; /* Ensures the overlay is above other content */
 `;
 
 const Reg = styled.div`
