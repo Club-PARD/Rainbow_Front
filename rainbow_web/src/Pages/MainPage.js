@@ -204,12 +204,13 @@ function MainPage() {
         >
           <FlowerCount />
         </motion.div>
-        {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper>
+        {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper centeredSlides={result.length <= 4}>
           <StyledSwiper
-            slidesPerView={3}
-            spaceBetween={20}
+            slidesPerView={4}
+            spaceBetween={0}
             navigation
             modules={[Pagination, Navigation]}
+            centeredSlides={result.length <= 4}
             className="mySwiper"
           >
             {result && result.map((data, index) => (
@@ -335,10 +336,13 @@ const SwiperWrapper = styled.div`
   display: flex;
   justify-content: center;
   transition: transform 0.3s ease-in-out;
+  ${(props) => props.centeredSlides && `
+    justify-content: center;
+  `}
 `
 
 const StyledSwiper = styled(Swiper)`
-  width: 100%;
+  width: 100vw;
   height: 318px;
   padding: 10px;
 `;
@@ -346,8 +350,8 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 246px !important;
   height: 298px !important;
-  margin-right: 20px;
-  margin-left: 20px;
+  // margin-right: 1px;
+  margin-left: 32px;
   border-radius: 6px;
   background-image: url(${(props) => props.ima});
   background-position: center;

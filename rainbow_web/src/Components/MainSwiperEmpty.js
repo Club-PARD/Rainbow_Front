@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import PostUpload from "../Assets/Img/PostUpload.svg";
+import WriteBtn from "./WriteBtn3";
+import WriteBtn2 from "./WriteBtn4";
 
 function MainSwiperEmpty(){
     return(
@@ -8,10 +10,8 @@ function MainSwiperEmpty(){
                 글을 작성하고<br/>
                 사진첩을 완성해보세요!
             </Explain>
-            <StyledPostImg/>
-            <TalkTo>
-                이야기하러 가기
-            </TalkTo>
+            <WriteBtn2/>
+            <WriteBtn/>
         </EmptyCase>
     )
 }
