@@ -3,6 +3,8 @@ import styled from "styled-components";
 import LoginHeader from '../Components/LoginHeader';
 import { postMemberAPI } from '../APIs/RegisterAPI';
 import { useNavigate } from 'react-router-dom';
+import eye from '../Assets/Img/eye.svg';
+import eyeOff from '../Assets/Img/eye-off.svg';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -35,6 +37,10 @@ function LocalSignUp() {
         type: "password",
         visible: false,
     });
+    const [pwType2, setpwType2] = useState({
+        type: "password",
+        visible: false,
+    });
 
     const [newData, setNewData] = useState({
         nickName: '',
@@ -49,6 +55,19 @@ function LocalSignUp() {
         setpwType(() => {
             // 만약 현재 pwType.visible이 false 라면
             if (!pwType.visible) {
+                return { type: "text", visible: true };
+
+                //현재 pwType.visible이 true 라면
+            } else {
+                return { type: "password", visible: false };
+            }
+        });
+    };
+
+    const handlePasswordType2 = (e) => {
+        setpwType2(() => {
+            // 만약 현재 pwType.visible이 false 라면
+            if (!pwType2.visible) {
                 return { type: "text", visible: true };
 
                 //현재 pwType.visible이 true 라면
@@ -213,15 +232,20 @@ function LocalSignUp() {
                 <InputField>
                     <InputTitle>비밀번호</InputTitle>
                     <SignUpInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
+                    <Eye src={(pwType.visible === true) ? eye : eyeOff}
+                        onClick={handlePasswordType}
+                    />
                     <ErrorExplain>{passWordMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
                     <InputTitle>비밀번호 확인</InputTitle>
-                    <SignUpInput type="password" color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                    <SignUpInput type={pwType2.type} color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                    <Eye src={(pwType2.visible === true) ? eye : eyeOff}
+                        onClick={handlePasswordType2}
+                    />
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
-                <InputTitle onClick={handlePasswordType}>{pwType.visible ? "비밀번호 숨기기" : "비밀번호 보기"}</InputTitle>
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
             </SignUpForm>
             <Footer>
@@ -229,8 +253,8 @@ function LocalSignUp() {
                 및 이용정책에 동의하는 것으로 간주됩니다.
             </Footer>
         </Container>
-    )
-}
+    );
+};
 
 
 
@@ -270,7 +294,7 @@ box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0,
 const InputField = styled.div`
 display: flex;
 flex-direction: column;
-align-items: flex-start;
+align-items: center;
 align-self: stretch;
 height: 72px;
 margin-bottom: 16px;
@@ -307,8 +331,9 @@ font-family: "GeistMono";
 
 //회원가입 input들
 const SignUpInput = styled.input`
+position: relative;
 display: flex;
-min-width: 240px;
+width: 330px;
 padding: 12px 16px 12px 16px;
 align-items: center;
 border: solid 1px;
@@ -362,4 +387,10 @@ const Footer = styled.div`
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 2rem;
+`
+
+const Eye = styled.img`
+    position: absolute;
+    right: 16px;
+    cursor: pointer;
 `
