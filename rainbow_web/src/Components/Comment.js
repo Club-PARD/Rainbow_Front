@@ -128,13 +128,13 @@ const CommentFormContainer = styled.form`
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
-  box-sizing: border-box;
+  // box-sizing: border-box;
 `;
 
 const CommentTextarea = styled.textarea`
   flex: 1;
   height: 22px;
-  padding: 8px;
+  padding-top: 8px;
   margin-bottom: 4px;
   font-size: 14px;
   border: none;
