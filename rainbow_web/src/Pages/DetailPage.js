@@ -41,6 +41,10 @@ function DetailPage() {
     fetchData();
   }, [params.postId]);
 
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  },[]);
+
   const openModal = () => {
     setIsModalOpen(true);
   };

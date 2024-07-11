@@ -43,6 +43,10 @@ function EditPage() {
         fetchData();
     }, [params]);
 
+    useEffect(()=>{
+      window.scrollTo(0, 0);
+    });
+
     const contentHandler = (e) => {
         setText(e.target.value);
         setData(prevData => ({ ...prevData, postContent: e.target.value }));

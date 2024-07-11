@@ -13,6 +13,7 @@ function CommunityPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios.get(`${server}/api/post/community`)
       .then(response => {
         setImages(response.data);
