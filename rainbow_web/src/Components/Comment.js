@@ -163,6 +163,7 @@ const CommentTextarea = styled.textarea`
   border: none;
   resize: none;
   outline: none;
+  font-family: "Pretendard-Regular";
   box-sizing: border-box;
   &::placeholder {
     color: #868686;
@@ -242,13 +243,16 @@ const TopBlurr = styled.div`
   width: 596px;
   height: 39px;
   position: relative;
-  top: 392.7px;
+  top: 391px;
   left: 0;
+  border: 1px solid #C6C6C6;
   border-radius: 8px;
-  backdrop-filter:blur(1px);
-  mask: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(transparent, #FFFFFD);
+
+  background: radial-gradient(35em 60em at 50% 100%, #FFFFFD, #FFFFFD, #FFFFFD);
   z-index: 999;
-`;
+`
 
 const None = styled.div`
   display: flex;
