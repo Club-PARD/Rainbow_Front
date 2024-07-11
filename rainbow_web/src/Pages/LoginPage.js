@@ -146,13 +146,14 @@ const Intro = styled.div`
   font-family: "GeistMono";
   text-align: center;
   font-size: 20px;
+  color: #2C2C2C;
   margin: 1.6rem;
 `
 
 const Line = styled.hr`
   width: 93%;
 
-  margin: 16px;
+  margin: 8px;
 
   border: solid 0.8px #B0B0B0;
 `
@@ -167,7 +168,7 @@ const LoginBtn = styled.button`
   width: 100%;
   height: auto;
 
-  margin: 16px;
+  margin: 8px;
   padding: 12px;
 
   background-color: #2C2C2C;
@@ -186,6 +187,7 @@ const SignUp = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-bottom: 8px;
 
   font-size: 15px;
   color: #2C2C2C;
@@ -210,7 +212,7 @@ const GoogleBtn = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 16px;
+  margin-top: 8px;
   width: 100%;
   height: 100%;
 `
