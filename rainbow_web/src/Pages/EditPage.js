@@ -107,7 +107,7 @@ function EditPage() {
                 <Content value={text} onChange={contentHandler}></Content>
                 <DetailBottomMenu>
                     <CancelBtn onClick={goToMain}>나가기</CancelBtn>
-                    <UploadBtn onClick={patchHandler}>게시하기</UploadBtn>
+                    <UploadBtn onClick={patchHandler}>수정하기</UploadBtn>
                 </DetailBottomMenu>
             </ContentWrapper>
         </Container>
@@ -124,7 +124,7 @@ const Container = styled.div`
   align-items: center;
   width: 100vw;
   overflow: scroll;
-  background-color: #FEFEFE;
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 `;
 
 const ContentWrapper = styled.div`
@@ -214,7 +214,8 @@ const Content = styled.textarea`
 `;
 
 const DetailBottomMenu = styled.div`
-  width: 507px;
+  width: 540px;
+  height: 32px;
   display: flex;
   margin-top: 16px;
   justify-content: right;
