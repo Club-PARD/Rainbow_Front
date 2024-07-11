@@ -8,6 +8,7 @@ import LocalLogin from '../Components/LocalLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import { googleLoginAPI } from '../APIs/LoginAPI';
 import { LoginState, UserData } from '../Atom';
+import { useRecoilValue } from 'recoil';
 
 const google = window.google;
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
@@ -40,7 +41,7 @@ function LoginPage() {
       }
       else {
         setIsLoggedIn(true);
-        navigate("/main");
+        navigate(`/main/${userData.user_id}`);
       }
     } catch(err) {
       console.log(err);
