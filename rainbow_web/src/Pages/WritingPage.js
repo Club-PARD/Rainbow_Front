@@ -33,6 +33,19 @@ function WritingPage() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set.
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
   const goToMain = () => {
     navigate(`../main/${userData.user_id}`);
   };

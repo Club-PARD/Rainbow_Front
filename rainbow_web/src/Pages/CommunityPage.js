@@ -13,6 +13,19 @@ function CommunityPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set.
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     axios.get(`${server}/api/post/community`)
       .then(response => {

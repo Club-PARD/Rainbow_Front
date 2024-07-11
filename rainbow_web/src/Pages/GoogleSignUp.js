@@ -23,6 +23,19 @@ function GoogleSignUp(){
       petName: petName,
     };
 
+    useEffect(() => {
+      const handleBeforeUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = ''; // Chrome requires returnValue to be set.
+      };
+  
+      window.addEventListener('beforeunload', handleBeforeUnload);
+  
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
+    }, []);
+
     const navigate = useNavigate();
 
     const onEmailHandler = (e) => {

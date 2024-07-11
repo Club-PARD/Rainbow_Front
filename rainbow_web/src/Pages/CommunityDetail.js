@@ -19,6 +19,19 @@ function DetailPage() {
   const userData = useRecoilValue(P_Data);
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set.
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     const fetchData = async () => {
       const response = await getDetailAPI(params.userId, params.postId);
