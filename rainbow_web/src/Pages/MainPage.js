@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from "styled-components";
 
@@ -23,7 +23,7 @@ import WriteBtn2 from '../Components/WriteBtn2';
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const userData = useRecoilValue(UserData);
+  const { userId } = useParams();
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
@@ -35,22 +35,20 @@ function MainPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllAPI(userData.user_id);
+      const data = await getAllAPI(userId);
       setResult(data || []);
     };
     fetchData();
-  }, [userData.user_id]);
+  }, [userId]);
 
   const getPetName = async () => {
-    console.log(userData.user_id);
-    const response = await getPetNameAPI(userData.user_id);
-    console.log(response);
+    const response = await getPetNameAPI(userId);
     setPetName(response);
   };
 
   useEffect(() => {
     getPetName();
-  }, []);
+  }, [userId]);
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
@@ -160,7 +158,7 @@ function MainPage() {
         >
           {result && result.map((data, index) => (
             <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-              <Link to={`/detail/${userData.user_id}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+              <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
                 <Text>{data.postTitle}</Text>
               </Link>
             </StyledSwiperSlide>

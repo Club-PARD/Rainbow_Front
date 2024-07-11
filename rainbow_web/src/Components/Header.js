@@ -30,7 +30,7 @@ function Header({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === '/main') {
+    if (location.pathname === `main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
@@ -69,7 +69,7 @@ function Header({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate('/main');
+    navigate(`main/${userData.user_id}`);
   };
 
   const handleToggleChange = async () => {

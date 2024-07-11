@@ -9,8 +9,6 @@ import GoogleSignUp from './Pages/GoogleSignUp';
 import Comment from './Components/Comment';
 import DetailPage from './Pages/DetailPage';
 import LandingPage from './Pages/LandingPage';
-import { LoginState } from './Atom';
-import { useRecoilValue } from 'recoil';
 import EditPage from './Pages/EditPage';
 
 function App() {
@@ -22,7 +20,7 @@ function App() {
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/comment" element={<Comment />}/>
         <Route path="/community" element={<CommunityPage />}/>
-        <Route path="/main" element={<MainPage />}/>
+        <Route path="/main/:userId" element={<MainPage />}/>
         <Route path="/write" element={<WritingPage />}/>
         <Route path="/register" element={<LocalSignUp />}/>
         <Route path="/register-google" element={<GoogleSignUp />}/>
