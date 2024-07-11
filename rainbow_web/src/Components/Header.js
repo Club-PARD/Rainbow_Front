@@ -22,6 +22,7 @@ function Header({ onActiveChange }) {
   const [communityDot, setCommunityDot] = useState(false);
   const [memoryDot, setMemoryDot] = useState(false);
   const userData = useRecoilValue(UserData);
+  const loggedInUserId = userData.user_id; // 로그인한 사용자의 user_id
 
   useEffect(() => {
     if (location.pathname === '/community') {
@@ -30,12 +31,12 @@ function Header({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === `main/${userData.user_id}`) {
+    if (location.pathname === `/main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, userData.user_id]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -69,7 +70,7 @@ function Header({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate(`../main/${userData.user_id}`);
+    navigate(`/main/${loggedInUserId}`); // 로그인한 사용자의 user_id로 메인 페이지로 이동
   };
 
   const handleToggleChange = async () => {
@@ -132,7 +133,7 @@ function Header({ onActiveChange }) {
         </ModalInfoButtonNoHover>
         <Reg />
         <ModalInfoButton>회원 정보 수정</ModalInfoButton>
-        <ModalInfoButton onClick={()=>{window.open("https://zenith-appendix-b29.notion.site/e4dcc388afdd4eaa9067fd5cabede20a?pvs=4")}}>이용 정책</ModalInfoButton>
+        <ModalInfoButton onClick={() => { window.open("https://zenith-appendix-b29.notion.site/e4dcc388afdd4eaa9067fd5cabede20a?pvs=4") }}>이용 정책</ModalInfoButton>
         <LogoutButton onClick={onSignOut}>로그아웃</LogoutButton>
       </StyledModal>
     </HeaderContainer>
@@ -192,7 +193,7 @@ const CustomButton = styled.button`
   font-size: 15px;
   font-style: normal;
   font-weight: 500;
-  line-height: 16px; 
+  line-height: 16px;
 
   &:hover {
     background-color: ${props => (props.hasDot ? 'transparent' : '#F3F3F3')};
@@ -242,7 +243,7 @@ const StyledModal = styled(Modal)`
   top: 64px;
   right: 28px;
   border-radius: 8px;
-  border: 1px solid #C6C6C6;  
+  border: 1px solid #C6C6C6;
   background: #FEFEFE;
   z-index: 10000;
   p {
@@ -251,7 +252,7 @@ const StyledModal = styled(Modal)`
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; 
+    line-height: 24px;
   }
 `;
 
