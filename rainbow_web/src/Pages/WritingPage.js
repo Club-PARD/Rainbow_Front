@@ -20,9 +20,7 @@ function WritingPage() {
 
   const [imageSrc, setImageSrc] = useState(BlankImage);
   const [imageFile, setImageFile] = useState(null);
-  const inputRef = useRef([]);
-
-  const [pictureLink, setPictureLink] = useState("");
+  const inputRef = useRef(null);
 
   const [textContent, setTextContent] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -54,6 +52,7 @@ function WritingPage() {
     if (!file) {
       setImageSrc(BlankImage);
       setImageFile(null);
+      setData({...data, pictureUrl: ""});
       return;
     }
 
@@ -64,6 +63,9 @@ function WritingPage() {
 
     if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
       alert('jpg, png, jpeg 파일만 업로드가 가능합니다.');
+      setImageSrc(BlankImage);
+      setImageFile(null);
+      setData({...data, pictureUrl: ""});
       return;
     }
 
@@ -76,12 +78,14 @@ function WritingPage() {
       console.log(response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
+      setImageSrc(BlankImage);
+      setImageFile(null);
+      setData({...data, pictureUrl: ""});
     }
   };
 
-  // post upload
   const handleUpload = async () => {
-    if (data.pictureUrl == "") {
+    if (data.pictureUrl === "") {
       alert('이미지를 등록해 주세요.');
       return;
     }
@@ -128,9 +132,8 @@ function WritingPage() {
         <StyledInput
           id="file-input"
           accept="image/*"
-          multiple
           type="file"
-          ref={el => (inputRef.current[0] = el)}
+          ref={inputRef}
           onChange={e => onUpload(e)}
           style={{ display: 'none' }}
         />
@@ -175,14 +178,13 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
+  min-height: 100vh;
   height: auto;
-  background: radial-gradient(40em 45em at 50% 30%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
-  padding: 10vh;
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 `;
 
 const Img = styled.img`
   width: 535px;
-  // height: 100%;
   border: 1px solid #DDD;
   border-radius: 8px;
   &:hover {
@@ -192,8 +194,6 @@ const Img = styled.img`
 `;
 
 const ImgLabel = styled.label`
-  // width: 535px;
-  // height: 100%;
   margin-bottom: 16px;
 `;
 
