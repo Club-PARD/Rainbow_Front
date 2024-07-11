@@ -30,7 +30,7 @@ function Header({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === `main/${userData.user_id}`) {
+    if (location.pathname === `/main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
