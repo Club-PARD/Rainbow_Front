@@ -428,7 +428,7 @@ const Container = styled.div`
   width: 100vw;
   height: auto;
   padding-top: 15vh;
-  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD);
+  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD
 `;
 
 const OuterDiv = styled.div`
