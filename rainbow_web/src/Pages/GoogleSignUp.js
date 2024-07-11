@@ -72,6 +72,10 @@ function GoogleSignUp(){
       console.log(email);
     });
 
+    useEffect(()=>{
+      window.scrollTo(0, 0);
+    },[]);
+
     return(
         <Container>
             <LoginHeader />

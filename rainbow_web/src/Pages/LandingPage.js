@@ -6,8 +6,12 @@ import Ex2 from "../Assets/Img/example2.svg";
 import Ex3 from "../Assets/Img/example3.png";
 import FlowerExample from "../Assets/Img/flowerExample.gif";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 function LandingPage () {
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  });
   return (
     <Container>
       <TopBlurr />

@@ -48,6 +48,10 @@ function LoginPage() {
     }
   }
 
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  });
+
   useEffect(() => {
     // global google
     google.accounts.id.initialize({

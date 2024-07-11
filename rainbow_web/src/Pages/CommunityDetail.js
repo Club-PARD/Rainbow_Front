@@ -19,6 +19,7 @@ function DetailPage() {
   const userData = useRecoilValue(P_Data);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchData = async () => {
       const response = await getDetailAPI(params.userId, params.postId);
       console.log(response);
