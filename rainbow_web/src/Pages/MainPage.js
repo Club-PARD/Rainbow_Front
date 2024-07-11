@@ -109,24 +109,13 @@ function MainPage() {
       <TopBlurr />
       <ExplainWrapper>
         <Title>기억의 꽃밭은</Title>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 2,
-            y : { duration: 1},
-          }}
-        >
-          <Explained>
-            반려동물과의 소중한 추억을 떠올리며<br />
-            한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
-            꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
-            사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
-            {petName} 에 대한 이야기를 들려주세요
-          </Explained>
-        </motion.div>
+        <Explained>
+          반려동물과의 소중한 추억을 떠올리며<br />
+          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
+          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
+          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
+          {petName} 에 대한 이야기를 들려주세요
+        </Explained>
         <WriteBtn2 />
       </ExplainWrapper>
       
