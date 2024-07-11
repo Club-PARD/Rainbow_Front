@@ -64,7 +64,7 @@ function WriteBtn() {
   const selectedQuestion = questions.find(q => q.question.id === selectedQuestionId)?.question;
 
   return (
-    <div>
+    <Container>
       <GlobalStyle />
       <ToWrite onClick={() => setModalIsOpen(true)}>글 작성하러 가기</ToWrite>
       <StyledModal
@@ -116,30 +116,41 @@ function WriteBtn() {
           <ArrowImage src={Arrow} alt="Arrow" />
         </SelectButton>
       </StyledModal>
-    </div>
+    </Container>
   );
 }
 
 export default WriteBtn;
 
-const ToWrite = styled.div`
+const Container = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+`;
+
+const ToWrite = styled.div`
+  idth: 129px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   font-weight: 400;
-  font-size: 16px;
   color: #8952FF;
-  z-index: 10002;
+  z-index: 10001;
   &:hover {
+    border: 1px solid #6A3CCA; 
+    border-radius: 8px;
+    padding: 0 12px;
     color: #6A3CCA;
-  }
-  &:hover{
+    background-color: #D5C1FF;
+
     cursor: pointer;
   }
-`;
+`
 
 const ExitButton = styled.button`
   width: 36px;

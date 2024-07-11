@@ -20,7 +20,8 @@ const FlowerCountWrapper = styled.div`
     justify-content: center;
     
     width: 362px;
-    padding: 8px 16px;
+    height: 48px;
+    padding: 0 16px;
     margin-bottom: 91px;
     margin-top: 261px;
     border-radius: 8px;
@@ -34,6 +35,7 @@ const FlowerText = styled.div`
     text-align: center;
     font-size: 16px;
     font-weight: 500;
+    margin: 16px;
 `
 
 export default FlowerCount;
