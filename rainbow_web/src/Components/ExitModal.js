@@ -16,10 +16,6 @@ const GlobalStyle = createGlobalStyle`
     backdrop-filter: blur(4px);
     z-index: 1000;
   }
-  
-  body.modal-open {
-    overflow: hidden;
-  }
 `;
 
 const ExitModal = ({ isOpen, onRequestClose, onExit }) => {
