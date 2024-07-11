@@ -13,6 +13,8 @@ const Comment = () => {
   const [placeholderVisible, setPlaceholderVisible] = useState(true);
   const { userId } = useParams(); // 현재 보고 있는 사용자의 ID
   const currentUser = useRecoilValue(UserData); // 현재 로그인한 사용자
+  const [commentCount, setCommentCount] = useState(0);
+
   const server = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
@@ -32,6 +34,16 @@ const Comment = () => {
 
     fetchComments();
   }, [server, userId]);
+
+  const getCommentCount = async () => {
+    try {
+      const response = await axios.get(`${server}/comment/count/${userId}`);
+      setCommentCount(response.data);
+      console.log("response: " + response + " saved: " + commentCount);
+    } catch(err) {
+      console.error(err);
+    }
+  };
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -60,10 +72,20 @@ const Comment = () => {
     }
   };
 
+  useEffect(() => {
+    getCommentCount();
+  });
+
   return (
     <BigContainer>
       <TopBlurr />
-      <Container>
+      <Container commentCount={commentCount}>
+        {(commentCount == 0) && 
+          <None>
+            아직 등록된 글이 없어요!<br />
+            서로에게 위로의 말을 건네 보세요
+          </None>
+        }
         <CommentList>
           {comments.map((comment, index) => (
             <CommentItem key={index}>
@@ -112,7 +134,8 @@ const Container = styled.div`
   max-height: 478px;
   padding: 8px 16px 8px 24px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: ${(props) => (props.commentCount === 0 ? 'center' : 'flex-start')};
+  justify-content: ${(props) => (props.commentCount === 0 ? 'center' : 'flex-start')};
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
@@ -125,7 +148,6 @@ const CommentFormContainer = styled.form`
   align-items: center;
   width: 594px;
   height: 50px;
-  padding-bottom: 5px;
   padding-left: 8px;
   border: 1px solid #C6C6C6;
   border-radius: 8px;
@@ -134,9 +156,9 @@ const CommentFormContainer = styled.form`
 
 const CommentTextarea = styled.textarea`
   flex: 1;
-  height: 22px;
-  padding: 8px 16px 14px;
-  margin-bottom: 4px;
+  min-height: 22px;
+  height: auto;
+  padding: 8px 16px;
   font-size: 14px;
   border: none;
   resize: none;
@@ -198,8 +220,6 @@ const CommentText = styled.span`
 
 const Button = styled.button`
   margin-left: 10px;
-  width: 76px;
-  height: 32px;
   padding: 12px;
   background-color: #FEFEFE;
   color: #2C2C2C;
@@ -229,3 +249,14 @@ const TopBlurr = styled.div`
   mask: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
   z-index: 999;
 `;
+
+const None = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #868686;
+  text-align: center;
+`
