@@ -6,7 +6,6 @@ import Modal from 'react-modal';
 import styled, { createGlobalStyle } from 'styled-components';
 import { UserData } from '../Atom';
 import Delete from '../Assets/Img/삭제버튼.png';
-import Arrow from '../Assets/Img/arrow.png';
 
 Modal.setAppElement('#root');
 
@@ -106,15 +105,15 @@ function WriteBtn() {
             </PageButtonContainer>
           </Pagination>
         )}
-        <SelectButton onClick={() => {
-          if (selectedQuestion) {
-            navigate('/write', { state: { selectedQuestion } });
-          } else {
-            alert('질문을 선택해주세요.');
-          }
-        }}>
-          <span>다음</span>
-          <ArrowImage src={Arrow} alt="Arrow" />
+        <SelectButton
+          onClick={() => {
+            if (selectedQuestion) {
+              navigate('/write', { state: { selectedQuestion } });
+            }
+          }}
+          disabled={!selectedQuestion}
+        >
+          <span>글쓰기</span>
         </SelectButton>
       </StyledModal>
     </div>
@@ -201,6 +200,11 @@ const QuestionButton = styled.button`
   height: 40px;
   border: none;
   border-radius: 8px;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 22px;
   background-color: ${props => props.disabled ? '#FEFEFE' : (props.selected ? '#DDDDDD' : '#FEFEFE')};
   color: ${props => props.disabled ? '#B0B0B0' : '#2C2C2C'};
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -252,27 +256,26 @@ const SelectButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 65px;
+  width: 53px;
   height: 36px;
   position: fixed;
   right: 18px;
-  bottom: 24px;
+  bottom: 28px;
   padding: 8px;
   gap: 4px;
   font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
   background-color: #FEFEFE;
-  color: #2C2C2C;
+  color: ${props => props.disabled ? '#9B9B9B' : '#2C2C2C'};
   border: none;
   border-radius: 8px;
   &:hover {
-    background-color: #F3F3F3;
+    background-color: ${props => props.disabled ? '#FEFEFE' : '#F3F3F3'};
   }
   &:hover{
-    cursor: pointer;
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   }
-`;
-
-const ArrowImage = styled.img`
-  width: 11.7px;
-  height: 11.7px;
 `;

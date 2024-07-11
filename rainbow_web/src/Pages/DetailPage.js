@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BackBtn } from "../Components/BackBtn";
 import Header from "../Components/DetailHeader";
-import WriteDeleteModal from '../Components/WriteDeleteModal';
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
@@ -108,7 +107,6 @@ function DetailPage() {
           <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
-      <WriteDeleteModal isOpen={isModalOpen} onRequestClose={closeModal} onExit={handleDelete} />
     </Container>
   );
 }

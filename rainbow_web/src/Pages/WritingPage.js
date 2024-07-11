@@ -81,10 +81,10 @@ function WritingPage() {
 
   // post upload
   const handleUpload = async () => {
-    // if (pictureLink == "") {
-    //   alert('이미지를 등록해 주세요.');
-    //   return;
-    // }
+    if (data.pictureUrl == "") {
+      alert('이미지를 등록해 주세요.');
+      return;
+    }
     console.log(data);
     try {
       const response = await postAPI(userData.user_id, data);
@@ -92,6 +92,7 @@ function WritingPage() {
       if(response){
         setIsIncreased(true);
       }
+      alert("게시가 완료되었습니다");
       navigate("../main");
     } catch (err) {
       console.log(err);
@@ -113,6 +114,7 @@ function WritingPage() {
 
   return (
       <Container>
+        <InputContainer>
         <WriteHeader />
         {selectedQuestion ? (
           <QuestionText>{selectedQuestion.questionText}</QuestionText>
@@ -138,7 +140,7 @@ function WritingPage() {
         />
         <ButtonContainer>
           <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
-          <SubmitButton type="button" onClick={handleUpload}>게시하기</SubmitButton>
+          <SubmitButton disabled={ !data.postTitle || !data.pictureUrl || !data.postContent} type="button" onClick={handleUpload}>게시하기</SubmitButton>
         </ButtonContainer>
 
         <ExitModal
@@ -146,6 +148,7 @@ function WritingPage() {
           onRequestClose={closeModal}
           onExit={goToMain}
         />
+        </InputContainer>
       </Container>
   );
 }
@@ -177,6 +180,7 @@ const Img = styled.img`
 const ImgLabel = styled.label`
   // width: 535px;
   // height: 100%;
+  margin-bottom: 16px;
 `;
 
 const StyledInput = styled.input`
@@ -195,11 +199,14 @@ const Textarea = styled.textarea`
   border: solid 1px #DDD;
   border-radius: 8px;
   padding: 12px 16px;
-  margin-top: 16px;
   outline: #B0B0B0;
+  margin-bottom: 16px;
 `;
 
-const QuestionText = styled.p`
+const QuestionText = styled.div`
+  display: flex;
+  justify-content: left;
+  padding-left: 15px;
   color: #2C2C2C;
   font-family: Pretendard;
   font-size: 20px;
@@ -207,13 +214,13 @@ const QuestionText = styled.p`
   font-weight: 500;
   line-height: 24px; /* 120% */
   align-self: flex-start;
-  padding-left: 375px;
+  margin-bottom: 16px;
+  width: 555px;
 `;
 
 const ButtonContainer = styled.div`
   width: 540px;
   display: flex;
-  margin-top: 16px;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
@@ -222,7 +229,7 @@ const ButtonContainer = styled.div`
 `;
 
 const ExitButton = styled.button`
-  width: 81px;
+  width: 69px;
   height: 32px;
   padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0);
@@ -258,4 +265,19 @@ const SubmitButton = styled.button`
   &:hover{
     cursor: pointer;
   }
+
+  &:disabled {
+  background-color: #DDDDDD;
+  color: #9B9B9B;
+  cursor: not-allowed;
+  }
 `;
+
+const InputContainer = styled.div`
+width: 555px;
+padding: 24px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`

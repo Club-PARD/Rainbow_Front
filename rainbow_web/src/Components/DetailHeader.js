@@ -107,7 +107,7 @@ function WriteHeader({ onActiveChange }) {
     <HeaderContainer>
       <GlobalStyle />
       <LogoAndButtonContainer>
-        <Img onClick={openExitModal}>
+        <Img onClick={goToMain}>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
       </LogoAndButtonContainer>
