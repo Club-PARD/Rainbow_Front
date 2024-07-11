@@ -72,10 +72,6 @@ function MainPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, []);
 
   const getTalkBubbleText = (count) => {
@@ -90,43 +86,10 @@ function MainPage() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; 
-      const pageHeight = window.innerHeight;
-
-      const newPage = Math.round(scrollTop / pageHeight) + 1; 
-      if (newPage !== currentPage) {
-        setCurrentPage(newPage); 
-      }
-
-      const maxScrollTop = scrollHeight - clientHeight; 
-      const startDarkeningPoint = maxScrollTop / 2; 
-      let newOpacity = 0;
-
-      if (scrollTop > startDarkeningPoint) {
-        newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); 
-      }
-
-      setBackgroundOpacity(newOpacity); 
-    };
-
-    const outerDivRefCurrent = outerDivRef.current; 
-    outerDivRefCurrent.addEventListener("scroll", handleScroll); 
-
-    return () => {
-      outerDivRefCurrent.removeEventListener("scroll", handleScroll); 
-    };
-  }, [currentPage]); 
 
   return (
-    <OuterDiv
-      ref={outerDivRef}
-      backgroundOpacity={backgroundOpacity}
-    >
       <Container>
       <Header />
-      <InnerDiv>
         <TopBlurr />
         <ExplainWrapper>
           <motion.div
@@ -204,8 +167,7 @@ function MainPage() {
             <Flowers />
           </motion.div>
         </FlowersWrapper>
-      </InnerDiv>
-      <InnerDiv>
+      
         {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -237,14 +199,10 @@ function MainPage() {
             ))}
           </StyledSwiper>
         </SwiperWrapper>}
-      </InnerDiv>
-      <InnerDiv>
         <CommentContainer>
           <Comment />
         </CommentContainer>
-      </InnerDiv>
       </Container>
-    </OuterDiv>
   );
 }
 
