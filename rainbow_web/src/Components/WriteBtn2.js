@@ -112,8 +112,7 @@ function WriteBtn() {
             alert('질문을 선택해주세요.');
           }
         }}>
-          <span>다음</span>
-          <ArrowImage src={Arrow} alt="Arrow" />
+          <span>글쓰기</span>
         </SelectButton>
       </StyledModal>
     </Container>
@@ -131,7 +130,7 @@ const Container = styled.div`
 `;
 
 const ToWrite = styled.div`
-  idth: 129px;
+  width: 129px;
   height: 24px;
   display: flex;
   flex-direction: column;
@@ -210,6 +209,11 @@ const QuestionButton = styled.button`
   height: 40px;
   border: none;
   border-radius: 8px;
+  font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 22px;
   background-color: ${props => props.disabled ? '#FEFEFE' : (props.selected ? '#DDDDDD' : '#FEFEFE')};
   color: ${props => props.disabled ? '#B0B0B0' : '#2C2C2C'};
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -261,27 +265,26 @@ const SelectButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 65px;
+  width: 53px;
   height: 36px;
   position: fixed;
   right: 18px;
-  bottom: 24px;
+  bottom: 28px;
   padding: 8px;
   gap: 4px;
   font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
   background-color: #FEFEFE;
-  color: #2C2C2C;
+  color: ${props => props.disabled ? '#9B9B9B' : '#2C2C2C'};
   border: none;
   border-radius: 8px;
   &:hover {
-    background-color: #F3F3F3;
+    background-color: ${props => props.disabled ? '#FEFEFE' : '#F3F3F3'};
   }
   &:hover{
-    cursor: pointer;
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   }
-`;
-
-const ArrowImage = styled.img`
-  width: 11.7px;
-  height: 11.7px;
 `;

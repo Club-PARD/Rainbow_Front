@@ -75,8 +75,8 @@ const ModalContent = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
-  width: 346px;
-  padding: 32px;
+  width: 300px;
+  padding: 20px;
   border-radius: 8px;
   border: 1px solid #9B9B9B;
   background: white;
@@ -89,7 +89,7 @@ const Title = styled.p`
   font-weight: 600;
   line-height: 120%;
   letter-spacing: -0.48px;
-  margin: 15px 0 12px 0;
+  margin-top: 10px;
 `;
 
 const Content = styled.p`
@@ -98,7 +98,7 @@ const Content = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0 0 32px 0;
+  margin-top: -12px;
 `;
 
 const ExitButton = styled.button`
@@ -109,9 +109,11 @@ const ExitButton = styled.button`
   top: 8px;
   right: 8px;
   border: none;
+  border-radius: 50%;
   background-color: transparent;
   &:hover{
     cursor: pointer;
+    background-color: #F3F3F3;
   }
 `;
 
@@ -125,7 +127,7 @@ const ButtonGroup = styled.div`
   display: flex;
   margin-left: auto;
   gap: 10px;
-  margin-bottom: 0;
+  margin-top: 40px;
 `;
 
 const StyledButton = styled.button`
