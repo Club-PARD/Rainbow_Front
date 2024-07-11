@@ -26,10 +26,6 @@ const GlobalStyle = createGlobalStyle`
     background: rgba(0, 0, 0, 0);
     z-index: 10001;
   }
-  
-  body.modal-open {
-    overflow: hidden;
-  }
 `;
 
 function WriteHeader({ onActiveChange }) {
