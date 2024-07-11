@@ -83,7 +83,7 @@ const InputWrapper = styled.div`
 
     width: 17rem;
 
-    margin: 4px;
+    margin: 0;
 `
 
 const Input = styled.input`
@@ -112,7 +112,9 @@ const Label = styled.div`
     justify-content: flex-start;
 
     width: 100%;
-
+    font-size: 14px;
+    
+    margin: 8px;
     margin-left: -4rem;
 `
 
