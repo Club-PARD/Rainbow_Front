@@ -79,7 +79,7 @@ function GoogleSignUp(){
                 <Intro>
                 <span>
                     Sincerely, 에 오신 것을 환영합니다<br />
-                    이메일을 입력해 주세요
+                    이메일을 입력해&nbsp;주세요
                 </span>
                 </Intro>
                 <LoginWrapper>
@@ -110,9 +110,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   width: 100vw;
+
   min-height: 100vh;
   
   color: #2C2C2C;
@@ -129,63 +130,58 @@ const Wrapper = styled.div`
 
 const LoginWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 24rem;
-
-  padding: 16px;
-  border-radius: 8px;
-  border: solid 1px #C6C6C6;
-  background: #FEFEFE;
-
-  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+width: 362px;
+padding: 16px;
+flex-direction: column;
+align-items: flex-start;
+border: 1px solid #C6C6C6;
+border-radius: 8px;
+background-color: #FFFFFF;
+box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 const InputWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 17rem;
-
-  margin: 16px;
+flex-direction: column;
+align-items: flex-start;
+align-self: stretch;
+height: 72px;
+margin-bottom: 16px;
 `
 
 const Input = styled.input`
-  width: 21rem;
-  height: 2.5rem;
+  display: flex;
+min-width: 240px;
+padding: 12px 16px 12px 16px;
+align-items: center;
+border: solid 1px;
+border-radius: 8px;
+align-self: stretch;
+border-color: #DDD;
+font-family: Pretendard;
+font-size: 14px;
+font-weight: 400;
 
-  margin: 0.5rem;
-  padding: 0 0.5rem;
-
-  border: solid 1px #DDD;
-  border-radius: 8px;
-  
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  
-  &::placeholder {
+&::placeholder {
     color: #B0B0B0;
-  }
+}
 
-  &:focus {
-    outline: none;
-    border-color: #B0B0B0;
-  }
+&:focus{
+ border-color: ${(props) => props.color || "#B0B0B0"};
+ outline: none;
+}
 `
 
 const Label = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  width: 100%;
-
-  margin-left: -4rem;
+  color: #2C2C2C;
+font-family: "Pretendard Variable";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 22px;
+margin-bottom: 4px;
+width: 330px;
+height: 22px;
 `
 
 const Intro = styled.div`
@@ -207,21 +203,18 @@ const Footer = styled.div`
 `
 
 const SignUpCreateBtn = styled.button`
-  width: 94%;
-  height: 46px;
-  margin: 16px;
-  padding: 12px;
+  align-self: stretch;
+height: 38px;
+border: 1px solid #2C2C2C;
+border-radius: 10px;
+background: #2C2C2C;
+color: #FEFEFE;
+font-size: 14px;
 
-  background-color: #2C2C2C;
-  color: #FEFEFE;
-
-  border: none;
-  border-radius: 8px;
-
-  &:hover {
-    background-color: #000000;
-    cursor: pointer;
-  }
+&:hover{
+background: #000;
+cursor: pointer;
+}
 `
 
 // //페이지 전체를 관리하는 css
