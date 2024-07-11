@@ -6,7 +6,7 @@ import LoginHeader from './LoginHeader';
 import { loginAPI } from '../APIs/LoginAPI';
 import { Link, useNavigate } from "react-router-dom";
 import { LoginState } from '../Atom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { UserData } from '../Atom';
 
 const clientId = process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
@@ -17,6 +17,7 @@ const Login = () => {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ userData, setUserData ] = useRecoilState(UserData);
+    const useData = useRecoilValue(UserData);
 
     const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ const Login = () => {
                 setIsLoggedIn(true);
                 setUserData(response);
                 console.log(userData);
-                navigate("../main");
+                navigate(`main/${useData.user_id}`);
             }
             else {
                 setLoginCheck(true);

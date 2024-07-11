@@ -48,7 +48,7 @@ function WriteHeader({ onActiveChange }) {
       setCommunityDot(false);
     }
 
-    if (location.pathname === '/main') {
+    if (location.pathname === `main/${userData.user_id}`) {
       setMemoryDot(true);
     } else {
       setMemoryDot(false);
@@ -99,7 +99,7 @@ function WriteHeader({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate('/main');
+    navigate(`main/${userData.user_id}`);
   };
 
   const handleToggleChange = async () => {
@@ -152,7 +152,7 @@ function WriteHeader({ onActiveChange }) {
       <ExitModal
         isOpen={exitModalIsOpen}
         onRequestClose={closeExitModal}
-        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
+        onExit={goToMain}
       />
     </HeaderContainer>
   );
