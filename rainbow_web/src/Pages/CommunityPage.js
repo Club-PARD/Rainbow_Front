@@ -23,6 +23,7 @@ function CommunityPage() {
   }, []);
 
   const handleImageClick = (userId) => {
+    console.log(userId);
     navigate(`../main/${userId}`);
   };
 

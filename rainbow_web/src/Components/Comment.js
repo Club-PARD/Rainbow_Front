@@ -5,18 +5,20 @@ import axios from 'axios';
 import Profile from '../Assets/Img/회_프로필.png';
 import { UserData } from '../Atom';
 import { getUserByIDAPI } from '../APIs/RegisterAPI';
+import { useParams } from 'react-router-dom';
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [placeholderVisible, setPlaceholderVisible] = useState(true);
-  const ownerId = useRecoilValue(UserData);
+  const { userId } = useParams(); // 현재 보고 있는 사용자의 ID
+  const currentUser = useRecoilValue(UserData); // 현재 로그인한 사용자
   const server = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`${server}/comment/readAll/${ownerId.user_id}`);
+        const response = await axios.get(`${server}/comment/readAll/${userId}`);
         const fetchedComments = response.data.map((comment) => ({
           nickname: comment.writerName,
           text: comment.userComment,
@@ -29,7 +31,7 @@ const Comment = () => {
     };
 
     fetchComments();
-  }, [server, ownerId]);
+  }, [server, userId]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -39,7 +41,7 @@ const Comment = () => {
     e.preventDefault();
     if (newComment.trim()) {
       try {
-        const userData = await getUserByIDAPI(ownerId.user_id);
+        const userData = await getUserByIDAPI(currentUser.user_id);
         const nickname = userData.name;
         console.log(userData);
         console.log(nickname);
@@ -49,8 +51,7 @@ const Comment = () => {
           userComment: newComment,
         };
 
-        await axios.post(`${server}/comment/${ownerId.user_id}/${ownerId.user_id}`, newCommentData);
-        //추후에 페이지 연결후 writerId로 수정 필요
+        await axios.post(`${server}/comment/${userId}/${currentUser.user_id}`, newCommentData);
         setComments([{ nickname: nickname, text: newComment }, ...comments]);
         setNewComment('');
       } catch (error) {
@@ -129,7 +130,6 @@ const CommentFormContainer = styled.form`
   border: 1px solid #C6C6C6;
   border-radius: 8px;
   background-color: #FEFEFE;
-  // box-sizing: border-box;
 `;
 
 const CommentTextarea = styled.textarea`
@@ -228,4 +228,4 @@ const TopBlurr = styled.div`
   backdrop-filter:blur(1px);
   mask: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, #FFF 100%);
   z-index: 999;
-`
+`;

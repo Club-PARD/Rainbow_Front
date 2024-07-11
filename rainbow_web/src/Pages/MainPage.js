@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { Link, useParams } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from "styled-components";
 
 import { motion } from "framer-motion";
@@ -23,32 +23,34 @@ import WriteBtn2 from '../Components/WriteBtn2';
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const userData = useRecoilValue(UserData);
+  const { userId } = useParams();  // URL의 userId 파라미터를 읽습니다.
+  const setUserData = useSetRecoilState(UserData);
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
   const postCount = useRecoilValue(PostCount);
-  
+
   const outerDivRef = useRef(); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [backgroundOpacity, setBackgroundOpacity] = useState(0); 
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllAPI(userData.user_id);
+      const data = await getAllAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
       setResult(data || []);
+      setUserData(prevUserData => ({ ...prevUserData, user_id: userId }));
     };
     fetchData();
-  }, [userData.user_id]);
+  }, [userId, setUserData]);
 
   const getPetName = async () => {
-    const response = await getPetNameAPI(userData.user_id);
+    const response = await getPetNameAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
     setPetName(response);
   };
 
   useEffect(() => {
     getPetName();
-  }, []);
+  }, [userId]);
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
@@ -211,7 +213,7 @@ function MainPage() {
           >
             {result && result.map((data, index) => (
               <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-                <Link to={`/detail/${userData.user_id}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
                   <Text>{data.postTitle}</Text>
                 </Link>
               </StyledSwiperSlide>
