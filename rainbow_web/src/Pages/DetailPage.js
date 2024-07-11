@@ -6,6 +6,7 @@ import Header from "../Components/DetailHeader";
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
+import WriteDeleteModal from '../Components/WriteDeleteModal'; // 임포트
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,14 +111,12 @@ function DetailPage() {
         </DetailBottomMenu>
       </ContentWrapper>
 
-      {/* 모달 구현 부분 */}
-      {isModalOpen && (
-        <Modal>
-          <p>정말로 삭제하시겠습니까?</p>
-          <button onClick={handleDelete}>삭제</button>
-          <button onClick={closeModal}>취소</button>
-        </Modal>
-      )}
+      {/* WriteDeleteModal 사용 부분 */}
+      <WriteDeleteModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        onDelete={handleDelete}
+      />
     </Container>
   );
 }
@@ -268,42 +267,5 @@ const DetailBottomBtn = styled.button`
   font-weight: 500;
   &:hover{
     cursor: pointer;
-  }
-`;
-
-const Modal = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 150px;
-  background-color: white;
-  border: 1px solid #C6C6C6;
-  border-radius: 8px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  p {
-    font-size: 16px;
-    font-weight: 400;
-    color: #2C2C2C;
-    margin-bottom: 20px;
-  }
-  button {
-    margin: 5px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2C2C2C;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    &:hover {
-      cursor: pointer;
-      background-color: #444;
-    }
   }
 `;
