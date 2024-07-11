@@ -139,8 +139,9 @@ function MainPage() {
             viewport={{ once: false }}
             transition={{
               ease: "easeInOut",
-              duration: 3,
+              duration: 2,
               y : { duration: 1},
+              delay: 0.5
             }}
           >
             <Explained>
@@ -157,8 +158,9 @@ function MainPage() {
             viewport={{ once: false }}
             transition={{
               ease: "easeInOut",
-              duration: 4,
+              duration: 2,
               y : { duration: 1},
+              delay: 1
             }}
           >
             <WriteBtn2 />
@@ -172,6 +174,7 @@ function MainPage() {
               ease: "easeInOut",
               duration: 2,
               y : { duration: 1},
+              delay: 1.5
             }}
           >
             <TalkBubble>
@@ -187,13 +190,17 @@ function MainPage() {
               ease: "easeInOut",
               duration: 2,
               y : { duration: 1},
+              delay: 2
             }}
           >
             <Flowers />
           </motion.div>
         </FlowersWrapper>
 
-        {/* <StickyWrapper> */}
+        </InnerDiv>
+        {/* 첫 번째 페이지 콘텐츠 */}
+        <InnerDiv>
+          {/* <StickyWrapper> */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -206,9 +213,6 @@ function MainPage() {
           >
             <FlowerCount />
           </motion.div>
-        </InnerDiv>
-        {/* 첫 번째 페이지 콘텐츠 */}
-        <InnerDiv>
           <SwiperWrapper>
             <StyledSwiper
               slidesPerView={3}
@@ -306,7 +310,7 @@ const TopBlurr = styled.div`
   backdrop-filter:blur(4px);
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
 
-  //background-color: rgba(255, 255, 255, 0.7);
+  // background-color: rgba(255, 255, 255, 0.7);
   // backdrop-filter: blur(3px);
   // mask: linear-gradient(#FFFFFD, transparent);
   // background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 
@@ -331,14 +335,6 @@ const FlowersWrapper = styled.div`
   width: 100%;
   height: auto;
 `
-
-// const StickyWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-// `
 
 const Title = styled.div`
   width: 362px;
@@ -423,7 +419,6 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 91px;
-
 `;
 
 const Container = styled.div`
@@ -433,17 +428,18 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: auto;
-  padding-top: 300px;
-  //padding: 10vh;
+  padding-top: 15vh;
+  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD);
 `;
 
 const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
+  height: auto;
+  overflow: scroll;
   scroll-behavior: smooth;
+  background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
   // background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
 
   /* 화면에서 스크롤바 안보이게 */

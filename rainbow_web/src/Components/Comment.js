@@ -124,7 +124,7 @@ const CommentFormContainer = styled.form`
   align-items: center;
   width: 594px;
   height: 50px;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   padding-left: 8px;
   border: 1px solid #C6C6C6;
   border-radius: 8px;
@@ -135,7 +135,7 @@ const CommentFormContainer = styled.form`
 const CommentTextarea = styled.textarea`
   flex: 1;
   height: 22px;
-  padding-top: 8px;
+  padding: 8px 16px 14px;
   margin-bottom: 4px;
   font-size: 14px;
   border: none;
