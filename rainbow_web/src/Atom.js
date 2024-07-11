@@ -4,6 +4,16 @@ export const UserData = atom({
     key: 'UserData',
     default: {
         user_id : "",
+        name : "",
+        email : ""
+    },
+});
+
+export const P_Data = atom({
+    key: 'P_Data',
+    default: {
+        user_id : "",
+        name : "",
         email : ""
     },
 });

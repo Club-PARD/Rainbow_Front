@@ -11,21 +11,19 @@ import 'swiper/css/pagination';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI } from '../APIs/AxiosAPI';
-import { UserData, PostCount } from '../Atom';
+import { P_Data, PostCount } from '../Atom';
 
 import Modal from 'react-modal';
-import Header from '../Components/Header';
+import Header from '../Components/C_Header';
 import Comment from '../Components/Comment';
-import Flowers from '../Components/Flowers';
+import Flowers from '../Components/C_Flowers';
 import FlowerCount from '../Components/FlowerCount';
-import WriteBtn2 from '../Components/WriteBtn2';
-import MainSwiperEmpty from "../Components/MainSwiperEmpty";
 
 Modal.setAppElement('#root');
 
 function MainPage() {
   const { userId } = useParams();  // URL의 userId 파라미터를 읽습니다.
-  const setUserData = useSetRecoilState(UserData);
+  const setUserData = useSetRecoilState(P_Data);
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
@@ -157,7 +155,6 @@ function MainPage() {
               delay: 1
             }}
           >
-            <WriteBtn2 />
           </motion.div>
         </ExplainWrapper>
         <motion.div
@@ -192,7 +189,7 @@ function MainPage() {
         </FlowersWrapper>
       </InnerDiv>
       <InnerDiv>
-        {/* <motion.div
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
@@ -203,26 +200,24 @@ function MainPage() {
           }}
         >
           <FlowerCount />
-        </motion.div> */}
-        {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper centeredSlides={result.length <= 4}>
-
+        </motion.div>
+        <SwiperWrapper>
           <StyledSwiper
-            slidesPerView={4}
-            spaceBetween={0}
+            slidesPerView={3}
+            spaceBetween={20}
             navigation
             modules={[Pagination, Navigation]}
-            centeredSlides={result.length <= 4}
             className="mySwiper"
           >
             {result && result.map((data, index) => (
               <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-                <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                <Link to={`/c_detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
                   <Text>{data.postTitle}</Text>
                 </Link>
               </StyledSwiperSlide>
             ))}
           </StyledSwiper>
-        </SwiperWrapper>}
+        </SwiperWrapper>
       </InnerDiv>
       <InnerDiv>
         <CommentContainer>
@@ -337,13 +332,10 @@ const SwiperWrapper = styled.div`
   display: flex;
   justify-content: center;
   transition: transform 0.3s ease-in-out;
-  ${(props) => props.centeredSlides && `
-    justify-content: center;
-  `}
 `
 
 const StyledSwiper = styled(Swiper)`
-  width: 100vw;
+  width: 100%;
   height: 318px;
   padding: 10px;
 `;
@@ -351,8 +343,8 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 246px !important;
   height: 298px !important;
-  // margin-right: 1px;
-  margin-left: 32px;
+  margin-right: 20px;
+  margin-left: 20px;
   border-radius: 6px;
   background-image: url(${(props) => props.ima});
   background-position: center;
@@ -376,7 +368,7 @@ const Text = styled.div`
   font-size: 15px;
   font-weight: 400;
   padding: 18px 12px 12px 12px;
-  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 0 0 6px 6px;
 `;
 
