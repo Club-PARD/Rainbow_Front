@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from "styled-components";
 
@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI } from '../APIs/AxiosAPI';
-import { UserData } from '../Atom';
+import { UserData, PostCount } from '../Atom';
 
 import Modal from 'react-modal';
 import Header from '../Components/Header';
@@ -23,11 +23,12 @@ import WriteBtn2 from '../Components/WriteBtn2';
 Modal.setAppElement('#root');
 
 function MainPage() {
-  const { userId } = useParams();
+  const userData = useRecoilValue(UserData);
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
-
+  const postCount = useRecoilValue(PostCount);
+  
   //어두워지는 코드
   const outerDivRef = useRef(); // outerDivRef를 생성하여 DOM 요소에 접근
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 관리하는 useState
@@ -35,20 +36,22 @@ function MainPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllAPI(userId);
+      const data = await getAllAPI(userData.user_id);
       setResult(data || []);
     };
     fetchData();
-  }, [userId]);
+  }, [userData.user_id]);
 
   const getPetName = async () => {
-    const response = await getPetNameAPI(userId);
+    console.log(userData.user_id);
+    const response = await getPetNameAPI(userData.user_id);
+    console.log(response);
     setPetName(response);
   };
 
   useEffect(() => {
     getPetName();
-  }, [userId]);
+  }, []);
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
@@ -60,6 +63,18 @@ function MainPage() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  const getTalkBubbleText = (count) => {
+    if (count >= 40) {
+      return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
+    } else if (count >= 20) {
+      return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
+    } else if (count >= 10) {
+      return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
+    } else {
+      return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
+    }
+  };
 
   //어두워지는 코드
   useEffect(() => {
@@ -104,36 +119,89 @@ function MainPage() {
       <Header />
       <InnerDiv>
       {/* {(backgroundOpacity < 0.2) && <TopBlurr />} */}
-      <TopBlurr />
-      <ExplainWrapper>
-        <Title>기억의 꽃밭은</Title>
-        <Explained>
-          반려동물과의 소중한 추억을 떠올리며<br />
-          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
-          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
-          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
-          {petName} 에 대한 이야기를 들려주세요
-        </Explained>
-        <WriteBtn2 />
-      </ExplainWrapper>
-      
-      <FlowersWrapper>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{
-            ease: "easeInOut",
-            duration: 2,
-            y : { duration: 1},
-          }}
-        >
-          <Flowers />
+        <TopBlurr />
+        <ExplainWrapper>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y : { duration: 1},
+            }}
+          >
+            <Title>기억의 꽃밭은</Title>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y : { duration: 1},
+              delay: 0.5
+            }}
+          >
+            <Explained>
+              반려동물과의 소중한 추억을 떠올리며<br />
+              한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
+              꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
+              사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
+              {petName} 에 대한 이야기를 들려주세요
+            </Explained>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y : { duration: 1},
+              delay: 1
+            }}
+          >
+            <WriteBtn2 />
+          </motion.div>
+        </ExplainWrapper>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y : { duration: 1},
+              delay: 1.5
+            }}
+          >
+            <TalkBubble>
+              {getTalkBubbleText(postCount)}
+            </TalkBubble>
         </motion.div>
-      </FlowersWrapper>
+        <FlowersWrapper>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{
+              ease: "easeInOut",
+              duration: 2,
+              y : { duration: 1},
+              delay: 2
+            }}
+          >
+            <Flowers />
+          </motion.div>
+        </FlowersWrapper>
 
-      {/* <StickyWrapper> */}
-        <motion.div
+        </InnerDiv>
+        {/* 첫 번째 페이지 콘텐츠 */}
+        <InnerDiv>
+          {/* <StickyWrapper> */}
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
@@ -142,55 +210,96 @@ function MainPage() {
                 duration: 2,
                 y: { duration: 1 },
             }}
-        >
-          <FlowerCount />
-        </motion.div>
-      </InnerDiv>
-      {/* 첫 번째 페이지 콘텐츠 */}
-      <InnerDiv>
-      <SwiperWrapper>
-        <StyledSwiper
-          slidesPerView={3}
-          spaceBetween={20}
-          navigation
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {result && result.map((data, index) => (
-            <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-              <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
-                <Text>{data.postTitle}</Text>
-              </Link>
-            </StyledSwiperSlide>
-          ))}
-        </StyledSwiper>
-        </SwiperWrapper>
-      </InnerDiv>
-      {/* 두 번째 페이지 콘텐츠 */}
-      <InnerDiv>
-      <CommentContainer>
-          {/* <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{
-                  ease: "easeInOut",
-                  duration: 2,
-                  y: { duration: 1 },
-              }}
           >
             <FlowerCount />
-          </motion.div> */}
-        <Comment />
-      </CommentContainer>
-        {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
-      </InnerDiv>
+          </motion.div>
+          <SwiperWrapper>
+            <StyledSwiper
+              slidesPerView={3}
+              spaceBetween={20}
+              navigation
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {result && result.map((data, index) => (
+                <StyledSwiperSlide key={index} ima={data.pictureUrl}>
+                  <Link to={`/detail/${userData.user_id}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                    <Text>{data.postTitle}</Text>
+                  </Link>
+                </StyledSwiperSlide>
+              ))}
+            </StyledSwiper>
+          </SwiperWrapper>
+        </InnerDiv>
+
+        {/* 두 번째 페이지 콘텐츠 */}
+        <InnerDiv>
+          <CommentContainer>
+            {/* <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{
+                    ease: "easeInOut",
+                    duration: 2,
+                    y: { duration: 1 },
+                }}
+            >
+              <FlowerCount />
+            </motion.div> */}
+            <Comment />
+          </CommentContainer>
+          {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
+        </InnerDiv>
       </Container>
     </OuterDiv>
   );
 }
 
 export default MainPage;
+
+const TalkBubble = styled.div`
+  position: relative;
+  width: 272px;
+  min-height: 60px;
+  padding: 8px 12px;
+  background: #FEFEFE;
+  border-radius: 8px;
+  border: 1px solid #C6C6C6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2C2C2C;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 16px;
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+
+  &:after, &:before {
+    position: absolute;
+    content: '';
+    width: 0;
+    bottom: -8px;
+    left: calc(50% - 8px);
+  }
+
+  &:after {
+    border-style: solid;
+    border-width: 8px 8px 0;
+    border-color: #FEFEFE transparent;
+    z-index: 1;
+  }
+
+  &:before {
+    border-style: solid;
+    border-width: 9px 9px 0;
+    border-color: #C6C6C6 transparent;
+    z-index: 0;
+    bottom: -9px;
+  }
+`
 
 const TopBlurr = styled.div`
   width: 100%;
@@ -213,6 +322,8 @@ const ExplainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
+  margin-bottom: 15vh;
+  font-family: "Pretendard-Regular";
 `
 
 const FlowersWrapper = styled.div`
@@ -222,16 +333,7 @@ const FlowersWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-top: 225px;
 `
-
-// const StickyWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-// `
 
 const Title = styled.div`
   width: 362px;
@@ -316,7 +418,6 @@ const CommentContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 91px;
-
 `;
 
 const Container = styled.div`
@@ -326,17 +427,18 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: auto;
-  padding-top: 300px;
-  //padding: 10vh;
+  padding-top: 15vh;
+  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD);
 `;
 
 const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
+  height: auto;
+  overflow: scroll;
   scroll-behavior: smooth;
+  background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
   // background-color: ${({ backgroundOpacity }) => `rgba(0, 0, 0, ${backgroundOpacity})`};
 
   /* 화면에서 스크롤바 안보이게 */
@@ -352,5 +454,5 @@ const InnerDiv = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 100px;
-  padding-top: 20vh;
+  padding-top: 10vh;
 `;

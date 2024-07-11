@@ -188,7 +188,7 @@ function LocalSignUp() {
             <SignUpTitle>
                 <span>Sincerely, 에 오신 것을 환영합니다<br /></span>
                 <span>
-                    이메일을 입력해주세요
+                    이메일을 입력해&nbsp;주세요
                 </span>
             </SignUpTitle>
             <SignUpForm>
@@ -257,8 +257,6 @@ font-size: 0.9rem;
 const SignUpForm = styled.div`
 display: flex;
 width: 362px;
-min-width: 320px;
-height: 534px;
 padding: 16px;
 flex-direction: column;
 align-items: flex-start;
@@ -274,8 +272,8 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 align-self: stretch;
-margin: 8px;
-height: 76px;
+height: 72px;
+margin-bottom: 16px;
 `
 
 //Input요소들 제목
@@ -286,7 +284,9 @@ font-size: 14px;
 font-style: normal;
 font-weight: 400;
 line-height: 22px;
-margin-bottom: 16px;
+margin-bottom: 4px;
+width: 330px;
+height: 22px;
 `
 
 //회원가입 제목 css
@@ -333,6 +333,7 @@ font-weight: 400;
 const SignUpCreateBtn = styled.button`
 align-self: stretch;
 height: 38px;
+border: 1px solid #2C2C2C;
 border-radius: 10px;
 background: #2C2C2C;
 color: #FEFEFE;
