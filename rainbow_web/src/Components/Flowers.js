@@ -92,18 +92,37 @@ const boingAnimation = keyframes`
   0% {
     transform: scale(1) rotate(0deg);
   }
-  50% {
-    transform: scale(0.7) rotate(40deg);
+  30% {
+    transform: scale(1.2) rotate(60deg);
   }
-  95% {
-    transform: rotate(10deg);
+  40% {
+    transform: rotate(-50deg);
+  }
+  50% {
+    transform: rotate(40deg);
+  }
+  60% {
+    transform: scale(1) rotate(-30deg);
+  }
+  70% {
+    tranform: rotate(25deg);
+  }
+  80% {a
+    transform: scale(1) rotate(-15deg);
+  }
+  90% {
+    tranform: rotate(1deg);
   }
   100% {
-    transform: rotate(0deg);
+    transform: scale(1) rotate(0deg);
   }
 `;
 
 const FlowerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   border: solid 1px #C6C6C6;
@@ -114,8 +133,8 @@ const FlowerBox = styled.div`
 `;
 
 const Flower = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   
   animation: ${boingAnimation} 2s;
 `;
