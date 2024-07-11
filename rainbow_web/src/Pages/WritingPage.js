@@ -34,7 +34,7 @@ function WritingPage() {
   const navigate = useNavigate();
 
   const goToMain = () => {
-    navigate(`/main/${userData.user_id}`);
+    navigate(`../main/${userData.user_id}`);
   };
 
   const onTextContentHandler = (e) => {

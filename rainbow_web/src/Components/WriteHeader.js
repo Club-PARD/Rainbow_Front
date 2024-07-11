@@ -98,7 +98,7 @@ function WriteHeader({ onActiveChange }) {
   };
 
   const goToMain = () => {
-    navigate(`main/${userData.user_id}`);
+    navigate(`../main/${userData.user_id}`);
   };
 
   const handleToggleChange = async () => {

@@ -17,13 +17,13 @@ function CommunityPage() {
       .then(response => {
         setImages(response.data);
         setLoaded(true);
-        console.log(response);
+        console.log(response.data);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleImageClick = (userId) => {
-    navigate(`/main/${userId}`);
+    navigate(`../main/${userId}`);
   };
 
   return (

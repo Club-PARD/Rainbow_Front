@@ -54,14 +54,14 @@ function DetailPage() {
       console.log("Deleting post with ID:", params.postId);  // 디버깅용 콘솔 로그
       await deletePostAPI(params.postId);
       console.log("Post deleted successfully");  // 디버깅용 콘솔 로그
-      navigate(`/main/${userData.user_id}`);
+      navigate(`../main/${userData.user_id}`);
     } catch (error) {
       console.error("Failed to delete post:", error);
     }
   };
 
   const goToMain = () => {
-    navigate(`/main/${userData.user_id}`);
+    navigate(`../main/${userData.user_id}`);
   };
 
   const handleNext = () => {

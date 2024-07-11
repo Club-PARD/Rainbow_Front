@@ -34,7 +34,7 @@ const Login = () => {
                 setIsLoggedIn(true);
                 setUserData(response);
                 console.log(userData);
-                navigate(`main/${useData.user_id}`);
+                navigate(`../main/${useData.user_id}`);
             }
             else {
                 setLoginCheck(true);

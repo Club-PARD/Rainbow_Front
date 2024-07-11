@@ -40,7 +40,8 @@ function LoginPage() {
       }
       else {
         setIsLoggedIn(true);
-        navigate(`/main/${data.user_id}`);
+        console.log(response.user_id);
+        navigate(`../main/${response.user_id}`);
       }
     } catch(err) {
       console.log(err);
