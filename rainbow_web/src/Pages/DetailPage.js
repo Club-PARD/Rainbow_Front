@@ -126,7 +126,7 @@ function DetailPage() {
         </Detail>
 
         <DetailBottomMenu>
-          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previos</DetailBottomBtn>
+          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previous</DetailBottomBtn>
           <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
