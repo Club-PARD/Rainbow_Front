@@ -200,7 +200,6 @@ function MainPage() {
               y: { duration: 1 },
           }}
         >
-          <FlowerCount />
         </motion.div>
         <SwiperWrapper>
           <StyledSwiper
