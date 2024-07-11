@@ -309,8 +309,7 @@ const TopBlurr = styled.div`
   left: 0;
   backdrop-filter:blur(4px);
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-
-  // background-color: rgba(255, 255, 255, 0.7);
+  //background-color: rgba(255, 255, 255, 0.7);
   // backdrop-filter: blur(3px);
   // mask: linear-gradient(#FFFFFD, transparent);
   // background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 

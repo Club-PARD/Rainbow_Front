@@ -8,8 +8,7 @@ import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserData } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
-import { getUserByIDAPI } from '../APIs/RegisterAPI';
-import ExitModal from './ExitModal';
+import ExitModal from './ExitModal'; 
 
 Modal.setAppElement('#root');
 
@@ -62,19 +61,6 @@ function WriteHeader({ onActiveChange }) {
     }
   }, [modalIsOpen, exitModalIsOpen]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await getUserByIDAPI(userData.user_id);
-        setIsActive(response.publicCheck);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchUserData();
-  }, [userData.user_id]);
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -119,8 +105,8 @@ function WriteHeader({ onActiveChange }) {
   return (
     <HeaderContainer>
       <GlobalStyle />
-      <LogoAndButtonContainer>
-        <Img onClick={openExitModal}>
+      <LogoAndButtonContainer onClick={openExitModal}>
+        <Img>
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
       </LogoAndButtonContainer>
@@ -132,7 +118,7 @@ function WriteHeader({ onActiveChange }) {
         onRequestClose={closeModal}
         overlayClassName="Overlay"
       >
-        <ModalInfoButtonNoHover>
+        <NoHoverModalInfoButton>
           페이지 공개
           <ToggleSwitch>
             <CheckBox
@@ -142,7 +128,7 @@ function WriteHeader({ onActiveChange }) {
             />
             <ToggleSlider />
           </ToggleSwitch>
-        </ModalInfoButtonNoHover>
+        </NoHoverModalInfoButton>
         <Reg />
         <ModalInfoButton>회원 정보 수정</ModalInfoButton>
         <ModalInfoButton>이용 정책</ModalInfoButton>
@@ -151,7 +137,7 @@ function WriteHeader({ onActiveChange }) {
       <ExitModal
         isOpen={exitModalIsOpen}
         onRequestClose={closeExitModal}
-        onExit={goToMain}
+        onExit={goToMain} // 나가기 버튼 클릭 시 /main으로 이동
       />
     </HeaderContainer>
   );
@@ -219,7 +205,7 @@ const StyledModal = styled(Modal)`
   border-radius: 8px;
   border: 1px solid #C6C6C6;  
   background: #FEFEFE;
-  z-index: 10000;
+  z-index: 10000; /* Ensures the modal is above other content */
   p {
     color: #2C2C2C;
     font-family: Pretendard;
@@ -228,6 +214,16 @@ const StyledModal = styled(Modal)`
     font-weight: 400;
     line-height: 24px; 
   }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000; /* Ensures the overlay is above other content */
 `;
 
 const Reg = styled.div`
@@ -310,10 +306,9 @@ const ModalInfoButton = styled.button`
   }
 `;
 
-const ModalInfoButtonNoHover = styled(ModalInfoButton)`
+const NoHoverModalInfoButton = styled(ModalInfoButton)`
   &:hover {
     background-color: white;
-    cursor: default;
   }
 `;
 

@@ -6,6 +6,7 @@ import Header from "../Components/DetailHeader";
 import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
+import WriteDeleteModal from '../Components/WriteDeleteModal'; // 임포트
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +48,9 @@ function DetailPage() {
 
   const handleDelete = async () => {
     try {
+      console.log("Deleting post with ID:", params.postId);  // 디버깅용 콘솔 로그
       await deletePostAPI(params.postId);
+      console.log("Post deleted successfully");  // 디버깅용 콘솔 로그
       navigate("/main");
     } catch (error) {
       console.error("Failed to delete post:", error);
@@ -107,6 +110,13 @@ function DetailPage() {
           <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
+
+      {/* WriteDeleteModal 사용 부분 */}
+      <WriteDeleteModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        onDelete={handleDelete}
+      />
     </Container>
   );
 }
@@ -132,7 +142,9 @@ const TopBlurr = styled.div`
   top: 0;
   left: 0;
 
-  backdrop-filter:blur(2px);
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(3px);
+  mask: linear-gradient(#FFFFFD, transparent);
 `
 
 const ContentWrapper = styled.div`

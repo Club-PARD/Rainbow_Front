@@ -63,6 +63,7 @@ const CommunityPageContainer = styled.div`
   backdrop-filter: ${props => (props.isBlurred ? 'blur(10px)' : 'none')};
   transition: backdrop-filter 0.3s, background 0.3s;
   padding-top: 108px;
+  margin-bottom: 200px;
 `;
 
 const TopBlurr = styled.div`
@@ -130,7 +131,7 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 1.5px 3px 10px 0px rgba(0, 0, 0, 0.25), 0px 0px 13.125px 0px rgba(12, 12, 13, 0.10);
-  &:hover {
+   &:hover {
     cursor: pointer;
   }
   opacity: ${props => (props.isLoaded ? 1 : 0)};
@@ -144,6 +145,13 @@ const Image = styled.img`
   height: 318px;
   object-fit: cover;
   border-radius: 8px;
+
+  // 여기 동운코드
+  transition: transform 0.3s ease-in-out;
+  &:hover{
+  cursor: pointer;
+  transform: scale(1.03);
+  }
 `;
 
 const OverlayText = styled.div`

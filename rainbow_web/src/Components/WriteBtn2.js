@@ -48,7 +48,7 @@ function WriteBtn() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [userData.UserID]);
+  }, [userData.user_id]);
 
   const totalPages = Math.ceil(questions.length / ITEMS_PER_PAGE);
 
@@ -160,9 +160,11 @@ const ExitButton = styled.button`
   top: 8px;
   right: 8px;
   border: none;
-  background-color: #FEFEFE;
+  border-radius: 50%;
+  background-color: transparent;
   &:hover{
     cursor: pointer;
+    background-color: #F3F3F3;
   }
 `;
 
