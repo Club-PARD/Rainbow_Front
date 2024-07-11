@@ -34,7 +34,7 @@ function WritingPage() {
   const navigate = useNavigate();
 
   const goToMain = () => {
-    navigate('/main');
+    navigate(`/main/${userData.user_id}`);
   };
 
   const onTextContentHandler = (e) => {
@@ -97,7 +97,7 @@ function WritingPage() {
         setIsIncreased(true);
       }
       alert("게시가 완료되었습니다");
-      navigate("../main");
+      navigate(`../main/${userData.user_id}`);
     } catch (err) {
       console.log(err);
     }

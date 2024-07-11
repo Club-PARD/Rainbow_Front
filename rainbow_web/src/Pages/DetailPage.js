@@ -7,6 +7,8 @@ import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
 import WriteDeleteModal from '../Components/WriteDeleteModal'; // 임포트
+import { UserData } from "../Atom";
+import { useRecoilValue } from "recoil";
 
 function DetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +17,7 @@ function DetailPage() {
   const [result, setResult] = useState([]);
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(null);
+  const userData = useRecoilValue(UserData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,14 +54,14 @@ function DetailPage() {
       console.log("Deleting post with ID:", params.postId);  // 디버깅용 콘솔 로그
       await deletePostAPI(params.postId);
       console.log("Post deleted successfully");  // 디버깅용 콘솔 로그
-      navigate("/main");
+      navigate(`/main/${userData.user_id}`);
     } catch (error) {
       console.error("Failed to delete post:", error);
     }
   };
 
   const goToMain = () => {
-    navigate('/main');
+    navigate(`/main/${userData.user_id}`);
   };
 
   const handleNext = () => {
