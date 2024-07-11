@@ -47,7 +47,9 @@ function DetailPage() {
 
   const handleDelete = async () => {
     try {
+      console.log("Deleting post with ID:", params.postId);  // 디버깅용 콘솔 로그
       await deletePostAPI(params.postId);
+      console.log("Post deleted successfully");  // 디버깅용 콘솔 로그
       navigate("/main");
     } catch (error) {
       console.error("Failed to delete post:", error);
@@ -107,6 +109,15 @@ function DetailPage() {
           <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
+
+      {/* 모달 구현 부분 */}
+      {isModalOpen && (
+        <Modal>
+          <p>정말로 삭제하시겠습니까?</p>
+          <button onClick={handleDelete}>삭제</button>
+          <button onClick={closeModal}>취소</button>
+        </Modal>
+      )}
     </Container>
   );
 }
@@ -257,5 +268,42 @@ const DetailBottomBtn = styled.button`
   font-weight: 500;
   &:hover{
     cursor: pointer;
+  }
+`;
+
+const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  border: 1px solid #C6C6C6;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #2C2C2C;
+    margin-bottom: 20px;
+  }
+  button {
+    margin: 5px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2C2C2C;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+      background-color: #444;
+    }
   }
 `;

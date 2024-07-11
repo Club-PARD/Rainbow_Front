@@ -4,7 +4,8 @@ import { postImgAPI } from "../APIs/AxiosAPI";
 import { getDetailAPI } from "../APIs/PublicAPI";
 import { useParams, useNavigate } from "react-router-dom";
 import { patchDetailAPI } from "../APIs/PublicAPI";
-import Header from "../Components/DetailHeader";
+import Header from "../Components/EditHeader";
+import ExitModal from '../Components/ExitModal';
 
 function EditPage() {
     const params = useParams();
@@ -33,6 +34,16 @@ function EditPage() {
     const contentHandler = (e) => {
         setText(e.target.value);
         setData({ ...data, postContent: e.target.value });
+    };
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => {
+      setModalIsOpen(true);
+    };
+  
+    const closeModal = () => {
+      setModalIsOpen(false);
     };
 
     const [imageSrc, setImageSrc] = useState("");
@@ -107,10 +118,15 @@ function EditPage() {
                 />
                 <Content value={text} onChange={contentHandler}></Content>
                 <DetailBottomMenu>
-                    <CancelBtn onClick={goToMain}>나가기</CancelBtn>
+                    <CancelBtn onClick={openModal}>나가기</CancelBtn>
                     <UploadBtn onClick={patchHandler}>수정하기</UploadBtn>
                 </DetailBottomMenu>
             </ContentWrapper>
+          <ExitModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          onExit={goToMain}
+          />
         </Container>
     );
 }
