@@ -25,6 +25,8 @@ function WritingPage() {
   const [textContent, setTextContent] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [data, setData] = useState({
     postTitle: "",
     pictureUrl: "",
@@ -116,6 +118,16 @@ function WritingPage() {
     }
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+  
+    // Your form submission logic here
+  
+    // After form submission is complete, set `isSubmitting` back to `false`:
+    setIsSubmitting(false);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     console.log(selectedQuestion);
@@ -157,7 +169,7 @@ function WritingPage() {
         />
         <ButtonContainer>
           <ExitButton type="button" onClick={openModal}>나가기</ExitButton>
-          <SubmitButton disabled={ !data.postTitle || !data.pictureUrl || !data.postContent} type="button" onClick={handleUpload}>게시하기</SubmitButton>
+          <SubmitButton disabled={ isSubmitting || !data.postTitle || !data.pictureUrl || !data.postContent} type="button" onClick={handleUpload}>게시하기</SubmitButton>
         </ButtonContainer>
 
         <ExitModal
