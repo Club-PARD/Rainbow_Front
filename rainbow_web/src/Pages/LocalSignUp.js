@@ -3,6 +3,9 @@ import styled from "styled-components";
 import LoginHeader from '../Components/LoginHeader';
 import { postMemberAPI } from '../APIs/RegisterAPI';
 import { useNavigate } from 'react-router-dom';
+import eye from '../Assets/Img/eye.svg';
+import eyeOff from '../Assets/Img/eye-off.svg';
+import { useEffect } from 'react';
 
 function LocalSignUp() {
     //유효성 검사 관련 코드
@@ -35,6 +38,10 @@ function LocalSignUp() {
         type: "password",
         visible: false,
     });
+    const [pwType2, setpwType2] = useState({
+        type: "password",
+        visible: false,
+    });
 
     const [newData, setNewData] = useState({
         nickName: '',
@@ -43,12 +50,39 @@ function LocalSignUp() {
         petName: '',
       });
 
+      useEffect(() => {
+        window.scrollTo(0,0);
+        const handleBeforeUnload = (event) => {
+          event.preventDefault();
+          event.returnValue = ''; // Chrome requires returnValue to be set.
+        };
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, []);
+
     const navigate = useNavigate();
 
     const handlePasswordType = (e) => {
         setpwType(() => {
             // 만약 현재 pwType.visible이 false 라면
             if (!pwType.visible) {
+                return { type: "text", visible: true };
+
+                //현재 pwType.visible이 true 라면
+            } else {
+                return { type: "password", visible: false };
+            }
+        });
+    };
+
+    const handlePasswordType2 = (e) => {
+        setpwType2(() => {
+            // 만약 현재 pwType.visible이 false 라면
+            if (!pwType2.visible) {
                 return { type: "text", visible: true };
 
                 //현재 pwType.visible이 true 라면
@@ -212,16 +246,21 @@ function LocalSignUp() {
 
                 <InputField>
                     <InputTitle>비밀번호</InputTitle>
-                    <SignUpInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
+                    <SignUpPWInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
+                    <Eye1 src={(pwType.visible === true) ? eye : eyeOff}
+                        onClick={handlePasswordType}
+                    />
                     <ErrorExplain>{passWordMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
                     <InputTitle>비밀번호 확인</InputTitle>
-                    <SignUpInput type="password" color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                    <SignUpPWInput type={pwType2.type} color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                    <Eye2 src={(pwType2.visible === true) ? eye : eyeOff}
+                        onClick={handlePasswordType2}
+                    />
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
-                <InputTitle onClick={handlePasswordType}>{pwType.visible ? "비밀번호 숨기기" : "비밀번호 보기"}</InputTitle>
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
             </SignUpForm>
             <Footer>
@@ -229,8 +268,8 @@ function LocalSignUp() {
                 및 이용정책에 동의하는 것으로 간주됩니다.
             </Footer>
         </Container>
-    )
-}
+    );
+};
 
 
 
@@ -270,7 +309,6 @@ box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0,
 const InputField = styled.div`
 display: flex;
 flex-direction: column;
-align-items: flex-start;
 align-self: stretch;
 height: 72px;
 margin-bottom: 16px;
@@ -284,6 +322,7 @@ font-size: 14px;
 font-style: normal;
 font-weight: 400;
 line-height: 22px;
+margin-left: 4px;
 margin-bottom: 4px;
 width: 330px;
 height: 22px;
@@ -308,8 +347,32 @@ font-family: "GeistMono";
 //회원가입 input들
 const SignUpInput = styled.input`
 display: flex;
-min-width: 240px;
+width: 330px;
 padding: 12px 16px 12px 16px;
+align-items: center;
+border: solid 1px;
+border-radius: 8px;
+align-self: stretch;
+border-color: #DDD;
+font-family: Pretendard;
+font-size: 14px;
+font-weight: 400;
+
+&::placeholder {
+    color: #B0B0B0;
+}
+
+&:focus{
+ border-color: ${(props) => props.color || "#B0B0B0"};
+ outline: none;
+}
+`
+
+const SignUpPWInput = styled.input`
+display: flex;
+position: relative;
+width: 305px;
+padding: 12px 41px 12px 16px;
 align-items: center;
 border: solid 1px;
 border-radius: 8px;
@@ -347,6 +410,7 @@ cursor: pointer;
 
 //error 내용 설명해주는 문자
 const ErrorExplain = styled.p`
+margin-left: 5px;
 margin-top: 1px;
 font-size: 12px;
 color: red;
@@ -362,4 +426,20 @@ const Footer = styled.div`
   font-weight: 500;
   color: #5E5E5E;
   margin-bottom: 2rem;
+`
+
+const Eye1 = styled.img`
+    position: absolute;
+    top: 65.5%;
+    left: 61%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+`
+
+const Eye2 = styled.img`
+    position: absolute;
+    top: 76.3%;
+    left: 61%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
 `

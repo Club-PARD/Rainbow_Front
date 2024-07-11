@@ -127,11 +127,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-betweem;
 
   width: 100vw;
 
-  min-height: 100vh;
+  height: 100vh;
   
   color: #2C2C2C;
   font-size: 0.9rem;
@@ -146,59 +146,75 @@ const Wrapper = styled.div`
 `
 
 const LoginWrapper = styled.div`
+  // display: flex;
+  // width: 362px;
+  // padding: 16px;
+  // flex-direction: column;
+  // align-items: flex-start;
+  // border: 1px solid #C6C6C6;
+  // border-radius: 8px;
+  // background-color: #FFFFFF;
+  // box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
   display: flex;
-width: 362px;
-padding: 16px;
-flex-direction: column;
-align-items: flex-start;
-border: 1px solid #C6C6C6;
-border-radius: 8px;
-background-color: #FFFFFF;
-box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 24rem;
+
+  padding: 16px;
+
+  border-radius: 8px;
+  border: solid 1px #C6C6C6;
+  background: #FEFEFE;
+
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `
 
 const InputWrapper = styled.div`
   display: flex;
-flex-direction: column;
-align-items: flex-start;
-align-self: stretch;
-height: 72px;
-margin-bottom: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  height: 72px;
+  margin-bottom: 16px;
 `
 
 const Input = styled.input`
   display: flex;
-min-width: 240px;
-padding: 12px 16px 12px 16px;
-align-items: center;
-border: solid 1px;
-border-radius: 8px;
-align-self: stretch;
-border-color: #DDD;
-font-family: Pretendard;
-font-size: 14px;
-font-weight: 400;
+  min-width: 240px;
+  padding: 12px 16px 12px 16px;
+  align-items: center;
+  border: solid 1px;
+  border-radius: 8px;
+  align-self: stretch;
+  border-color: #DDD;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 8px;
 
-&::placeholder {
+  &::placeholder {
     color: #B0B0B0;
-}
+  }
 
-&:focus{
- border-color: ${(props) => props.color || "#B0B0B0"};
- outline: none;
-}
+  &:focus{
+    border-color: ${(props) => props.color || "#B0B0B0"};
+    outline: none;
+  }
 `
 
 const Label = styled.div`
   color: #2C2C2C;
-font-family: "Pretendard Variable";
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 22px;
-margin-bottom: 4px;
-width: 330px;
-height: 22px;
+  font-family: "Pretendard Variable";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  margin-left: 8px;
+  margin-bottom: 4px;
+  width: 330px;
+  height: 22px;
 `
 
 const Intro = styled.div`
@@ -216,22 +232,23 @@ const Footer = styled.div`
   text-align: center;
   font-weight: 500;
   color: #5E5E5E;
-  margin-bottom: 2rem;
 `
 
 const SignUpCreateBtn = styled.button`
   align-self: stretch;
-height: 38px;
-border: 1px solid #2C2C2C;
-border-radius: 10px;
-background: #2C2C2C;
-color: #FEFEFE;
-font-size: 14px;
+  height: 38px;
+  border: 1px solid #2C2C2C;
+  border-radius: 10px;
+  background: #2C2C2C;
+  color: #FEFEFE;
+  margin: 8px;
+  margin-top: 16px;
+  font-size: 14px;
 
-&:hover{
-background: #000;
-cursor: pointer;
-}
+  &:hover{
+    background: #000;
+    cursor: pointer;
+  }
 `
 
 // //페이지 전체를 관리하는 css
