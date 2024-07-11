@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import flowerImage from "../Assets/Img/flower.svg";
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Increased, PostCount, UserData } from '../Atom';
+import { Increased, PostCount, P_Data } from '../Atom';
 import { getCountAPI } from '../APIs/AxiosAPI';
 
 // Flowers component to display flower animations based on post count
 const Flowers = () => {
-  const userData = useRecoilValue(UserData);
+  const userData = useRecoilValue(P_Data);
   const [isIncreased, setIsIncreased] = useRecoilState(Increased);
   const [saveIncreased, setSaveIncreased] = useState(false);
   const [postNumber, setPostNumber] = useRecoilState(PostCount);
