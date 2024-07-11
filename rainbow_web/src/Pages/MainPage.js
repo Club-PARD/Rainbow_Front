@@ -192,7 +192,7 @@ function MainPage() {
         </FlowersWrapper>
       </InnerDiv>
       <InnerDiv>
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
@@ -203,7 +203,7 @@ function MainPage() {
           }}
         >
           <FlowerCount />
-        </motion.div>
+        </motion.div> */}
         {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper>
           <StyledSwiper
             slidesPerView={3}
