@@ -19,6 +19,7 @@ import Comment from '../Components/Comment';
 import Flowers from '../Components/Flowers';
 import FlowerCount from '../Components/FlowerCount';
 import WriteBtn2 from '../Components/WriteBtn2';
+import MainSwiperEmpty from "../Components/MainSwiperEmpty";
 
 Modal.setAppElement('#root');
 
@@ -203,7 +204,7 @@ function MainPage() {
         >
           <FlowerCount />
         </motion.div>
-        <SwiperWrapper>
+        {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper>
           <StyledSwiper
             slidesPerView={3}
             spaceBetween={20}
@@ -219,7 +220,7 @@ function MainPage() {
               </StyledSwiperSlide>
             ))}
           </StyledSwiper>
-        </SwiperWrapper>
+        </SwiperWrapper>}
       </InnerDiv>
       <InnerDiv>
         <CommentContainer>
@@ -370,7 +371,7 @@ const Text = styled.div`
   font-size: 15px;
   font-weight: 400;
   padding: 18px 12px 12px 12px;
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
   border-radius: 0 0 6px 6px;
 `;
 
