@@ -105,16 +105,38 @@ function MainPage() {
       {/* outerDivRef로 참조되는 div 요소, 스크롤 가능, 배경색은 불투명도에 따라 변경 */}
       <Header />
       <InnerDiv>
-      <TopBlurr />
+      {(backgroundOpacity < 0.2) && <TopBlurr />}
       <ExplainWrapper>
-        <Title>기억의 꽃밭은</Title>
-        <Explained>
-          반려동물과의 소중한 추억을 떠올리며<br />
-          한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
-          꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
-          사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
-          {petName} 에 대한 이야기를 들려주세요
-        </Explained>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 2,
+            y : { duration: 1},
+          }}
+        >
+          <Title>기억의 꽃밭은</Title>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 2,
+            y : { duration: 1},
+          }}
+        >
+          <Explained>
+            반려동물과의 소중한 추억을 떠올리며<br />
+            한 송이씩 피어나는 '기억의 꽃'으로 채워지는 공간입니다.<br /><br />
+            꽃은 추억을 상징하며, 40개의 질문에 답변하면<br />
+            사랑과 그리움이 가득한 꽃밭이 완성됩니다.<br /><br />
+            {petName} 에 대한 이야기를 들려주세요
+          </Explained>
+        </motion.div>
         <WriteBtn2 />
       </ExplainWrapper>
       
@@ -170,7 +192,7 @@ function MainPage() {
       {/* 두 번째 페이지 콘텐츠 */}
       <InnerDiv>
       <CommentContainer>
-          <motion.div
+          {/* <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
@@ -181,7 +203,7 @@ function MainPage() {
               }}
           >
             <FlowerCount />
-          </motion.div>
+          </motion.div> */}
         <Comment />
       </CommentContainer>
         {/* 세 번째 페이지 콘텐츠, Comment 컴포넌트 포함 */}
@@ -195,13 +217,14 @@ export default MainPage;
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 64px;
+  height: 20vh;
   position: fixed;
   top: 0;
   left: 0;
   //background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter:blur(3px);
-  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+  // backdrop-filter:blur(3px);
+  // mask: linear-gradient(#FFFFFD, transparent);
+  background: linear-gradient(#FFFFFD, #FFFFFD, transparent); 
   z-index: 999;
 `
 
@@ -212,7 +235,6 @@ const ExplainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-top: 200px;
 `
 
 const FlowersWrapper = styled.div`
@@ -354,4 +376,5 @@ const InnerDiv = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 100px;
+  padding: 20vh;
 `;

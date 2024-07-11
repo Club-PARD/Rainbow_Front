@@ -21,7 +21,7 @@ const FlowerCountWrapper = styled.div`
     
     width: 362px;
     height: 48px;
-    padding: 8px 16px;
+    padding: 0 16px;
     margin-bottom: 91px;
     margin-top: 261px;
     border-radius: 8px;
