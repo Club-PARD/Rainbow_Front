@@ -121,6 +121,7 @@ const Container = styled.div`
   min-height: 100vh;
   background-color: #FEFEFE;
   padding-top: 108px;
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
 `;
 
 const TopBlurr = styled.div`
