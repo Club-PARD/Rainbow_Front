@@ -25,11 +25,11 @@ function App() {
         <Route path="/main/:userId" element={<MainPage />}/>
         <Route path="/c_main/:userId" element={<CommunityMainPage />}/>
         <Route path="/write" element={<WritingPage />}/>
+        <Route path="/edit/:userId/:postId" element={<EditPage/>}/>
         <Route path="/register" element={<LocalSignUp />}/>
         <Route path="/register-google" element={<GoogleSignUp />}/>
         <Route path="/detail/:userId/:postId" element={<DetailPage/>}/>
         <Route path="/c_detail/:userId/:postId" element={<CommunityDetail/>}/>
-        <Route path="/edit/:userId/:postId" element={<EditPage/>}/>
       </Routes>
     </div>
   );

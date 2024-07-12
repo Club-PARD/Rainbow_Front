@@ -76,49 +76,23 @@ function MainPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = outerDivRef.current; 
-      const pageHeight = window.innerHeight;
-
-      const newPage = Math.round(scrollTop / pageHeight) + 1; 
-      if (newPage !== currentPage) {
-        setCurrentPage(newPage); 
-      }
-
-      const maxScrollTop = scrollHeight - clientHeight; 
-      const startDarkeningPoint = maxScrollTop / 2; 
-      let newOpacity = 0;
-
-      if (scrollTop > startDarkeningPoint) {
-        newOpacity = (scrollTop - startDarkeningPoint) / (maxScrollTop - startDarkeningPoint); 
-      }
-
-      setBackgroundOpacity(newOpacity); 
-    };
-
-    const outerDivRefCurrent = outerDivRef.current; 
-    outerDivRefCurrent.addEventListener("scroll", handleScroll); 
-
-    return () => {
-      outerDivRefCurrent.removeEventListener("scroll", handleScroll); 
-    };
-  }, [currentPage]); 
+  // const getTalkBubbleText = (count) => {
+  //   if (count >= 40) {
+  //     return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
+  //   } else if (count >= 20) {
+  //     return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
+  //   } else if (count >= 10) {
+  //     return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
+  //   } else {
+  //     return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
+  //   }
+  // };
 
   return (
-    <OuterDiv
-      ref={outerDivRef}
-      backgroundOpacity={backgroundOpacity}
-    >
       <Container>
       <Header />
-      <InnerDiv>
         {/* <TopBlurr /> */}
         <ExplainWrapper>
           <motion.div
@@ -217,8 +191,7 @@ function MainPage() {
             <Flowers />
           </motion.div>
         </FlowersWrapper>
-      </InnerDiv>
-      <InnerDiv>
+      
         {/* <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -250,14 +223,10 @@ function MainPage() {
             ))}
           </StyledSwiper>
         </SwiperWrapper>}
-      </InnerDiv>
-      <InnerDiv>
         <CommentContainer>
           <Comment />
         </CommentContainer>
-      </InnerDiv>
       </Container>
-    </OuterDiv>
   );
 }
 

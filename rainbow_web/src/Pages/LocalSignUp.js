@@ -246,19 +246,23 @@ function LocalSignUp() {
 
                 <InputField>
                     <InputTitle>비밀번호</InputTitle>
+                    <PwWrapper>
                     <SignUpPWInput type={pwType.type} color={passWordColor} ref={passWordInput} onChange={onPassWordHandler} onBlur={onPassWordHandler} placeholder="type your password" />
                     <Eye1 src={(pwType.visible === true) ? eye : eyeOff}
                         onClick={handlePasswordType}
                     />
+                    </PwWrapper>
                     <ErrorExplain>{passWordMsg}</ErrorExplain>
                 </InputField>
 
                 <InputField>
                     <InputTitle>비밀번호 확인</InputTitle>
-                    <SignUpPWInput type={pwType2.type} color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
-                    <Eye2 src={(pwType2.visible === true) ? eye : eyeOff}
-                        onClick={handlePasswordType2}
-                    />
+                    <PwWrapper>
+                        <SignUpPWInput type={pwType2.type} color={confirmPassWordColor} ref={confirmPassWordInput}  onChange={onConfirmPassWordHandler} placeholder="check password" />
+                        <Eye2 src={(pwType2.visible === true) ? eye : eyeOff}
+                            onClick={handlePasswordType2}
+                        />
+                    </PwWrapper>
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
                 <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
@@ -429,17 +433,23 @@ const Footer = styled.div`
 `
 
 const Eye1 = styled.img`
-    position: absolute;
-    top: 65.5%;
-    left: 61%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
+   width: 24px;
+   height: 24px;
+   cursor: pointer;
+   position: absolute;
+   margin-right: 16px;
 `
 
 const Eye2 = styled.img`
-    position: absolute;
-    top: 76.3%;
-    left: 61%;
-    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
     cursor: pointer;
+    position: absolute;
+    margin-right: 16px;
+`
+
+const PwWrapper = styled.div`
+display: flex;
+justify-content: right;
+align-items: center;
 `

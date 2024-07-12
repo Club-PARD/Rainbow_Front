@@ -3,15 +3,13 @@ import styled, { createGlobalStyle } from 'styled-components';
 import Modal from 'react-modal';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import WriteBtn from './WriteBtn';
 import profile from '../Assets/Img/프로필.png';
 import logo from '../Assets/Img/logo.svg';
 import { useRecoilValue } from 'recoil';
 import { UserData, P_Data } from '../Atom';
 import { patchPublicAPI } from '../APIs/PublicAPI';
 import { getUserByIDAPI } from '../APIs/RegisterAPI';
-import ExitModal from './ExitModal';
-import { BackBtn } from "../Components/BackBtn";
+import c_back from "../Assets/Img/c_back.svg";
 
 
 Modal.setAppElement('#root');
@@ -35,24 +33,8 @@ function WriteHeader({ onActiveChange }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isActive, setIsActive] = useState(false);
-  const [communityDot, setCommunityDot] = useState(false);
-  const [memoryDot, setMemoryDot] = useState(false);
   const userData = useRecoilValue(P_Data);
   const U_Data = useRecoilValue(UserData);
-
-  useEffect(() => {
-    if (location.pathname === '/community') {
-      setCommunityDot(true);
-    } else {
-      setCommunityDot(false);
-    }
-
-    if (location.pathname === `/main/${userData.user_id}`) {
-      setMemoryDot(true);
-    } else {
-      setMemoryDot(false);
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     if (modalIsOpen || exitModalIsOpen) {
@@ -81,10 +63,6 @@ function WriteHeader({ onActiveChange }) {
 
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-
-  const closeExitModal = () => {
-    setExitModalIsOpen(false);
   };
 
   const onSignOut = () => {
@@ -124,9 +102,12 @@ function WriteHeader({ onActiveChange }) {
           <img src={logo} alt="BrandLogo" style={{ width: '186px' }} />
         </Img>
       </LogoAndButtonContainer>
-      <StyledBackBtn onClick={goToCommunity}>
-        <BackBtn />
-      </StyledBackBtn>
+      <C_BackBtn onClick={goToCommunity}>
+        <p>커뮤니티로  돌아가기</p>
+        <BackImg>
+          <img src={c_back} alt="Back to community" style={{ width: '100%', height: '100%' }}/>
+        </BackImg>
+      </C_BackBtn>
       <ImageButtonWrapper onClick={openModal}>
         <img src={profile} alt="Button" style={{ width: '100%', height: '100%' }} />
       </ImageButtonWrapper>
@@ -157,11 +138,33 @@ function WriteHeader({ onActiveChange }) {
 
 export default WriteHeader;
 
-const StyledBackBtn = styled.div`
-  position: fixed;
-  right: 720px;
+const BackImg = styled.div`
+  width: 16px;
+  height: 16px;
+`;
+
+const C_BackBtn = styled.button`
+  width : 172px;
+  height : 32px;
+  display: inline-flex;
+  height: 32px;
+  padding: 12px;
+  margin-left: -148px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #C6C6C6;
+  background: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 106.667% */
   &:hover{
     cursor: pointer;
+    background-color: #F3F3F3;
   }
 `;
 
