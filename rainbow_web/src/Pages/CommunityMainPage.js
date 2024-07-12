@@ -251,7 +251,7 @@ function MainPage() {
           >
             {result && result.map((data, index) => (
               <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-                <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                <Link to={`/c_detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
                   <Text>{data.postTitle}</Text>
                 </Link>
               </StyledSwiperSlide>
