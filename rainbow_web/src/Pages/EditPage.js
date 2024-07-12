@@ -243,6 +243,7 @@ const ImgLabel = styled.label`
 const StyledInput = styled.input`
   width: 535px;
   height: auto;
+  font-family: "Pretendard-Regular";
 `;
 
 const Content = styled.textarea`
@@ -257,6 +258,7 @@ const Content = styled.textarea`
   padding: 12px 16px;
   outline: #B0B0B0;
   margin-top: 16px;
+  font-family: "Pretendard-Regular";
 `;
 
 const DetailBottomMenu = styled.div`
