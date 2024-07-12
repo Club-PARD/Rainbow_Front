@@ -73,7 +73,7 @@ function MainPage() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

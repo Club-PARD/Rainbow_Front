@@ -38,6 +38,7 @@ function EditPage() {
     }, []);
 
     useEffect(() => {
+      window.scrollTo(0, 0);
         const fetchData = async () => {
             try {
                 const response = await getDetailAPI(params.userId, params.postId);
@@ -55,10 +56,6 @@ function EditPage() {
 
         fetchData();
     }, [params]);
-
-    useEffect(()=>{
-      window.scrollTo(0, 0);
-    });
 
     const contentHandler = (e) => {
         setText(e.target.value);

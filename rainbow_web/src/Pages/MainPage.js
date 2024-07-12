@@ -78,7 +78,7 @@ function MainPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [userId]);
 
   // const getTalkBubbleText = (count) => {
   //   if (count >= 40) {
