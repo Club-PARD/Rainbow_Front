@@ -150,6 +150,7 @@ const C_BtnContainer = styled.div`
   width: 556px;
   padding-bottom: 24px;
   gap: 16px;
+  margin-top: -57px;
   margin-left: -50px;
 `;
 
