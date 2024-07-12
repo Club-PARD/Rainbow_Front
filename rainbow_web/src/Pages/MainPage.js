@@ -119,7 +119,7 @@ function MainPage() {
       <Container>
       <Header />
       <InnerDiv>
-        <TopBlurr />
+        {/* <TopBlurr /> */}
         <ExplainWrapper>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -265,7 +265,6 @@ export default MainPage;
 
 const TalkBubble = styled.div`
   position: relative;
-  width: auto;
   min-width: 272px;
   min-height: 60px;
   padding: 8px 12px;
@@ -282,6 +281,7 @@ const TalkBubble = styled.div`
   font-weight: 400;
   margin: 16px;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+  z-index: 0;
 
   &:after, &:before {
     position: absolute;
@@ -301,21 +301,20 @@ const TalkBubble = styled.div`
     border-style: solid;
     border-width: 9px 9px 0;
     border-color: #C6C6C6 transparent;
-    z-index: 0;
     bottom: -9px;
   }
 `
 
-const TopBlurr = styled.div`
-  width: 100%;
-  height: 20vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  backdrop-filter:blur(4px);
-  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-`
+// const TopBlurr = styled.div`
+//   width: 100%;
+//   height: 10vh;
+//   position: fixed;
+//   z-index: 2;
+//   top: 0;
+//   left: 0;
+//   backdrop-filter:blur(4px);
+//   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
+// `
 
 const ExplainWrapper = styled.div`
   display: flex;
