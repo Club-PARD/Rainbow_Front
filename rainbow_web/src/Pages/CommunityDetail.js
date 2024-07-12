@@ -104,7 +104,7 @@ function DetailPage() {
         </DetailTopMenu>
         <C_BtnContainer>
           <C_BackBtn onClick={goToCommunity}>
-            <p>커뮤니티로  돌아가기</p>
+            <p>커뮤니티로 돌아가기</p>
             <BackImg>
               <img src={c_back} alt="Back to community" style={{ width: '100%', height: '100%' }}/>
             </BackImg>
@@ -125,7 +125,7 @@ function DetailPage() {
         </Detail>
 
         <DetailBottomMenu>
-          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previos</DetailBottomBtn>
+          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previous</DetailBottomBtn>
           <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>

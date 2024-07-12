@@ -75,17 +75,17 @@ function MainPage() {
     };
   }, []);
 
-  const getTalkBubbleText = (count) => {
-    if (count >= 40) {
-      return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
-    } else if (count >= 20) {
-      return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
-    } else if (count >= 10) {
-      return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
-    } else {
-      return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
-    }
-  };
+  // const getTalkBubbleText = (count) => {
+  //   if (count >= 40) {
+  //     return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
+  //   } else if (count >= 20) {
+  //     return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
+  //   } else if (count >= 10) {
+  //     return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
+  //   } else {
+  //     return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
+  //   }
+  // };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,8 +123,7 @@ function MainPage() {
     >
       <Container>
       <Header />
-      <InnerDiv>
-        <TopBlurr />
+        {/* <TopBlurr /> */}
         <ExplainWrapper>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -181,9 +180,30 @@ function MainPage() {
             delay: 1.5
           }}
         >
-          <TalkBubble>
-            {getTalkBubbleText(postCount)}
-          </TalkBubble>
+          {(postCount >= 40) &&
+            <TalkBubble>
+              {petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다.<br />
+              {petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.
+            </TalkBubble>
+          }
+          {(postCount >= 20 && postCount < 40) &&
+            <TalkBubble>
+              꽃밭이 더욱 풍성해지고 있어요.<br />
+              {petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.
+            </TalkBubble>
+          }
+          {(postCount >= 10 && postCount < 20) &&
+            <TalkBubble>
+              기억의 꽃들이 점점 더 피어나고 있어요.<br />
+              {petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.
+            </TalkBubble>
+          }
+          {(postCount < 10) &&
+            <TalkBubble>
+              {petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요.<br />
+              기억의 꽃밭을 천천히 채워볼까요?
+            </TalkBubble>
+          }
         </motion.div>
         <FlowersWrapper>
           <motion.div
@@ -200,8 +220,6 @@ function MainPage() {
             <Flowers />
           </motion.div>
         </FlowersWrapper>
-      </InnerDiv>
-      <InnerDiv>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -230,12 +248,9 @@ function MainPage() {
             ))}
           </StyledSwiper>
         </SwiperWrapper>
-      </InnerDiv>
-      <InnerDiv>
         <CommentContainer>
           <Comment />
         </CommentContainer>
-      </InnerDiv>
       </Container>
     </OuterDiv>
   );
@@ -245,7 +260,7 @@ export default MainPage;
 
 const TalkBubble = styled.div`
   position: relative;
-  width: 272px;
+  min-width: 272px;
   min-height: 60px;
   padding: 8px 12px;
   background: #FEFEFE;
@@ -260,7 +275,9 @@ const TalkBubble = styled.div`
   font-size: 14px;
   font-weight: 400;
   margin: 16px;
+  margin-top: 5vh;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+  z-index: 0;
 
   &:after, &:before {
     position: absolute;
@@ -274,27 +291,26 @@ const TalkBubble = styled.div`
     border-style: solid;
     border-width: 8px 8px 0;
     border-color: #FEFEFE transparent;
-    z-index: 1;
   }
 
   &:before {
     border-style: solid;
     border-width: 9px 9px 0;
     border-color: #C6C6C6 transparent;
-    z-index: 0;
     bottom: -9px;
   }
 `
 
-const TopBlurr = styled.div`
-  width: 100%;
-  height: 20vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  backdrop-filter:blur(4px);
-  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-`
+// const TopBlurr = styled.div`
+//   width: 100%;
+//   height: 10vh;
+//   position: fixed;
+//   z-index: 2;
+//   top: 0;
+//   left: 0;
+//   backdrop-filter:blur(4px);
+//   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
+// `
 
 const ExplainWrapper = styled.div`
   display: flex;
@@ -303,7 +319,7 @@ const ExplainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-bottom: 15vh;
+  margin: 10vh;
   font-family: "Pretendard-Regular";
 `
 
@@ -314,14 +330,16 @@ const FlowersWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
+  margin-bottom: 20vh;
 `
 
 const Title = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   color: #2C2C2C;
   font-family: "Geist Mono";
   font-size: 24px;
@@ -333,8 +351,9 @@ const Explained = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 16px;
   font-weight: 400;
   margin: 16px;
@@ -344,10 +363,14 @@ const SwiperWrapper = styled.div`
   display: flex;
   justify-content: center;
   transition: transform 0.3s ease-in-out;
+  ${(props) => props.centeredSlides && `
+    justify-content: center;
+  `}
+  margin: 20vh;
 `
 
 const StyledSwiper = styled(Swiper)`
-  width: 100%;
+  width: 100vw;
   height: 318px;
   padding: 10px;
 `;
@@ -355,8 +378,8 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 246px !important;
   height: 298px !important;
-  margin-right: 20px;
-  margin-left: 20px;
+  // margin-right: 1px;
+  margin-left: 32px;
   border-radius: 6px;
   background-image: url(${(props) => props.ima});
   background-position: center;
@@ -380,7 +403,7 @@ const Text = styled.div`
   font-size: 15px;
   font-weight: 400;
   padding: 18px 12px 12px 12px;
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
   border-radius: 0 0 6px 6px;
 `;
 
@@ -390,7 +413,6 @@ const CommentContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 91px;
 `;
 
 const Container = styled.div`
@@ -400,8 +422,9 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: auto;
-  padding-top: 15vh;
-  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD
+  padding-top: 20vh;
+  padding-bottom: 10vh;
+  background: radial-gradient(50em 50em at 50% 40%, #DED2F6, #EDE6FA, transparent, transparent);
 `;
 
 const OuterDiv = styled.div`
@@ -427,3 +450,188 @@ const InnerDiv = styled.div`
   font-size: 100px;
   padding-top: 10vh;
 `;
+
+// const TalkBubble = styled.div`
+//   position: relative;
+//   width: 272px;
+//   min-height: 60px;
+//   padding: 8px 12px;
+//   background: #FEFEFE;
+//   border-radius: 8px;
+//   border: 1px solid #C6C6C6;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   color: #2C2C2C;
+//   text-align: center;
+//   font-size: 14px;
+//   font-weight: 400;
+//   margin: 16px;
+//   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+
+//   &:after, &:before {
+//     position: absolute;
+//     content: '';
+//     width: 0;
+//     bottom: -8px;
+//     left: calc(50% - 8px);
+//   }
+
+//   &:after {
+//     border-style: solid;
+//     border-width: 8px 8px 0;
+//     border-color: #FEFEFE transparent;
+//     z-index: 1;
+//   }
+
+//   &:before {
+//     border-style: solid;
+//     border-width: 9px 9px 0;
+//     border-color: #C6C6C6 transparent;
+//     z-index: 0;
+//     bottom: -9px;
+//   }
+// `
+
+// const TopBlurr = styled.div`
+//   width: 100%;
+//   height: 20vh;
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   backdrop-filter:blur(4px);
+//   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+// `
+
+// const ExplainWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   height: auto;
+//   margin-bottom: 15vh;
+//   font-family: "Pretendard-Regular";
+// `
+
+// const FlowersWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%;
+//   height: auto;
+// `
+
+// const Title = styled.div`
+//   width: 362px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+//   justify-content: center;
+//   color: #2C2C2C;
+//   font-family: "Geist Mono";
+//   font-size: 24px;
+//   font-style: normal;
+//   font-weight: 400;
+// `;
+
+// const Explained = styled.div`
+//   width: 362px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+//   justify-content: center;
+//   font-size: 16px;
+//   font-weight: 400;
+//   margin: 16px;
+// `;
+
+// const SwiperWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   transition: transform 0.3s ease-in-out;
+// `
+
+// const StyledSwiper = styled(Swiper)`
+//   width: 100%;
+//   height: 318px;
+//   padding: 10px;
+// `;
+
+// const StyledSwiperSlide = styled(SwiperSlide)`
+//   width: 246px !important;
+//   height: 298px !important;
+//   margin-right: 20px;
+//   margin-left: 20px;
+//   border-radius: 6px;
+//   background-image: url(${(props) => props.ima});
+//   background-position: center;
+//   background-size: cover;
+//   color: white;
+//   display: flex;
+//   align-items: end;
+//   background-repeat: no-repeat;
+//   transition: transform 0.4s ease;
+//   &:hover {
+//     cursor: pointer;
+//     transform: scale(1.05);
+//   }
+// `;
+
+// const Text = styled.div`
+//   display: flex;
+//   width: 262px;
+//   height: 49px;
+//   font-family: Geist Mono;
+//   font-size: 15px;
+//   font-weight: 400;
+//   padding: 18px 12px 12px 12px;
+//   background: rgba(0, 0, 0, 0.5);
+//   border-radius: 0 0 6px 6px;
+// `;
+
+// const CommentContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 100%;
+//   margin-top: 91px;
+// `;
+
+// const Container = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100vw;
+//   height: auto;
+//   padding-top: 15vh;
+//   background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD
+// `;
+
+// const OuterDiv = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100vw;
+//   height: auto;
+//   overflow: scroll;
+//   scroll-behavior: smooth;
+//   background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
+
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+// `;
+
+// const InnerDiv = styled.div`
+//   height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   font-size: 100px;
+//   padding-top: 10vh;
+// `;

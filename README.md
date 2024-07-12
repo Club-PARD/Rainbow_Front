@@ -153,8 +153,7 @@ Sincerely,
 
 # 🙏 Acknowledgements 
 > **This was made possible by** </br>
-<a href="https://we-pard.com/" style="display:flex;flex-direction:column;">
-<img src="asset/images/PARD-Logo.png" width="520" height="140" />  
+<a href="https://we-pard.com/" style="display:flex;flex-direction:column;"> 
 <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExampoeG5sZDN4ZHhoNWRpMXRsdDZlcjhzczk4eTE0d2dyajB6YWJjeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SwO3hAK7Jt5nYD0L1z/giphy.gif" width="520" height="140" />
 <a/>
 
