@@ -125,7 +125,7 @@ const Container = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 `;
 

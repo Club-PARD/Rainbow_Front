@@ -45,7 +45,7 @@ const FlowersWrapper = styled.div`
   border: solid 1.5px #C6C6C6;
   border-radius: 8px;
   padding: 12px;
-  margin-bottom: 7%;
+  margin: 16px;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `;
 
