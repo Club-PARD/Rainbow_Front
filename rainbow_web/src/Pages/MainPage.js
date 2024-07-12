@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
 import styled from "styled-components";
 
 import { motion } from "framer-motion";
@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
-import { getAllAPI } from '../APIs/AxiosAPI';
+import { getAllAPI, getCountAPI } from '../APIs/AxiosAPI';
 import { UserData, PostCount } from '../Atom';
 
 import Modal from 'react-modal';
@@ -25,11 +25,17 @@ Modal.setAppElement('#root');
 
 function MainPage() {
   const { userId } = useParams();  // URL의 userId 파라미터를 읽습니다.
+  const userData = useRecoilValue(UserData);
   const setUserData = useSetRecoilState(UserData);
   const [result, setResult] = useState([]);
   const [petName, setPetName] = useState("");
   const [scrollY, setScrollY] = useState(0);
-  const postCount = useRecoilValue(PostCount);
+
+  const [postNumber, setPostNumber] = useRecoilState(PostCount);
+  const getPostCount = async () => {
+    const response = await getCountAPI(userData.user_id);
+    setPostNumber(response);
+  };
 
   const outerDivRef = useRef(); 
   const [currentPage, setCurrentPage] = useState(1); 
@@ -42,16 +48,14 @@ function MainPage() {
       setUserData(prevUserData => ({ ...prevUserData, user_id: userId }));
     };
     fetchData();
-  }, [userId, setUserData]);
+    getPostCount();
+    getPetName();
+  }, [userId, setUserData, setPostNumber]);
 
   const getPetName = async () => {
     const response = await getPetNameAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
     setPetName(response);
   };
-
-  useEffect(() => {
-    getPetName();
-  }, [userId]);
 
   const handleScroll = () => {
     setScrollY(window.scrollY);
@@ -74,23 +78,22 @@ function MainPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const getTalkBubbleText = (count) => {
-    if (count >= 40) {
-      return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
-    } else if (count >= 20) {
-      return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
-    } else if (count >= 10) {
-      return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
-    } else {
-      return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
-    }
-  };
-
+  // const getTalkBubbleText = (count) => {
+  //   if (count >= 40) {
+  //     return `${petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다. ${petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.`;
+  //   } else if (count >= 20) {
+  //     return `꽃밭이 더욱 풍성해지고 있어요. ${petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.`;
+  //   } else if (count >= 10) {
+  //     return `기억의 꽃들이 점점 더 피어나고 있어요. ${petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.`;
+  //   } else {
+  //     return `${petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요. 기억의 꽃밭을 천천히 채워볼까요?`;
+  //   }
+  // };
 
   return (
       <Container>
       <Header />
-        <TopBlurr />
+        {/* <TopBlurr /> */}
         <ExplainWrapper>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -148,9 +151,30 @@ function MainPage() {
             delay: 1.5
           }}
         >
-          <TalkBubble>
-            {getTalkBubbleText(postCount)}
-          </TalkBubble>
+          {(postNumber >= 40) &&
+            <TalkBubble>
+              {petName}와(과)의 추억이 아름다운 꽃밭으로 완성되었습니다.<br />
+              {petName}은(는) 이제 영원히 당신의 마음속에 함께할 것입니다.
+            </TalkBubble>
+          }
+          {(postNumber >= 20 && postNumber < 40) &&
+            <TalkBubble>
+              꽃밭이 더욱 풍성해지고 있어요.<br />
+              {petName}와(과) 함께한 기억들이 당신의 마음속에서 영원히 빛나고 있습니다.
+            </TalkBubble>
+          }
+          {(postNumber >= 10 && postNumber < 20) &&
+            <TalkBubble>
+              기억의 꽃들이 점점 더 피어나고 있어요.<br />
+              {petName}와(과)의 소중한 추억들이 꽃밭을 아름답게 가꾸고 있네요.
+            </TalkBubble>
+          }
+          {(postNumber < 10) &&
+            <TalkBubble>
+              {petName}과(와)의 기억의 꽃이 하나씩 피어나고 있어요.<br />
+              기억의 꽃밭을 천천히 채워볼까요?
+            </TalkBubble>
+          }
         </motion.div>
         <FlowersWrapper>
           <motion.div
@@ -180,7 +204,7 @@ function MainPage() {
         >
           <FlowerCount />
         </motion.div> */}
-        {postCount === 0 ? <MainSwiperEmpty/> : <SwiperWrapper centeredSlides={result.length <= 4}>
+        {postNumber === 0 ? <MainSwiperEmpty/> : <SwiperWrapper centeredSlides={result.length <= 4}>
 
           <StyledSwiper
             slidesPerView={4}
@@ -210,7 +234,7 @@ export default MainPage;
 
 const TalkBubble = styled.div`
   position: relative;
-  width: 272px;
+  min-width: 272px;
   min-height: 60px;
   padding: 8px 12px;
   background: #FEFEFE;
@@ -226,6 +250,7 @@ const TalkBubble = styled.div`
   font-weight: 400;
   margin: 16px;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
+  z-index: 0;
 
   &:after, &:before {
     position: absolute;
@@ -239,27 +264,26 @@ const TalkBubble = styled.div`
     border-style: solid;
     border-width: 8px 8px 0;
     border-color: #FEFEFE transparent;
-    z-index: 1;
   }
 
   &:before {
     border-style: solid;
     border-width: 9px 9px 0;
     border-color: #C6C6C6 transparent;
-    z-index: 0;
     bottom: -9px;
   }
 `
 
-const TopBlurr = styled.div`
-  width: 100%;
-  height: 20vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  backdrop-filter:blur(4px);
-  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-`
+// const TopBlurr = styled.div`
+//   width: 100%;
+//   height: 10vh;
+//   position: fixed;
+//   z-index: 2;
+//   top: 0;
+//   left: 0;
+//   backdrop-filter:blur(4px);
+//   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
+// `
 
 const ExplainWrapper = styled.div`
   display: flex;
