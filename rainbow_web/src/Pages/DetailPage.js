@@ -56,7 +56,7 @@ function DetailPage() {
 
   useEffect(()=>{
     window.scrollTo(0, 0);
-  },[]);
+  },[params.postId]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -267,6 +267,7 @@ const Content = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: #2C2C2C;
+  font-family: "Pretendard-Regular";
 `;
 
 const DetailBottomMenu = styled.div`
