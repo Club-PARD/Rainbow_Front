@@ -8,6 +8,8 @@ import { Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation'; // navigation css 추가
+
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI, getCountAPI } from '../APIs/AxiosAPI';
