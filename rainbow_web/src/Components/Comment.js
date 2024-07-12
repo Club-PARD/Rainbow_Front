@@ -50,24 +50,26 @@ const Comment = () => {
   };
 
   const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (newComment.trim()) {
-      try {
-        const userData = await getUserByIDAPI(currentUser.user_id);
-        const nickname = userData.name;
-        console.log(userData);
-        console.log(nickname);
+    if (e.type === 'submit' || (e.type === 'keydown' && e.key === 'Enter' && !e.shiftKey)) {
+      e.preventDefault();
+      if (newComment.trim()) {
+        try {
+          const userData = await getUserByIDAPI(currentUser.user_id);
+          const nickname = userData.name;
+          console.log(userData);
+          console.log(nickname);
 
-        const newCommentData = {
-          nickname: nickname,
-          userComment: newComment,
-        };
+          const newCommentData = {
+            nickname: nickname,
+            userComment: newComment,
+          };
 
-        await axios.post(`${server}/comment/${userId}/${currentUser.user_id}`, newCommentData);
-        setComments([{ nickname: nickname, text: newComment }, ...comments]);
-        setNewComment('');
-      } catch (error) {
-        console.error('Failed to post comment:', error);
+          await axios.post(`${server}/comment/${userId}/${currentUser.user_id}`, newCommentData);
+          setComments([{ nickname: nickname, text: newComment }, ...comments]);
+          setNewComment('');
+        } catch (error) {
+          console.error('Failed to post comment:', error);
+        }
       }
     }
   };
@@ -80,7 +82,7 @@ const Comment = () => {
     <BigContainer>
       <TopBlurr />
       <Container commentCount={commentCount}>
-        {(commentCount == 0) && 
+        {(commentCount === 0) && 
           <None>
             아직 등록된 글이 없어요!<br />
             서로에게 위로의 말을 건네 보세요
@@ -106,6 +108,7 @@ const Comment = () => {
           placeholder={placeholderVisible ? "방명록을 입력해주세요" : ""}
           onFocus={() => setPlaceholderVisible(false)}
           onBlur={() => setPlaceholderVisible(true)}
+          onKeyDown={handleCommentSubmit}
         />
         <Button type="submit" disabled={!newComment.trim()} className={!newComment.trim() ? 'disabled' : ''}>
           보내기
@@ -263,4 +266,4 @@ const None = styled.div`
   font-weight: 500;
   color: #868686;
   text-align: center;
-`
+`;

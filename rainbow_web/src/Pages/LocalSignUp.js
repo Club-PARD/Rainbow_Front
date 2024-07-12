@@ -167,6 +167,7 @@ function LocalSignUp() {
 
 
     const onSubmitHandler = async (e) => {
+        e.preventDefault(); // Prevent the default form submission
         if (email === '' || !emailValid) {
             setEmailMsg("이메일의 형식이 올바르지 않습니다");
             setEmailColor("red");
@@ -225,7 +226,7 @@ function LocalSignUp() {
                     이메일을 입력해&nbsp;주세요
                 </span>
             </SignUpTitle>
-            <SignUpForm>
+            <SignUpForm onSubmit={onSubmitHandler}>
                 <InputField>
                     <InputTitle>이메일</InputTitle>
                     <SignUpInput type="email" color={emailColor} ref={emailInput} onChange={onEmailHandler} onBlur={onEmailHandler} placeholder="type your email" />
@@ -265,7 +266,7 @@ function LocalSignUp() {
                     </PwWrapper>
                     <ErrorExplain>{confirmPassWordMsg}</ErrorExplain>
                 </InputField>
-                <SignUpCreateBtn onClick={onSubmitHandler}>회원가입</SignUpCreateBtn>
+                <SignUpCreateBtn type="submit">회원가입</SignUpCreateBtn>
             </SignUpForm>
             <Footer>
                 계속 진행할 경우 Sincerely,의 개인정보 약관<br />
@@ -274,8 +275,6 @@ function LocalSignUp() {
         </Container>
     );
 };
-
-
 
 export default LocalSignUp;
 
@@ -297,7 +296,7 @@ font-size: 0.9rem;
 // calc(100vw * 320 / 1920);
 
 //회원가입 Form
-const SignUpForm = styled.div`
+const SignUpForm = styled.form`
 display: flex;
 width: 362px;
 padding: 16px;
@@ -452,4 +451,4 @@ const PwWrapper = styled.div`
 display: flex;
 justify-content: right;
 align-items: center;
-`
+`;

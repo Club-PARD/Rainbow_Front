@@ -251,6 +251,7 @@ const TalkBubble = styled.div`
   font-size: 14px;
   font-weight: 400;
   margin: 16px;
+  margin-top: 5vh;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
   z-index: 0;
 
@@ -294,7 +295,7 @@ const ExplainWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-bottom: 15vh;
+  margin: 10vh;
   font-family: "Pretendard-Regular";
 `
 
@@ -305,14 +306,16 @@ const FlowersWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: auto;
+  margin-bottom: 20vh;
 `
 
 const Title = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   color: #2C2C2C;
   font-family: "Geist Mono";
   font-size: 24px;
@@ -324,8 +327,9 @@ const Explained = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 16px;
   font-weight: 400;
   margin: 16px;
@@ -338,6 +342,7 @@ const SwiperWrapper = styled.div`
   ${(props) => props.centeredSlides && `
     justify-content: center;
   `}
+  margin: 20vh;
 `
 
 const StyledSwiper = styled(Swiper)`
@@ -384,7 +389,6 @@ const CommentContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 91px;
 `;
 
 const Container = styled.div`
@@ -394,8 +398,9 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   height: auto;
-  padding-top: 15vh;
-  background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD
+  padding-top: 20vh;
+  padding-bottom: 10vh;
+  background: radial-gradient(50em 50em at 50% 40%, #DED2F6, #EDE6FA, transparent, transparent);
 `;
 
 const OuterDiv = styled.div`
