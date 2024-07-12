@@ -50,7 +50,7 @@ const Comment = () => {
   };
 
   const handleCommentSubmit = async (e) => {
-    if (e.type === 'submit' || (e.type === 'keydown' && e.key === 'Enter' && !e.shiftKey)) {
+    if (e.type === 'submit') {
       e.preventDefault();
       if (newComment.trim()) {
         try {
