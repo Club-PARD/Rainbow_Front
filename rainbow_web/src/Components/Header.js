@@ -149,7 +149,7 @@ const HeaderContainer = styled.div`
   padding: 32px 40px 8px 40px;
   gap: 16px;
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   backdrop-filter:blur(4px);
   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
   top: -10px;
