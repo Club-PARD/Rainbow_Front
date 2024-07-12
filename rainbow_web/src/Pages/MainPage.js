@@ -336,6 +336,8 @@ const Explained = styled.div`
 `;
 
 const SwiperWrapper = styled.div`
+position:relative;
+z-index: 0;
   display: flex;
   justify-content: center;
   transition: transform 0.3s ease-in-out;
@@ -346,12 +348,16 @@ const SwiperWrapper = styled.div`
 `
 
 const StyledSwiper = styled(Swiper)`
+position:relative;
+z-index: 0;
   width: 100vw;
   height: 318px;
   padding: 10px;
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+position:relative;
+z-index: 0;
   width: 246px !important;
   height: 298px !important;
   // margin-right: 1px;
