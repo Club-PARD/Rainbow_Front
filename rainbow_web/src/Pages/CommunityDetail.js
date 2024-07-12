@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { BackBtn } from "../Components/BackBtn";
+import c_back from "../Assets/Img/c_back.svg";
+import c_home from "../Assets/Img/c_home.svg";
 import Header from "../Components/DetailHeader";
-import { getDetailAPI, deletePostAPI } from "../APIs/PublicAPI";
+import { getDetailAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
-import { P_Data } from "../Atom";
+import { P_Data, UserData } from "../Atom";
 import { useRecoilValue } from "recoil";
 
 function DetailPage() {
@@ -16,7 +17,7 @@ function DetailPage() {
   const [result, setResult] = useState([]);
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(null);
-  const userData = useRecoilValue(P_Data);
+  const u_data = useRecoilValue(UserData);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -63,8 +64,16 @@ function DetailPage() {
   };
 
   const goToMain = () => {
-    navigate(`../c_main/${userData.user_id}`);
+    navigate(`../main/${u_data.user_id}`);
   };
+  
+  const goToCommunity = () => {
+    navigate(`../community`);
+  }
+
+  const goToCommunityMain = () => {
+    navigate(`../c_main/${params.userId}`);
+  }
 
   const handleNext = () => {
     const currentIndex = result.index;
@@ -91,11 +100,22 @@ function DetailPage() {
       <Header />
       <ContentWrapper>
         <DetailTopMenu>
-          <StyledBackBtn onClick={goToMain}>
-            <BackBtn />
-          </StyledBackBtn>
+          <StyledBackBtn onClick={goToMain} />
         </DetailTopMenu>
-
+        <C_BtnContainer>
+          <C_BackBtn onClick={goToCommunity}>
+            <p>커뮤니티로  돌아가기</p>
+            <BackImg>
+              <img src={c_back} alt="Back to community" style={{ width: '100%', height: '100%' }}/>
+            </BackImg>
+          </C_BackBtn>
+          <C_GoBtn onClick={goToCommunityMain}>
+            <p>페이지 방문하기</p>
+            <HomeImg>
+              <img src={c_home} alt="Back to other's mainpage" style={{ width: '100%', height: '100%' }}/>
+            </HomeImg>
+          </C_GoBtn>
+        </C_BtnContainer>
         <Detail>
           <Title>{result.postTitle}</Title>
           <ImgWrapper>
@@ -114,6 +134,72 @@ function DetailPage() {
 }
 
 export default DetailPage;
+
+const BackImg = styled.div`
+  width: 16px;
+  height: 16px;
+`;
+
+const HomeImg = styled.div`
+  width: 16px;
+  height: 16px;
+`;
+
+const C_BtnContainer = styled.div`
+  display: flex;
+  width: 556px;
+  padding-bottom: 24px;
+  gap: 16px;
+  margin-left: -50px;
+`;
+
+const C_BackBtn = styled.button`
+  width : 172px;
+  height : 32px;
+  display: inline-flex;
+  height: 32px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #C6C6C6;
+  background: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 106.667% */
+  &:hover{
+    cursor: pointer;
+    background-color: #F3F3F3;
+  }
+`;
+
+const C_GoBtn = styled.button`
+  width : 148px;
+  height : 32px;
+  display: inline-flex;
+  height: 32px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #C6C6C6;
+  background: #FEFEFE;
+  color: #2C2C2C;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 106.667% */
+  &:hover{
+    cursor: pointer;
+    background-color: #F3F3F3;
+  }
+`;
 
 const Container = styled.div`
   display: flex;

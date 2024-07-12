@@ -17,7 +17,6 @@ import Modal from 'react-modal';
 import Header from '../Components/C_Header';
 import Comment from '../Components/Comment';
 import Flowers from '../Components/C_Flowers';
-import FlowerCount from '../Components/FlowerCount';
 
 Modal.setAppElement('#root');
 

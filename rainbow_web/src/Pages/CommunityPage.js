@@ -40,9 +40,10 @@ function CommunityPage() {
     fetchImages();
   }, []);
 
-  const handleImageClick = (userId) => {
+  const handleImageClick = (userId, postId) => {
     console.log(userId);
-    navigate(`../c_main/${userId}`);
+    console.log(postId);
+    navigate(`../c_detail/${userId}/${postId}`);
   };
 
   const handleActiveChange = (newIsActive) => {
@@ -61,7 +62,7 @@ function CommunityPage() {
       </Tip>
       <ImageContainer>
         {images.slice().reverse().map((data, index) => (
-          <ImageWrapper key={index} isLoaded={isLoaded} index={index} onClick={() => handleImageClick(data.userId)}>
+          <ImageWrapper key={index} isLoaded={isLoaded} index={index} onClick={() => handleImageClick(data.userId, data.postId)}>
             <Image src={data.pictureUrl} alt={`sample ${index + 1}`} />
             <OverlayText>{data.postTitle}</OverlayText>
             <TopBlurr2 />
