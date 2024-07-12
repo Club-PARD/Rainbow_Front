@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from "styled-components";
+import { getCountAPI } from "../APIs/AxiosAPI";
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation'; // navigation css 추가
+
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI } from '../APIs/AxiosAPI';
@@ -17,6 +20,7 @@ import Modal from 'react-modal';
 import Header from '../Components/C_Header';
 import Comment from '../Components/Comment';
 import Flowers from '../Components/C_Flowers';
+import MainSwiperEmpty from "../Components/MainSwiperEmpty";
 
 Modal.setAppElement('#root');
 
@@ -31,12 +35,16 @@ function MainPage() {
   const outerDivRef = useRef(); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [backgroundOpacity, setBackgroundOpacity] = useState(0); 
+  const [postNumber, setPostNumber] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
       setResult(data || []);
       setUserData(prevUserData => ({ ...prevUserData, user_id: userId }));
+
+      const cnt = await getCountAPI(userId);
+      setPostNumber(cnt);
     };
     fetchData();
   }, [userId, setUserData]);
@@ -231,23 +239,25 @@ function MainPage() {
           }}
         >
         </motion.div>
-        <SwiperWrapper>
+        {postNumber === 0 ? <MainSwiperEmpty/> : <SwiperWrapper centeredSlides={result.length <= 4}>
+
           <StyledSwiper
-            slidesPerView={3}
-            spaceBetween={20}
+            slidesPerView={4}
+            spaceBetween={0}
             navigation
             modules={[Pagination, Navigation]}
+            centeredSlides={result.length <= 4}
             className="mySwiper"
           >
             {result && result.map((data, index) => (
               <StyledSwiperSlide key={index} ima={data.pictureUrl}>
-                <Link to={`/c_detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
+                <Link to={`/detail/${userId}/${data.postId}`} style={{ textDecoration: 'none', color: 'white', width: '100%', height: '100%', display: 'flex', alignItems: 'end' }}>
                   <Text>{data.postTitle}</Text>
                 </Link>
               </StyledSwiperSlide>
             ))}
           </StyledSwiper>
-        </SwiperWrapper>
+        </SwiperWrapper>}
         <CommentContainer>
           <Comment />
         </CommentContainer>
