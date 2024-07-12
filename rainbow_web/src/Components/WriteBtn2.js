@@ -125,7 +125,7 @@ const Container = styled.div`
   width: 362px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -138,7 +138,6 @@ const ToWrite = styled.div`
   justify-content: center;
   font-size: 16px;
   font-weight: 400;
-  z-index: 10001;
   padding: 0 12px;
   border: 1px solid #D5C1FF;
   border-radius: 8px;

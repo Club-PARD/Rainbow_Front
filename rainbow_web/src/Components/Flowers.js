@@ -3,28 +3,21 @@ import styled, { keyframes } from 'styled-components';
 import flowerImage from "../Assets/Img/flower.svg";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Increased, PostCount, UserData } from '../Atom';
-import { getCountAPI } from '../APIs/AxiosAPI';
 
 // Flowers component to display flower animations based on post count
 const Flowers = () => {
   const userData = useRecoilValue(UserData);
   const [isIncreased, setIsIncreased] = useRecoilState(Increased);
   const [saveIncreased, setSaveIncreased] = useState(false);
-  const [postNumber, setPostNumber] = useRecoilState(PostCount);
+  const postNumber = useRecoilValue(PostCount);
 
   const flowerArray = Array.from({ length: postNumber }, (_, index) => index + 1);
   const blankArray = Array.from({ length: 40 - postNumber }, (_, index) => index + 1);
 
-  const getPostCount = async () => {
-    const response = await getCountAPI(userData.user_id);
-    setPostNumber(response);
-  };
-
   useEffect(() => {
-    getPostCount();
     setSaveIncreased(isIncreased);
     setIsIncreased(false);
-  }, [isIncreased, userData.user_id, setIsIncreased, setPostNumber]);
+  }, [isIncreased, userData.user_id, setIsIncreased]);
 
   return (
     <FlowersWrapper>
@@ -52,7 +45,7 @@ const FlowersWrapper = styled.div`
   border: solid 1.5px #C6C6C6;
   border-radius: 8px;
   padding: 12px;
-  margin-bottom: 7%;
+  margin: 16px;
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
 `;
 
