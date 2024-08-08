@@ -6,6 +6,7 @@ export const googleLoginAPI = async (data) => {
     try{
         const config = {"Content-Type": 'application/json'};
 
+        console.log(data);
         const response = await axios.post(
             `${server}/api/auth/googleLogin`,
             data, config, { withCredentials: true }
