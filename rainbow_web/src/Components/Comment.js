@@ -20,7 +20,7 @@ const Comment = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`${server}/comment/readAll/${userId}`);
+        const response = await axios.get(`${server}/api/comment/readAll/${userId}`);
         const fetchedComments = response.data.map((comment) => ({
           nickname: comment.writerName,
           text: comment.userComment,
