@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import c_back from "../Assets/Img/c_back.svg";
 import c_home from "../Assets/Img/c_home.svg";
-import Header from "../Components/DetailHeader";
+import Header from "../Components/C_DetailHeader";
 import { getDetailAPI } from "../APIs/PublicAPI";
 import { getAllAPI } from "../APIs/AxiosAPI";
 import { getCountAPI } from "../APIs/AxiosAPI";
@@ -208,22 +208,21 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background-color: #FEFEFE;
+  background-color: #000;
   padding-top: 108px;
-  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #FFFFFD, #FFFFFD);
+  background: radial-gradient(40em 45em at 50% 100%, #DED2F6, #EDE6FA, #000, #000);
 `;
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 108px;
+  height: 20vh;
 
   position: fixed;
   top: 0;
   left: 0;
 
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(3px);
-  mask: linear-gradient(#FFFFFD, transparent);
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
 `
 
 const ContentWrapper = styled.div`

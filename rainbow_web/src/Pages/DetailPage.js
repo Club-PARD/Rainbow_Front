@@ -156,15 +156,14 @@ const Container = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 108px;
+  height: 20vh;
 
   position: fixed;
   top: 0;
   left: 0;
 
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(3px);
-  mask: linear-gradient(#FFFFFD, transparent);
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
 `
 
 const ContentWrapper = styled.div`

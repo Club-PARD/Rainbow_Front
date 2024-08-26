@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import styled, { createGlobalStyle } from 'styled-components';
 import { UserData } from '../Atom';
 import Delete from '../Assets/Img/삭제버튼.png';
+import writeImg from '../Assets/Img/writeImg.svg';
 
 Modal.setAppElement('#root');
 
@@ -66,7 +67,10 @@ function WriteBtn() {
   return (
     <div>
       <GlobalStyle />
-      <WriteButton onClick={() => setModalIsOpen(true)}>글 쓰기</WriteButton>
+      <WriteButton onClick={() => setModalIsOpen(true)}>
+        <img src={writeImg} alt="글쓰기 이모지" />
+        이야기하러 가기
+      </WriteButton>
       <StyledModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -123,8 +127,11 @@ function WriteBtn() {
 export default WriteBtn;
 
 const WriteButton = styled.button`
-  width: 67px;
+  display: flex;
+  align-items: center;
+  width: 140px;
   height: 32px;
+  gap: 8px;
   padding: 12px;
   font-family: Pretendard;
   font-style: normal;
@@ -139,6 +146,11 @@ const WriteButton = styled.button`
   &:hover{
     cursor: pointer;
     background-color: #000;
+  }
+  img {
+    height: 100%; // 이미지를 텍스트의 높이에 맞춤
+    width: 17.831px;
+    height: 17.123px;
   }
 `;
 
