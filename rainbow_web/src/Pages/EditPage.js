@@ -38,6 +38,7 @@ function EditPage() {
     }, []);
 
     useEffect(() => {
+      window.scrollTo(0, 0);
         const fetchData = async () => {
             try {
                 const response = await getDetailAPI(params.userId, params.postId);
@@ -55,10 +56,6 @@ function EditPage() {
 
         fetchData();
     }, [params]);
-
-    useEffect(()=>{
-      window.scrollTo(0, 0);
-    });
 
     const contentHandler = (e) => {
         setText(e.target.value);
@@ -246,6 +243,7 @@ const ImgLabel = styled.label`
 const StyledInput = styled.input`
   width: 535px;
   height: auto;
+  font-family: "Pretendard-Regular";
 `;
 
 const Content = styled.textarea`
@@ -260,6 +258,7 @@ const Content = styled.textarea`
   padding: 12px 16px;
   outline: #B0B0B0;
   margin-top: 16px;
+  font-family: "Pretendard-Regular";
 `;
 
 const DetailBottomMenu = styled.div`

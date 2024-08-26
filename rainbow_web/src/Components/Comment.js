@@ -20,7 +20,7 @@ const Comment = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`${server}/comment/readAll/${userId}`);
+        const response = await axios.get(`${server}/api/comment/readAll/${userId}`);
         const fetchedComments = response.data.map((comment) => ({
           nickname: comment.writerName,
           text: comment.userComment,
@@ -37,7 +37,7 @@ const Comment = () => {
 
   const getCommentCount = async () => {
     try {
-      const response = await axios.get(`${server}/comment/count/${userId}`);
+      const response = await axios.get(`${server}/api/comment/count/${userId}`);
       setCommentCount(response.data);
       console.log("response: " + response + " saved: " + commentCount);
     } catch(err) {
@@ -50,7 +50,7 @@ const Comment = () => {
   };
 
   const handleCommentSubmit = async (e) => {
-    if (e.type === 'submit' || (e.type === 'keydown' && e.key === 'Enter' && !e.shiftKey)) {
+    if (e.type === 'submit') {
       e.preventDefault();
       if (newComment.trim()) {
         try {
@@ -64,7 +64,7 @@ const Comment = () => {
             userComment: newComment,
           };
 
-          await axios.post(`${server}/comment/${userId}/${currentUser.user_id}`, newCommentData);
+          await axios.post(`${server}/api/comment/${userId}/${currentUser.user_id}`, newCommentData);
           setComments([{ nickname: nickname, text: newComment }, ...comments]);
           setNewComment('');
         } catch (error) {

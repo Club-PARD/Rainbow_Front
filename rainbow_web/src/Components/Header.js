@@ -149,9 +149,9 @@ const HeaderContainer = styled.div`
   padding: 32px 40px 8px 40px;
   gap: 16px;
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   backdrop-filter:blur(4px);
-  mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
   top: -10px;
 `;
 
@@ -161,7 +161,7 @@ const LogoAndButtonContainer = styled.div`
   gap: 410px;
 `;
 
-const Img = styled.div`gi
+const Img = styled.div`
   display: flex;
   align-items: center;
   width: 178px;

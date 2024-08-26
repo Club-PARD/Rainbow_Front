@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
-import styled from "styled-components";
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation'; // navigation css 추가
+import styled from 'styled-components';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI, getCountAPI } from '../APIs/AxiosAPI';
@@ -56,7 +57,7 @@ function MainPage() {
     const response = await getPetNameAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
     setPetName(response);
   };
-
+ 
   const handleScroll = () => {
     setScrollY(window.scrollY);
   };
@@ -76,7 +77,7 @@ function MainPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [userId]);
 
   // const getTalkBubbleText = (count) => {
   //   if (count >= 40) {
@@ -334,6 +335,8 @@ const Explained = styled.div`
 `;
 
 const SwiperWrapper = styled.div`
+position:relative;
+z-index: 0;
   display: flex;
   justify-content: center;
   transition: transform 0.3s ease-in-out;
@@ -344,12 +347,16 @@ const SwiperWrapper = styled.div`
 `
 
 const StyledSwiper = styled(Swiper)`
+position:relative;
+z-index: 0;
   width: 100vw;
   height: 318px;
   padding: 10px;
 `;
 
 const StyledSwiperSlide = styled(SwiperSlide)`
+position:relative;
+z-index: 0;
   width: 246px !important;
   height: 298px !important;
   // margin-right: 1px;

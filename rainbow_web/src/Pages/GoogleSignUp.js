@@ -87,7 +87,7 @@ function GoogleSignUp() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>

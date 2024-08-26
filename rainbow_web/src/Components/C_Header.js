@@ -48,7 +48,7 @@ function WriteHeader({ onActiveChange }) {
     const fetchUserData = async () => {
       try {
         const response = await getUserByIDAPI(userData.user_id);
-        setIsActive(response.publicCheck);
+        // setIsActive(response.publicCheck);
       } catch (err) {
         console.error(err);
       }

@@ -104,14 +104,14 @@ const Container = styled.div`
 `;
 
 const LandingWrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   height: auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 13vh;
+  padding-top: 13vh;
 
   overflow: scroll;
 
