@@ -34,21 +34,17 @@ function LoginPage() {
 
   const handleGoogleLogin = async (res) => {
     try{
-      const tokenData = {
+      // google login 결과
+      // console.log("Encoded JWT ID token: " + res.credential);
+      // const googleUser = jwtDecode(res.credential);
+
+      // google login API
+      const googleUser = {
         token : res.credential
       };
-      console.log("Encoded JWT ID token: " + res.credential);
-      // const googleUser = jwtDecode(res.credential);
-      
-      // google login 결과
-      // console.log(googleUser);
-      
-      // google login API
-      // const response = await googleLoginAPI(googleUser);
-      const response = await googleLoginAPI(tokenData);
-      // console.log((response.name == null));
-      if(response === null)
-        console.log("Google Login API Response: null");
+
+      const response = await googleLoginAPI(googleUser);
+      console.log("Google Login API response: ", response);
       setUserData(response);
       console.log(userData);
 

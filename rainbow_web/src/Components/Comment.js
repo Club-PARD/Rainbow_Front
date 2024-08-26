@@ -37,7 +37,7 @@ const Comment = () => {
 
   const getCommentCount = async () => {
     try {
-      const response = await axios.get(`${server}/comment/count/${userId}`);
+      const response = await axios.get(`${server}/api/comment/count/${userId}`);
       setCommentCount(response.data);
       console.log("response: " + response + " saved: " + commentCount);
     } catch(err) {
@@ -64,7 +64,7 @@ const Comment = () => {
             userComment: newComment,
           };
 
-          await axios.post(`${server}/comment/${userId}/${currentUser.user_id}`, newCommentData);
+          await axios.post(`${server}/api/comment/${userId}/${currentUser.user_id}`, newCommentData);
           setComments([{ nickname: nickname, text: newComment }, ...comments]);
           setNewComment('');
         } catch (error) {
