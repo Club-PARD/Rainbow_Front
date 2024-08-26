@@ -11,6 +11,7 @@ import GoogleSignUp from './Pages/GoogleSignUp';
 import Comment from './Components/Comment';
 import DetailPage from './Pages/DetailPage';
 import LandingPage from './Pages/LandingPage';
+import LandingPage2 from './Pages/LandingPage2';
 import EditPage from './Pages/EditPage';
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
     <div className="App">
       <Routes>
         {/* <Route path="/" element={LoginState ? (<MainPage />) : (<LandingPage />)}/> */}
-        <Route path="/" element={<LandingPage />}/>
+        <Route path="/" element={<LandingPage2 />}/>
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/comment" element={<Comment />}/>
         <Route path="/community" element={<CommunityPage />}/>

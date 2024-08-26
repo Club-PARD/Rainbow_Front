@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
-import styled from "styled-components";
 
 import { motion } from "framer-motion";
 import { Pagination, Navigation } from 'swiper/modules';
@@ -9,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation'; // navigation css 추가
-
+import styled from 'styled-components';
 
 import { getPetNameAPI } from '../APIs/RegisterAPI';
 import { getAllAPI, getCountAPI } from '../APIs/AxiosAPI';
@@ -95,7 +94,7 @@ function MainPage() {
   return (
       <Container>
       <Header />
-        {/* <TopBlurr /> */}
+      <TopBlurr/>
         <ExplainWrapper>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -277,16 +276,18 @@ const TalkBubble = styled.div`
   }
 `
 
-// const TopBlurr = styled.div`
-//   width: 100%;
-//   height: 10vh;
-//   position: fixed;
-//   z-index: 2;
-//   top: 0;
-//   left: 0;
-//   backdrop-filter:blur(4px);
-//   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
-// `
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 20vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+`
 
 const ExplainWrapper = styled.div`
   display: flex;

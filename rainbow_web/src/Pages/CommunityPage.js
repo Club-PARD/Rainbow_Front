@@ -100,13 +100,15 @@ const CommunityPageContainer = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 64px;
+  height: 20vh;
+
   position: fixed;
   top: 0;
   left: 0;
-  backdrop-filter:blur(3px);
+  z-index: 2;
+
+  backdrop-filter:blur(4px);
   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-  z-index: 999;
 `
 
 const TopBlurr2 = styled.div`

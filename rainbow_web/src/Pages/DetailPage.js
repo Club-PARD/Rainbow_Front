@@ -126,8 +126,8 @@ function DetailPage() {
         </Detail>
 
         <DetailBottomMenu>
-          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previous</DetailBottomBtn>
-          <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
+          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;이전글</DetailBottomBtn>
+          <DetailBottomBtn onClick={handleNext}>다음글&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
 
@@ -156,15 +156,14 @@ const Container = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 108px;
+  height: 20vh;
 
   position: fixed;
   top: 0;
   left: 0;
 
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(3px);
-  mask: linear-gradient(#FFFFFD, transparent);
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
 `
 
 const ContentWrapper = styled.div`

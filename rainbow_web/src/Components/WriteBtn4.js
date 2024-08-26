@@ -131,8 +131,9 @@ const Container = styled.div`
 
 const ToWrite = styled.div`
 background-image: url(${PostUpload});
-width: 440px;
-height: 300px;
+background-size: cover;
+width: 660px;
+height: 420px;
 transition: transform 0.3s ease-in-out;
 &:hover{
 cursor: pointer;

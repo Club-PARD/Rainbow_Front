@@ -131,7 +131,7 @@ function MainPage() {
     >
       <Container>
       <Header />
-        {/* <TopBlurr /> */}
+        <TopBlurr />
         <ExplainWrapper>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -311,16 +311,18 @@ const TalkBubble = styled.div`
   }
 `
 
-// const TopBlurr = styled.div`
-//   width: 100%;
-//   height: 10vh;
-//   position: fixed;
-//   z-index: 2;
-//   top: 0;
-//   left: 0;
-//   backdrop-filter:blur(4px);
-//   mask: linear-gradient(#FFFFD, #FFFFFD, transparent);
-// `
+const TopBlurr = styled.div`
+  width: 100%;
+  height: 20vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  backdrop-filter:blur(4px);
+  mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
+`
 
 const ExplainWrapper = styled.div`
   display: flex;
@@ -350,7 +352,7 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #2C2C2C;
+  color: #fff;
   font-family: "Geist Mono";
   font-size: 24px;
   font-style: normal;
@@ -360,6 +362,7 @@ const Title = styled.div`
 const Explained = styled.div`
   width: 362px;
   display: flex;
+  color: #fff;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -434,7 +437,7 @@ const Container = styled.div`
   height: auto;
   padding-top: 20vh;
   padding-bottom: 10vh;
-  background: radial-gradient(50em 50em at 50% 40%, #DED2F6, #EDE6FA, transparent, transparent);
+  //background: radial-gradient(50em 50em at 50% 40%, #8952FF, #000, transparent, transparent);
 `;
 
 const OuterDiv = styled.div`
@@ -444,204 +447,9 @@ const OuterDiv = styled.div`
   height: auto;
   overflow: scroll;
   scroll-behavior: smooth;
-  background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
+  background: #000;
 
   &::-webkit-scrollbar {
     display: none;
   }
 `;
-
-const InnerDiv = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 100px;
-  padding-top: 10vh;
-`;
-
-// const TalkBubble = styled.div`
-//   position: relative;
-//   width: 272px;
-//   min-height: 60px;
-//   padding: 8px 12px;
-//   background: #FEFEFE;
-//   border-radius: 8px;
-//   border: 1px solid #C6C6C6;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   color: #2C2C2C;
-//   text-align: center;
-//   font-size: 14px;
-//   font-weight: 400;
-//   margin: 16px;
-//   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.10), 0px 8px 10px -6px rgba(0, 0, 0, 0.10);
-
-//   &:after, &:before {
-//     position: absolute;
-//     content: '';
-//     width: 0;
-//     bottom: -8px;
-//     left: calc(50% - 8px);
-//   }
-
-//   &:after {
-//     border-style: solid;
-//     border-width: 8px 8px 0;
-//     border-color: #FEFEFE transparent;
-//     z-index: 1;
-//   }
-
-//   &:before {
-//     border-style: solid;
-//     border-width: 9px 9px 0;
-//     border-color: #C6C6C6 transparent;
-//     z-index: 0;
-//     bottom: -9px;
-//   }
-// `
-
-// const TopBlurr = styled.div`
-//   width: 100%;
-//   height: 20vh;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   backdrop-filter:blur(4px);
-//   mask: linear-gradient(#FFFFFD, #FFFFFD, transparent);
-// `
-
-// const ExplainWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   height: auto;
-//   margin-bottom: 15vh;
-//   font-family: "Pretendard-Regular";
-// `
-
-// const FlowersWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   height: auto;
-// `
-
-// const Title = styled.div`
-//   width: 362px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   justify-content: center;
-//   color: #2C2C2C;
-//   font-family: "Geist Mono";
-//   font-size: 24px;
-//   font-style: normal;
-//   font-weight: 400;
-// `;
-
-// const Explained = styled.div`
-//   width: 362px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   justify-content: center;
-//   font-size: 16px;
-//   font-weight: 400;
-//   margin: 16px;
-// `;
-
-// const SwiperWrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   transition: transform 0.3s ease-in-out;
-// `
-
-// const StyledSwiper = styled(Swiper)`
-//   width: 100%;
-//   height: 318px;
-//   padding: 10px;
-// `;
-
-// const StyledSwiperSlide = styled(SwiperSlide)`
-//   width: 246px !important;
-//   height: 298px !important;
-//   margin-right: 20px;
-//   margin-left: 20px;
-//   border-radius: 6px;
-//   background-image: url(${(props) => props.ima});
-//   background-position: center;
-//   background-size: cover;
-//   color: white;
-//   display: flex;
-//   align-items: end;
-//   background-repeat: no-repeat;
-//   transition: transform 0.4s ease;
-//   &:hover {
-//     cursor: pointer;
-//     transform: scale(1.05);
-//   }
-// `;
-
-// const Text = styled.div`
-//   display: flex;
-//   width: 262px;
-//   height: 49px;
-//   font-family: Geist Mono;
-//   font-size: 15px;
-//   font-weight: 400;
-//   padding: 18px 12px 12px 12px;
-//   background: rgba(0, 0, 0, 0.5);
-//   border-radius: 0 0 6px 6px;
-// `;
-
-// const CommentContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: space-between;
-//   width: 100%;
-//   margin-top: 91px;
-// `;
-
-// const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100vw;
-//   height: auto;
-//   padding-top: 15vh;
-//   background: radial-gradient50em 50emat 50% 100%, #C5AAFF, #FFFFFD, #FFFFFD
-// `;
-
-// const OuterDiv = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100vw;
-//   height: auto;
-//   overflow: scroll;
-//   scroll-behavior: smooth;
-//   background: radial-gradient(50em 50em at 50% 30%, #DED2F6, #EDE6FA, transparent, transparent);
-
-//   &::-webkit-scrollbar {
-//     display: none;
-//   }
-// `;
-
-// const InnerDiv = styled.div`
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 100px;
-//   padding-top: 10vh;
-// `;
