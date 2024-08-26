@@ -58,7 +58,7 @@ function MainPage() {
     const response = await getPetNameAPI(userId);  // URL의 userId로 데이터를 가져옵니다.
     setPetName(response);
   };
-
+ 
   const handleScroll = () => {
     setScrollY(window.scrollY);
   };
