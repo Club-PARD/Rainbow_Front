@@ -28,7 +28,7 @@ function LoginPage() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
+  }, []);5
 
   const navigate = useNavigate();
 
