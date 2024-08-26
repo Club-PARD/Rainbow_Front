@@ -125,8 +125,8 @@ function DetailPage() {
         </Detail>
 
         <DetailBottomMenu>
-          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;Previous</DetailBottomBtn>
-          <DetailBottomBtn onClick={handleNext}>Next&nbsp;&nbsp;&rarr;</DetailBottomBtn>
+          <DetailBottomBtn onClick={handlePrevious}>&larr;&nbsp;&nbsp;이전글</DetailBottomBtn>
+          <DetailBottomBtn onClick={handleNext}>다음글&nbsp;&nbsp;&rarr;</DetailBottomBtn>
         </DetailBottomMenu>
       </ContentWrapper>
     </Container>
