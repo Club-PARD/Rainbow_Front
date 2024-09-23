@@ -93,10 +93,12 @@ function LoginPage() {
         </Intro>
         <LoginWrapper>
           <LocalLogin />
+          {/*
           <SignUp>
             <Span>계정이 없으신가요?&nbsp;</Span>
             <Span><Link to="/register" >Sign Up</Link></Span>
           </SignUp>
+          */}
           <Line />
           {/* Google Login button */}
           <GoogleBtn id="signInDiv"></GoogleBtn>
