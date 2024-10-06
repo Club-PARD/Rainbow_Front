@@ -96,7 +96,7 @@ function DetailPage() {
 
   return (
     <Container>
-      <TopBlurr />
+      {/*<TopBlurr />*/}
       <Header />
       <ContentWrapper>
         <DetailTopMenu>

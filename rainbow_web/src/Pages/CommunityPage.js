@@ -100,7 +100,7 @@ const CommunityPageContainer = styled.div`
 
 const TopBlurr = styled.div`
   width: 100%;
-  height: 20vh;
+  height: 10vh;
 
   position: fixed;
   top: 0;
