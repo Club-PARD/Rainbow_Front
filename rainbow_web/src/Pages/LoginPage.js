@@ -92,14 +92,14 @@ function LoginPage() {
           </span>
         </Intro>
         <LoginWrapper>
-          <LocalLogin />
+          {/* <LocalLogin /> */}
           {/*
           <SignUp>
             <Span>계정이 없으신가요?&nbsp;</Span>
             <Span><Link to="/register" >Sign Up</Link></Span>
           </SignUp>
           */}
-          <Line />
+          {/* <Line /> */}
           {/* Google Login button */}
           <GoogleBtn id="signInDiv"></GoogleBtn>
         </LoginWrapper>
@@ -134,10 +134,10 @@ const LoginWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  margin-top: 20%;
   width: 24rem;
 
-  padding: 16px;
+  padding: 10px;
 
   border-radius: 8px;
   border: solid 1px #C6C6C6;
@@ -217,6 +217,7 @@ const GoogleBtn = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 8px;
+  margin-bottom: 8px;
   width: 100%;
   height: 100%;
 `
