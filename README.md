@@ -25,7 +25,7 @@
 
 <p align="center">
   <a href="https://naver.com">
-    <img alt="Sincerely," title="Sincerely," src="./rainbow_web/src/Assets/Img/logo.svg" width="45%">
+    <img alt="Mora" title="Mora" src="./00_FE/public/logo.svg" width="45%">
   </a>
 </p>
 
